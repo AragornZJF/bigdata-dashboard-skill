@@ -1,0 +1,36 @@
+{
+  "name": "skeleton_power_plant",
+  "entryFile": "index.html",
+  "layout": "absolute-1600x900",
+  "deps": ["echarts"],
+  "description": "某发电厂数据管理中心（内置源，免 --source-dir）。1600x900 绝对定位紫色主题，缩放适配。",
+  "elements": {
+    "title": { "anchor": "[data-f=title]", "type": "text" },
+    "sectionTitles": {
+      "anchor": "[data-f=sec-*]",
+      "type": "text",
+      "keys": ["unitStatus", "consumption", "nature", "plantStats", "windPlan", "finance", "trend", "finish"]
+    },
+    "kpis": {
+      "anchor": "[data-f=kpi-0..1]",
+      "type": "kpi_list",
+      "description": "底部温度 KPI（label+value），按数组顺序对应 kpi-0..1"
+    },
+    "liquidBalls": {
+      "anchor": "[data-ball=0..5]",
+      "type": "liquid_ball",
+      "description": "6 个水波球：0-2 为圆形波（当日负荷率/运行小时/调度完成率），3-5 为柱形波（月收入/利润/成本），value 0-100，自动换算波位"
+    },
+    "charts": [
+      { "domId": "c1", "type": "grouped_hbar", "description": "某机组状态（20万/45万 × 运行/备用/检修）", "inject": { "yAxis.data": "unitStatus.categories", "series": "unitStatus.series" } },
+      { "domId": "c3", "type": "bar", "description": "耗存分析（月度柱状）", "inject": { "xAxis.data": "consumption.months", "series[0].data": "consumption.values" } },
+      { "domId": "c4", "type": "donut_pie", "description": "自然因素（晴天/雨天环形）", "inject": { "series[0].data": "nature.pieData" } },
+      { "domId": "c7", "type": "bar", "description": "各电厂发电量统计", "inject": { "xAxis.data": "plantStats.plants", "series[0].data": "plantStats.values" } },
+      { "domId": "c9", "type": "dual_line", "description": "发电量趋势（发电量/用电量双折线）", "inject": { "xAxis.data": "trend.dates", "series[0].data": "trend.generation", "series[1].data": "trend.usage" } },
+      { "domId": "c8", "type": "donut_pie", "description": "风电计划完成情况（模板空面板，由注入器初始化）", "inject": { "series[0].data": "windPlan.pieData" } }
+    ],
+    "tables": [
+      { "anchor": "[data-f=financeTable]", "type": "table", "description": "财务信息（指标/数额）", "columns": ["label", "value"] }
+    ]
+  }
+}

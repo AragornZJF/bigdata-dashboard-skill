@@ -1,0 +1,46 @@
+{
+  "_comment": "自定义模板 metadata.json 规范 —— 用户添加新模板时创建此文件",
+  "name": "我的自定义大屏",
+  "version": "1.0",
+  "description": "模板描述",
+  "author": "your-name",
+  "layout": {
+    "type": "float|flex|grid|absolute|layui-grid",
+    "columns": 3,
+    "unit": "vw|vh|rem|px"
+  },
+  "data_schema": {
+    "title": "大屏标题",
+    "statCards": [
+      { "id": "stat_0", "label": "指标名称", "value": 0, "unit": "个" }
+    ],
+    "charts": [
+      {
+        "id": "chart_main",
+        "type": "bar|line|pie|radar|gauge",
+        "dataHint": "柱状图: [number...]，饼图: [{name, value}...]"
+      }
+    ],
+    "tables": [
+      { "id": "table_0", "headers": ["列1", "列2"], "rows": [] }
+    ],
+    "rankings": [
+      { "id": "rank_0", "items": [] }
+    ]
+  },
+  "theme": {
+    "background": "#0d1b3e",
+    "primaryColor": "#00f0ff",
+    "textColor": "#ffffff",
+    "panelBg": "rgba(6, 48, 109, 0.3)"
+  },
+  "dependencies": {
+    "echarts": true,
+    "jquery": true,
+    "frameworks": [],
+    "maps": [],
+    "plugins": [],
+    "extraCSS": [],
+    "extraJS": []
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "name": "skeleton_smart_city",
+  "entryFile": "index.html",
+  "layout": "absolute-1920x1080",
+  "deps": ["echarts"],
+  "description": "智慧城市综合监管一体化平台（内置源，免 --source-dir）。1920x1080 绝对定位设计稿，缩放适配。",
+  "elements": {
+    "title": { "anchor": "[data-f=title]", "type": "text" },
+    "sectionTitles": {
+      "anchor": "[data-f=sec-*]",
+      "type": "text",
+      "keys": ["internal", "industry", "departments", "rectData", "overall", "matters", "objectTypes", "alarms"]
+    },
+    "kpis": {
+      "anchor": "[data-f=kpi-0..4]",
+      "type": "kpi_list",
+      "description": "整体指标区 5 个 KPI（label+value），按数组顺序对应 kpi-0..4"
+    },
+    "liquidBalls": {
+      "anchor": "[data-ball=0..3] / [data-f=ball-pct-*] / [data-f=ball-label-*]",
+      "type": "liquid_ball",
+      "description": "内部指标评价 4 个水波球，value 为 0-100 百分比，自动换算波位"
+    },
+    "centerProgress": { "anchor": "[data-f=center-progress]", "type": "percent_text" },
+    "wordCloud": { "anchor": "[data-f=wordCloud] .wc", "type": "text_list" },
+    "charts": [
+      {
+        "domId": "chart_876930",
+        "type": "horizontal_bar",
+        "description": "产业结构对比-横向柱状（右侧百分比标签）",
+        "inject": { "yAxis.data": "industryBar.categories", "series[0].data": "industryBar.values" }
+      },
+      {
+        "domId": "chart_407810",
+        "type": "donut_pie",
+        "description": "监管对象类型-环形饼图（标签自动按合计算百分比）",
+        "inject": { "series[0].data": "objectPie.pieData", "legend.data": "objectPie.legendNames" }
+      }
+    ],
+    "tables": [
+      {
+        "anchor": "[data-f=alarmTable]",
+        "type": "status_table",
+        "description": "实时告警（5列：发生时间/所属领域/具体位置/告警内容/当前状态），状态自动着色",
+        "columns": ["time", "domain", "location", "content", "status"]
+      },
+      {
+        "anchor": "[data-f=rectTable]",
+        "type": "table",
+        "description": "发现问题及整改数据（7列）",
+        "columns": ["domain", "total", "major", "fixed", "rate", "avgFixDays", "avgCloseDays"]
+      }
+    ]
+  }
+}

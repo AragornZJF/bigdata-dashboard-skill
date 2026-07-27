@@ -1,0 +1,105 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 项目定位
+
+**单文件 HTML 数据大屏生成器**。输入 Excel（`.xlsx`）或 JSON 数据，输出自包含 `.html`（CSS/JS/图片全部 base64 内联，无 CDN 依赖，双击即可打开）。基于 ECharts + Python 构建。
+
+## 权威说明书
+
+**任何任务开始前先读 `SKILL.md`** —— 它是构建流水线、模板清单、数据契约的唯一权威来源。模板名、CLI 参数、字段 schema 都不要凭记忆，每次以 SKILL.md 当前内容为准。
+
+## 环境（Windows 专项）
+
+- 通过 **`py` launcher** 调用 Python，**禁止**使用 `python` / `python3`。
+- 路径用正斜杠；用 `/dev/null` 而非 `NUL`。
+- 终端中文输出乱码只是 Windows bash 的 GBK 显示问题，HTML 内中文是正确的 UTF-8，**不要**当成 bug 去"修复"。
+- 浏览器预览：`start output/foo.html`。
+
+## 常用命令
+
+```bash
+# 构建（模式1：布局引擎，默认 / 模式2：骨架模板）
+py scripts/build_dashboard.py data.json --theme dark --output dashboard.html
+py scripts/build_dashboard.py data.json --template skeleton_pharma --output dashboard.html
+
+# Excel 输入会被自动识别，无需预先转 JSON
+py scripts/build_dashboard.py data.xlsx --output dashboard.html
+
+# 清单查询
+py scripts/build_dashboard.py --list                 # 列出所有可构建模板
+py scripts/build_dashboard.py --list-data-templates  # 列出可填写的数据样本及渲染策略
+
+# Excel ⇄ JSON 双向转换
+py scripts/make_xlsx_template.py assets/templates/data/<skeleton>/example.json user_data.xlsx
+py scripts/xlsx_to_json.py user_data.xlsx user_data.json     # make_xlsx_template 产物 → JSON
+py scripts/excel_to_json.py any.xlsx any.json                # 统一入口：_meta / legacy / 启发式 三分支
+```
+
+`build_dashboard.py` 没有 `--help`（该 flag 会被当作数据路径报错）。不带参数运行可查看 usage。
+
+## 架构：两种模式
+
+```
+用户数据 (Excel/JSON)
+   │
+   ├─ 模式1 · 布局引擎（默认）
+   │   data_processor.py → layout_builder.py → renderer.html → dashboard.html
+   │
+   └─ 模式2 · 骨架适配（需 --template）
+       template_adapter.py → 注入 skeleton.html → dashboard.html
+```
+
+**模式1** 根据数据形状自动决定最优布局。**模式2** 复用预置 HTML 骨架，通过 `injector.js` 注入数据。
+
+## 双目录模式（关键，最易踩坑）
+
+`assets/templates/data/<skeleton>/` 与 `assets/templates/skeletons/<skeleton>/` 一一对应但职责不同。混淆这两者是头号错误来源：
+
+| 目录 | 内容 | 用途 | 谁读取 |
+|---|---|---|---|
+| `templates/data/<skeleton>/` | `example.json` `example.xlsx` `README.md` | **给用户填写的业务数据样本** + 字段映射文档 | 仅 SKILL.md 流程中 `cp` 给用户 |
+| `templates/skeletons/<skeleton>/` | `skeleton.html` `theme.css` `injector.js` `template_config.json`（4 个模板还含源 `index.html` / `echarts.min.js` / `static-resources/`） | **渲染层配置** | `build_dashboard.py` 构建时 |
+
+字段映射链路：`example.json` 业务字段 → `injector.js` → `template_config.json` 中的 DOM selector / echarts 实例 id。每个模板的字段映射细节见对应 `templates/data/<skeleton>/README.md`。
+
+## 模板清单：哪些需要 `--source-dir`
+
+共 11 个骨架。**7 个自带源文件**（无需 `--source-dir`）：`skeleton_smart_city`、`skeleton_power_plant`、`skeleton_pharma`、`skeleton_weather`、`skeleton_lpl`、`skeleton_generic`、`skeleton_data_center`。
+
+其余 4 个（`skeleton_revenue`、`skeleton_device_monitor`、`skeleton_credit_risk`、`skeleton_telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录。
+
+**11 个含 `injector.js`**（完整数据注入）：revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / generic / data_center / lpl。
+
+## 数据注入机制
+
+对深度定制模板（图表数据嵌在外部 JS 中），构建流程：
+1. 把源 HTML 资产内联（CSS/JS/图片全部 base64）。
+2. 通用 JSON → `template_config.json` 形态映射。
+3. 注入 `injector.js`，读取 `window.DASHBOARD_DATA` 并更新 DOM + ECharts。
+4. 输出完全自包含的单文件 HTML。
+
+注入器通过 `echarts.getInstanceByDom()` 拿到已初始化的图表实例，再用 `setOption()` 更新数据 —— 不修改原始 JS 文件，也不向全局暴露图表变量。
+
+## Gotchas（易踩点）
+
+- **`data_schema.json` 和 `metadata.json` 是 `template_adapter.py` 的副产物**，`build_dashboard.py` **不读取**，可直接忽略。其中 chart id 可能是占位符（如 `myChart` / `a` / `b`），DOM id 以 `template_config.json` 与 `templates/data/<skeleton>/README.md` 为准。
+- **布局引擎会自动升级旧版 `window.DASHBOARD_DATA`** 格式 → `layout_config` schema，不要手动迁移旧数据。
+- **Excel 三分支识别**（`excel_to_json.py` 按优先级）：(1) 隐藏 `_meta` sheet（`make_xlsx_template.py` 产物）→ 完整还原原 JSON；(2) legacy sheet 名（`config`/`stats_left`/`summary`/`bignumber`/`gauges`/`ranking`）；(3) 启发式（2 列「文本+数值」且 ≤10 行的 sheet → statCards，其余「文本+数值」sheet → 柱状图，多列 sheet → 表格）。
+- **布局规则**：statCards 顶部通栏；charts + tables 按每行最多 3 个自动均分。
+- 产物体积通常 1–8 MB，主要来自内联的 `echarts.min.js`（~777 KB）+ 背景图。
+
+## 数据契约（速查）
+
+**通用 / 布局引擎 JSON** —— 支持 `title`、`statCards[]`、`charts[]`（type：`bar`/`line`/`area`/`pie`/`rose`/`hbar`/`scatter`；支持多系列 `{categories, series}` 或直接透传完整 ECharts `option`）、`tables[]`。完整 schema 见 `references/data_schema.md` + `references/layout_schema.md`。
+
+**行业专用 schema**（如医药的 `classKpis` / `centerKpis` / `checkDetailPie` / `yearlyBar` / `sampleLine` / `waterfall` / `registrationBar`）—— 按模板定义，位置 `templates/data/<skeleton>/example.json`，字段说明见同目录 `README.md`。
+
+## 自定义模板
+
+最小可行：`assets/templates/custom/<name>/` 下仅放一个 `metadata.json` 即可。详见 `assets/templates/custom/README.md` 与 `metadata.example.json`。不提供 `skeleton.html` 时由 renderer 引擎按 `metadata.json` 的布局配置兜底渲染。
+
+## 何时使用 bigdata-dashboard-expert 智能体
+
+仓库内置子智能体 `.claude/agents/bigdata-dashboard-expert.md`。当用户想生成 / 定制大屏、或挑选模板时，委派给它即可 —— 它的 system prompt 已经编码了完整 SKILL.md 工作流，主上下文无需重复推导。

@@ -1,0 +1,66 @@
+{
+  "company": { "name": "示例科技有限公司", "industry": "制造业" },
+  "indicators": [
+    { "date": "2026-07-24", "riskStatus": "正常", "riskStyle": "green", "value": "85" },
+    { "date": "2026-07-24", "riskStatus": "关注", "riskStyle": "yellow", "value": "62" },
+    { "date": "2026-07-24", "riskStatus": "预警", "riskStyle": "red", "value": "38" }
+  ],
+  "debtSources": {
+    "rows": [
+      ["短期借款", "12000"],
+      ["长期借款", "8000"],
+      ["应付债券", "3000"]
+    ]
+  },
+  "debtItems": {
+    "rows": [
+      ["负债总额", "23000"],
+      ["资产负债率", "45%"]
+    ]
+  },
+  "opinionList": [
+    { "text": "正面舆情：新签订单增长", "sentiment": "利好", "class": "good" },
+    { "text": "负面舆情：监管问询", "sentiment": "利空", "class": "bad" }
+  ],
+  "inventory": {
+    "dates": ["01月", "02月", "03月", "04月", "05月"],
+    "rawMaterials": {
+      "坯布": [10, 12, 11, 13, 14],
+      "棉纱": [8, 9, 8, 10, 11],
+      "棉花": [5, 6, 5, 7, 8],
+      "亚麻": [3, 4, 3, 5, 6]
+    },
+    "finishedGoods": {
+      "家纺成品": [20, 22, 21, 24, 25],
+      "坯布": [15, 16, 15, 18, 19],
+      "印染布": [12, 13, 12, 14, 15],
+      "面纱": [8, 9, 8, 10, 11],
+      "原棉": [6, 7, 6, 8, 9],
+      "其他": [4, 5, 4, 6, 7]
+    }
+  },
+  "indexData": {
+    "dates": ["01月", "02月", "03月", "04月", "05月"],
+    "产能指数": [110, 112, 115, 118, 120],
+    "销售指数": [105, 108, 110, 112, 115],
+    "盈利能力指数": [98, 100, 102, 105, 108]
+  },
+  "charts": {
+    "profitCoverage": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "series": [{ "initial": [5.5, 5.4, 5.3, 5.5, 5.6] }], "animateData": [5.54, 5.48, 5.33, 5.55, 5.63] },
+    "liquidityCoverage": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "series": [{ "initial": [5.6, 5.5, 5.3, 5.4, 5.5] }], "animateData": [5.62, 5.58, 5.35, 5.43, 5.33] },
+    "solvencyCoverage": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "series": [{ "initial": [3.8, 3.6, 3.6, 3.5, 3.8] }], "animateData": [3.79, 3.61, 3.6, 3.51, 3.85] },
+    "inventoryBarLine": { "xAxis": ["坯布", "棉纱", "棉花"], "series": [{ "data": [120, 90, 60] }, { "data": [80, 70, 50] }] },
+    "totalAssetsPie": { "centerTitle": "合计", "centerSubtitle": "可变现资产", "data": [{ "name": "流动资产", "value": 6000 }, { "name": "固定资产", "value": 4000 }] },
+    "liquidAssetsPie": { "centerTitle": "合计", "centerSubtitle": "速动资产", "data": [{ "name": "货币资金", "value": 3000 }, { "name": "应收账款", "value": 2000 }] },
+    "productivityIndex": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "data": [110, 112, 115, 118, 120] },
+    "consumptionIndex": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "data": [105, 108, 110, 112, 115] },
+    "profitabilityIndex": { "xAxis": ["01月", "02月", "03月", "04月", "05月"], "data": [98, 100, 102, 105, 108] },
+    "relationGraph": {
+      "nodes": [
+        { "name": "核心企业", "value": 100, "category": 0, "id": 0 },
+        { "name": "供应商A", "value": 40, "category": 1, "id": 1 }
+      ],
+      "links": [{ "source": "核心企业", "target": "供应商A" }]
+    }
+  }
+}

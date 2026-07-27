@@ -1,0 +1,101 @@
+{
+  "title": "大数据可视化系统数据分析平台",
+  "statCards": [
+    { "label": "用户总数", "value": "200万" },
+    { "label": "数据总量", "value": "1,200TB" },
+    { "label": "接入厂商", "value": "150家" },
+    { "label": "监测指标", "value": "251项" },1
+    { "label": "服务节点", "value": "34家" },
+    { "label": "应用系统", "value": "150项" }
+  ],
+  "metrics": [
+    { "label": "数据调用量", "value": 24356, "unit": "件", "max": 30000, "yoy": 34, "trend": "up" },
+    { "label": "消息推送量", "value": 243567, "unit": "封", "max": 300000, "yoy": 28, "trend": "up" },
+    { "label": "接口请求量", "value": 19500, "unit": "笔", "max": 30000, "yoy": 12, "trend": "down" }
+  ],
+  "centerLabel": "业绩总览",
+  "centerNumber": "1,938,272",
+  "pieTitles": ["任务完成率", "资源占用率", "服务覆盖率"],
+  "sectionTitles": ["数据采集趋势", "业务模块统计", "区域分布"],
+  "charts": [
+    {
+      "id": "echarts3",
+      "type": "bar",
+      "data": [
+        { "name": "1月", "value": 320 },
+        { "name": "2月", "value": 380 },
+        { "name": "3月", "value": 290 },
+        { "name": "4月", "value": 450 },
+        { "name": "5月", "value": 520 },
+        { "name": "6月", "value": 610 }
+      ]
+    },
+    {
+      "id": "echarts1",
+      "type": "bar",
+      "data": [
+        { "name": "平台A", "value": 1200 },
+        { "name": "平台B", "value": 980 },
+        { "name": "平台C", "value": 1500 },
+        { "name": "平台D", "value": 760 },
+        { "name": "平台E", "value": 1100 }
+      ]
+    },
+    {
+      "id": "echarts2",
+      "type": "line",
+      "data": [
+        { "name": "周一", "value": 120 },
+        { "name": "周二", "value": 180 },
+        { "name": "周三", "value": 150 },
+        { "name": "周四", "value": 220 },
+        { "name": "周五", "value": 280 },
+        { "name": "周六", "value": 200 },
+        { "name": "周日", "value": 160 }
+      ]
+    },
+    {
+      "id": "lastecharts",
+      "type": "pie",
+      "data": [
+        { "name": "华北", "value": 1048 },
+        { "name": "华东", "value": 735 },
+        { "name": "华南", "value": 580 },
+        { "name": "西部", "value": 484 },
+        { "name": "海外", "value": 300 }
+      ]
+    },
+    {
+      "id": "pe01",
+      "type": "pie",
+      "data": [
+        { "name": "已完成", "value": 78 },
+        { "name": "进行中", "value": 22 }
+      ]
+    },
+    {
+      "id": "pe02",
+      "type": "pie",
+      "data": [
+        { "name": "CPU", "value": 56 },
+        { "name": "内存", "value": 30 },
+        { "name": "磁盘", "value": 14 }
+      ]
+    },
+    {
+      "id": "pe03",
+      "type": "pie",
+      "data": [
+        { "name": "覆盖", "value": 92 },
+        { "name": "未覆盖", "value": 8 }
+      ]
+    }
+  ],
+  "ranking": [
+    { "name": "数据接入平台", "value": 500 },
+    { "name": "智能分析引擎", "value": 432 },
+    { "name": "可视化中心", "value": 380 },
+    { "name": "实时监控系统", "value": 280 },
+    { "name": "预警调度模块", "value": 220 }
+  ]
+}

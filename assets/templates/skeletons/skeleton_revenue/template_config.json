@@ -1,0 +1,112 @@
+{
+  "name": "skeleton_revenue",
+  "entryFile": "index.html",
+  "layout": "three-column",
+  "deps": [
+    "echarts",
+    "jquery"
+  ],
+  "elements": {
+    "title": {
+      "selector": ".head h1",
+      "type": "text"
+    },
+    "bigNumber": {
+      "selector": ".numtxt",
+      "labelSelector": ".numbt",
+      "type": "text"
+    },
+    "summaryItems": {
+      "selector": ".wrap ul li",
+      "type": "rolling_list",
+      "columns": [
+        "orderNo",
+        "amount",
+        "product",
+        "time"
+      ]
+    },
+    "gauges": [
+      {
+        "domId": "zb1",
+        "type": "pie_gauge",
+        "labelSelector": ".zb1 span"
+      },
+      {
+        "domId": "zb2",
+        "type": "pie_gauge",
+        "labelSelector": ".zb2 span"
+      },
+      {
+        "domId": "zb3",
+        "type": "pie_gauge",
+        "labelSelector": ".zb3 span"
+      }
+    ],
+    "charts": [
+      {
+        "domId": "echart5",
+        "type": "horizontal_bar",
+        "description": "左侧顶部-横向进度条",
+        "inject": {
+          "yAxis.data": "categories",
+          "series[0].data": "values"
+        }
+      },
+      {
+        "domId": "echart1",
+        "type": "rose_pie",
+        "description": "左侧底部-南丁格尔玫瑰饼图",
+        "inject": {
+          "legend.data": "legendNames",
+          "series[0].data": "pieData"
+        }
+      },
+      {
+        "domId": "echart4",
+        "type": "bar_line_mixed",
+        "description": "中部-双柱+折线混合图(双Y轴)",
+        "inject": {
+          "xAxis[0].data": "months",
+          "series[0].data": "bar1Data",
+          "series[1].data": "bar2Data",
+          "series[2].data": "lineData",
+          "legend[0].data": "legendNames"
+        }
+      },
+      {
+        "domId": "echart3",
+        "type": "dual_line",
+        "description": "中部底部-双折线面积图",
+        "inject": {
+          "xAxis[0].data": "months",
+          "series[0].data": "salesData",
+          "series[1].data": "profitData",
+          "legend.data": "legendNames"
+        }
+      },
+      {
+        "domId": "echart2",
+        "type": "area_rose_pie",
+        "description": "右侧底部-面积玫瑰饼图",
+        "inject": {
+          "legend.data": "legendNames",
+          "series[0].data": "pieData"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "selector": ".table1",
+        "type": "ranking",
+        "description": "右侧顶部-排行榜",
+        "columns": [
+          "rank",
+          "company",
+          "amount",
+          "growth"
+        ]
+      }
+    ]
+  }
+}

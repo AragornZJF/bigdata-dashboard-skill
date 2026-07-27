@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>某发电厂数据管理中心</title>
+<style>
+html,body{margin:0;padding:0;height:100%;background:#070418;overflow:hidden;
+  font-family:"Microsoft YaHei","PingFang SC","Helvetica Neue",Arial,sans-serif;}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+#stage{position:relative;width:1600px;height:900px;flex:0 0 auto;transform-origin:center center;background:#0E0B2D;}
+.hdr,.pic{position:absolute;object-fit:fill;pointer-events:none;}
+.title{position:absolute;display:flex;align-items:center;justify-content:center;
+  color:#ffffff;font-size:26px;font-weight:700;letter-spacing:3px;text-shadow:0 0 14px rgba(90,120,255,.6);}
+.panel{position:absolute;background-size:100% 100%;background-repeat:no-repeat;}
+.ptitle{position:absolute;left:18px;top:12px;color:#ffffff;font-size:16px;font-weight:700;letter-spacing:1px;}
+.pbody{position:absolute;left:6px;right:6px;top:40px;bottom:6px;}
+.cfree{position:absolute;}
+.kpi{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.kpi[style*="text-align:left"]{align-items:flex-start;}
+.klabel{color:#cfd8ff;font-weight:600;}
+.kvalue{font-weight:800;text-shadow:0 0 12px rgba(120,140,255,.35);}
+.lq{position:absolute;pointer-events:none;}
+.lqlabel{position:absolute;left:0;right:0;top:0;text-align:center;color:#cfd8ff;font-size:13px;font-weight:600;}
+.wave{animation:wmove 3.4s linear infinite;}
+@keyframes wmove{from{transform:translateX(0);}to{transform:translateX(-22%);}}
+.ftbl{position:absolute;padding:44px 14px 10px;box-sizing:border-box;}
+.ftbl table{width:100%;height:100%;border-collapse:collapse;table-layout:fixed;}
+.ftbl th{color:#eef2ff;font-size:15px;font-weight:700;text-align:center;height:34px;
+  border-bottom:1px solid rgba(255,255,255,.18);}
+.ftbl td{color:#c9d4f5;font-size:14px;text-align:center;height:44px;
+  border-bottom:1px solid rgba(255,255,255,.07);}
+.ftbl th:first-child,.ftbl td:first-child{border-right:1px solid rgba(255,255,255,.12);}
+.ftbl tbody tr:nth-child(odd){background:rgba(255,255,255,.05);}
+</style></head>
+<body>
+<div id="wrap"><div id="stage">
+<img class="hdr" src="static-resources/pic_0.png" style="left:0;top:0;width:1600px;height:100px;"/><div class="title" style="left:627.6px;top:18.5px;width:345.6px;height:44.1px;" data-f="title">某发电厂数据管理中心</div><img class="pic" src="static-resources/pic_19.png" style="left:1136.9px;top:603.8px;width:435.4px;height:279.8px;"/><div class="ptitle" style="left:1136.9px;top:607.8px;width:200px;height:26px;position:absolute;" data-f="sec-finish">完成率</div><div class="panel" style="left:22.2px;top:100.0px;width:444.4px;height:250.0px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-unitStatus"><div class="ptitle">某机组状态</div><div class="pbody" id="c1"></div></div><div class="panel" style="left:22.2px;top:350.0px;width:444.4px;height:250.0px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-consumption"><div class="ptitle">耗存分析</div><div class="pbody" id="c3"></div></div><div class="panel" style="left:22.2px;top:600.0px;width:444.4px;height:287.5px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-nature"><div class="ptitle">自然因素</div><div class="pbody" id="c4"></div></div><div class="panel" style="left:479.0px;top:599.7px;width:641.0px;height:283.9px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-plantStats"><div class="ptitle">各电厂发电量统计</div><div class="pbody" id="c7"></div></div><div class="panel" style="left:1133.3px;top:100.0px;width:444.4px;height:250.0px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-windPlan"><div class="ptitle">风电计划完成情况</div><div class="pbody" id="c8"></div></div><div class="ptitle" style="left:479.0px;top:240.4px;width:641.9px;height:374.1px;height:26px;" data-f="sec-trend">发电量趋势</div><div class="cfree" id="c9" style="left:479.0px;top:240.4px;width:641.9px;height:374.1px;"></div><div class="panel" style="left:1133.3px;top:350.0px;width:444.4px;height:250.0px;background-image:url('static-resources/static-resource_ccc5dfe0-10ad-11ed-8892-139cf1488263.png');" data-f="sec-finance"><div class="ptitle">财务信息</div><div class="pbody" id="c16"></div></div><div class="kpi" style="left:429.4px;top:100.5px;width:223.8px;height:104.6px;text-align:left;"><div class="klabel" style="font-size:16px;color:#35d0e0;">某日发电量</div><div class="kvalue" style="font-size:34px;color:#ffffff;">938,473</div></div><div class="kpi" style="left:597.0px;top:115.8px;width:117.5px;height:89.2px;text-align:center;"><div class="klabel" style="font-size:13px;color:#cfd8ff;">计划发电量</div><div class="kvalue" style="font-size:22px;color:#ffffff;">954,274</div></div><div class="kpi" style="left:693.7px;top:115.8px;width:117.5px;height:89.2px;text-align:center;"><div class="klabel" style="font-size:13px;color:#cfd8ff;">完成率</div><div class="kvalue" style="font-size:22px;color:#e05585;">98.34%</div></div><div class="kpi" style="left:1133.4px;top:169.1px;width:166.2px;height:138.4px;text-align:center;"><div class="kvalue" style="font-size:40px;color:#d65fa0;">65%</div><div class="klabel" style="font-size:13px;color:#cfd8ff;">本年时间进度</div></div><div class="kpi" style="left:1133.3px;top:100.0px;width:444.4px;height:250.0px;text-align:center;"><div class="kvalue" style="font-size:44px;color:#ffd94d;">76%</div><div class="klabel" style="font-size:13px;color:#cfd8ff;">年计划完成率</div></div><div class="kpi" style="left:1414.3px;top:169.1px;width:158.1px;height:138.4px;text-align:center;"><div class="kvalue" style="font-size:40px;color:#a06ef0;">65%</div><div class="klabel" style="font-size:13px;color:#cfd8ff;">年度进度差</div></div><div class="lq" style="left:799.1px;top:97.4px;width:127.0px;height:107.6px;" data-ball="0" data-ball-type="circle">
+<div class="lqlabel">当日负荷率</div>
+<svg viewBox="0 0 127 108" width="100%" height="100%">
+<defs><clipPath id="c13"><circle cx="63" cy="60" r="45"/></clipPath>
+<linearGradient id="g13" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9a6bff"/><stop offset="1" stop-color="#5b21d6"/></linearGradient></defs>
+<circle cx="63" cy="60" r="45" fill="rgba(20,12,60,0.7)" stroke="rgba(150,110,255,0.5)" stroke-width="1.5"/>
+<g clip-path="url(#c13)">
+<rect x="0" y="19.1" width="127" height="108" fill="url(#g13)" opacity="0.95"/>
+<g transform="translate(0,15.1)"><path class="wave" d="M0 5 Q8 -3 15 5 T46 5 T76 5 T107 5 T137 5 T168 5 V108 H0 Z" fill="url(#g13)"/></g>
+</g>
+<text x="63" y="65" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">95.00%</text>
+</svg></div><div class="lq" style="left:903.7px;top:97.9px;width:121.0px;height:106.6px;" data-ball="1" data-ball-type="circle">
+<div class="lqlabel">当日运行小时</div>
+<svg viewBox="0 0 121 107" width="100%" height="100%">
+<defs><clipPath id="c14"><circle cx="60" cy="59" r="45"/></clipPath>
+<linearGradient id="g14" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9a6bff"/><stop offset="1" stop-color="#5b21d6"/></linearGradient></defs>
+<circle cx="60" cy="59" r="45" fill="rgba(20,12,60,0.7)" stroke="rgba(150,110,255,0.5)" stroke-width="1.5"/>
+<g clip-path="url(#c14)">
+<rect x="0" y="83.5" width="121" height="107" fill="url(#g14)" opacity="0.95"/>
+<g transform="translate(0,79.5)"><path class="wave" d="M0 5 Q7 -3 15 5 T44 5 T73 5 T102 5 T131 5 T160 5 V107 H0 Z" fill="url(#g14)"/></g>
+</g>
+<text x="60" y="64" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">23.00%</text>
+</svg></div><div class="lq" style="left:996.1px;top:97.9px;width:132.2px;height:106.6px;" data-ball="2" data-ball-type="circle">
+<div class="lqlabel">当月调度完成率</div>
+<svg viewBox="0 0 132 107" width="100%" height="100%">
+<defs><clipPath id="c15"><circle cx="66" cy="59" r="45"/></clipPath>
+<linearGradient id="g15" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9a6bff"/><stop offset="1" stop-color="#5b21d6"/></linearGradient></defs>
+<circle cx="66" cy="59" r="45" fill="rgba(20,12,60,0.7)" stroke="rgba(150,110,255,0.5)" stroke-width="1.5"/>
+<g clip-path="url(#c15)">
+<rect x="0" y="30.6" width="132" height="107" fill="url(#g15)" opacity="0.95"/>
+<g transform="translate(0,26.6)"><path class="wave" d="M0 5 Q8 -3 16 5 T48 5 T79 5 T111 5 T143 5 T174 5 V107 H0 Z" fill="url(#g15)"/></g>
+</g>
+<text x="66" y="64" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">82.00%</text>
+</svg></div><div class="lq" style="left:1158.5px;top:670.4px;width:127.9px;height:179.4px;" data-ball="3" data-ball-type="rect">
+<div class="lqlabel" style="top:2px;">月收入</div>
+<svg viewBox="0 0 128 179" width="100%" height="100%">
+<defs><clipPath id="c21"><rect x="23" y="34" width="82" height="135" rx="3"/></clipPath>
+<linearGradient id="g21" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#7b5cff" stop-opacity="0.95"/><stop offset="1" stop-color="#7b5cff" stop-opacity="0.55"/></linearGradient></defs>
+<rect x="23" y="34" width="82" height="135" rx="3" fill="rgba(15,10,45,0.6)" stroke="rgba(200,200,230,0.55)" stroke-width="1.5"/>
+<g clip-path="url(#c21)">
+<rect x="23" y="40.8" width="82" height="135" fill="url(#g21)"/>
+<g transform="translate(23,37.8)"><path class="wave" d="M0 4 Q7 -2 13 4 T39 4 T65 4 T92 4 T118 4 V145 H0 Z" fill="url(#g21)"/></g>
+</g>
+<text x="64" y="107" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">95.00%</text>
+</svg></div><div class="lq" style="left:1291.1px;top:670.4px;width:127.0px;height:179.4px;" data-ball="4" data-ball-type="rect">
+<div class="lqlabel" style="top:2px;">月利润</div>
+<svg viewBox="0 0 127 179" width="100%" height="100%">
+<defs><clipPath id="c22"><rect x="23" y="34" width="81" height="135" rx="3"/></clipPath>
+<linearGradient id="g22" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#e05585" stop-opacity="0.95"/><stop offset="1" stop-color="#e05585" stop-opacity="0.55"/></linearGradient></defs>
+<rect x="23" y="34" width="81" height="135" rx="3" fill="rgba(15,10,45,0.6)" stroke="rgba(200,200,230,0.55)" stroke-width="1.5"/>
+<g clip-path="url(#c22)">
+<rect x="23" y="67.8" width="81" height="135" fill="url(#g22)"/>
+<g transform="translate(23,64.8)"><path class="wave" d="M0 4 Q7 -2 13 4 T39 4 T65 4 T91 4 T117 4 V145 H0 Z" fill="url(#g22)"/></g>
+</g>
+<text x="63" y="107" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">75.00%</text>
+</svg></div><div class="lq" style="left:1419.4px;top:670.4px;width:127.9px;height:179.4px;" data-ball="5" data-ball-type="rect">
+<div class="lqlabel" style="top:2px;">月成本</div>
+<svg viewBox="0 0 128 179" width="100%" height="100%">
+<defs><clipPath id="c23"><rect x="23" y="34" width="82" height="135" rx="3"/></clipPath>
+<linearGradient id="g23" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#f0c53d" stop-opacity="0.95"/><stop offset="1" stop-color="#f0c53d" stop-opacity="0.55"/></linearGradient></defs>
+<rect x="23" y="34" width="82" height="135" rx="3" fill="rgba(15,10,45,0.6)" stroke="rgba(200,200,230,0.55)" stroke-width="1.5"/>
+<g clip-path="url(#c23)">
+<rect x="23" y="67.8" width="82" height="135" fill="url(#g23)"/>
+<g transform="translate(23,64.8)"><path class="wave" d="M0 4 Q7 -2 13 4 T39 4 T65 4 T92 4 T118 4 V145 H0 Z" fill="url(#g23)"/></g>
+</g>
+<text x="64" y="107" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="700">75.00%</text>
+</svg></div><div class="kpi" style="left:30.9px;top:805.7px;width:117.2px;height:70.7px;" data-f="kpi-0"><div class="klabel" style="font-size:14px;">最高温度</div>
+<div class="kvalue" style="font-size:26px;color:#e05585;">32</div></div><div class="kpi" style="left:340.9px;top:805.7px;width:117.2px;height:70.7px;" data-f="kpi-1"><div class="klabel" style="font-size:14px;">最低温度</div>
+<div class="kvalue" style="font-size:26px;color:#6b8af0;">17</div></div><div class="ftbl" style="left:1133.3px;top:350.0px;width:444.4px;height:250.0px;" data-f="financeTable">
+<table><thead><tr><th>指标</th><th>数额</th></tr></thead>
+<tbody><tr><td>月累计收入</td><td>3,500,000元</td></tr><tr><td>月累计利润</td><td>1,500,000元</td></tr><tr><td>月累计成本</td><td>2,000,000元</td></tr></tbody></table></div>
+</div></div>
+<script src="echarts.min.js"></script>
+<script>
+function fit(){var s=document.getElementById("stage");
+  var sc=Math.min(window.innerWidth/1600,window.innerHeight/900);
+  s.style.transform="scale("+sc+")";}
+window.addEventListener("resize",fit);fit();
+(function(){var el=document.getElementById("c1");if(!el)return;var c=echarts.init(el);c.setOption({
+ tooltip:{trigger:"axis",backgroundColor:"rgba(18,14,52,0.92)",borderColor:"rgba(124,108,255,0.45)",borderWidth:1,padding:[8,12],textStyle:{color:"#eaf0ff",fontSize:12},axisPointer:{type:"shadow",shadowStyle:{color:"rgba(120,110,255,0.12)"}}},
+ color:["#35e0e0","#e85585"],
+ legend:{bottom:2,left:"center",icon:"rect",itemWidth:10,itemHeight:10,textStyle:{color:"#cfd8ff",fontSize:12},data:["20万","45万"]},
+ grid:{left:8,right:20,top:8,bottom:26,containLabel:true},
+ xAxis:{type:"value",max:600,axisLabel:{color:"#8a90c0",fontSize:11},splitLine:{lineStyle:{color:"rgba(255,255,255,0.08)",type:"dashed"}},axisLine:{show:false},axisTick:{show:false}},
+ yAxis:{type:"category",data:["运行", "备用", "检修"],axisLabel:{color:"#cfd8ff",fontSize:12},axisLine:{show:false},axisTick:{show:false}},
+ series:[{name:"20万",type:"bar",data:[200, 550, 380],barWidth:16,barGap:"35%",itemStyle:{color:"#35e0e0"}},
+         {name:"45万",type:"bar",data:[450, 400, 380],barWidth:16,itemStyle:{color:"#e85585"}}]
+});window.addEventListener("resize",function(){c.resize();});})();(function(){var el=document.getElementById("c3");if(!el)return;var c=echarts.init(el);c.setOption({
+ tooltip:{trigger:"axis",backgroundColor:"rgba(18,14,52,0.92)",borderColor:"rgba(124,108,255,0.45)",borderWidth:1,padding:[8,12],textStyle:{color:"#eaf0ff",fontSize:12},axisPointer:{type:"shadow",shadowStyle:{color:"rgba(120,110,255,0.12)"}}},
+ grid:{left:8,right:12,top:14,bottom:24,containLabel:true},
+ xAxis:{type:"category",data:["2月", "3月", "4月", "5月", "6月", "7月"],axisLabel:{color:"#cfd8ff",fontSize:12},axisLine:{lineStyle:{color:"rgba(255,255,255,0.2)"}},axisTick:{show:false}},
+ yAxis:{type:"value",max:1000,axisLabel:{color:"#8a90c0",fontSize:11},splitLine:{lineStyle:{color:"rgba(255,255,255,0.08)",type:"dashed"}}},
+ series:[{name:"耗存",type:"bar",data:[460, 570, 320, 200, 900, 750],barWidth:22,
+   itemStyle:{color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:"#4ff2e2"},{offset:1,color:"#1fb6c9"}])}}]
+});window.addEventListener("resize",function(){c.resize();});})();(function(){var el=document.getElementById("c4");if(!el)return;var c=echarts.init(el);c.setOption({
+ color:["#35e0e0","#e85585"],
+ tooltip:{trigger:"item",backgroundColor:"rgba(18,14,52,0.92)",borderColor:"rgba(124,108,255,0.45)",borderWidth:1,padding:[8,12],textStyle:{color:"#eaf0ff",fontSize:12},
+   formatter:function(p){return p.marker+" "+p.name+"："+p.value+" 天（占比 "+p.percent.toFixed(0)+"%）";}},
+ legend:{bottom:6,left:"center",icon:"rect",itemWidth:10,itemHeight:10,textStyle:{color:"#cfd8ff",fontSize:12}},
+ series:[{type:"pie",radius:["52%","72%"],center:["50%","44%"],
+   label:{color:"#dfe6ff",fontSize:12.5,lineHeight:17,formatter:function(p){return p.name+"："+p.value+" 天\n占比："+p.percent.toFixed(0)+"%";}},
+   labelLine:{length:10,length2:8,lineStyle:{color:"rgba(210,220,255,0.5)"}},
+   itemStyle:{borderColor:"#17103f",borderWidth:2},
+   data:[{"name": "下雨天", "value": 18}, {"name": "晴天", "value": 12}]
+ }]
+});window.addEventListener("resize",function(){c.resize();});})();(function(){var el=document.getElementById("c7");if(!el)return;var c=echarts.init(el);c.setOption({
+ tooltip:{trigger:"axis",backgroundColor:"rgba(18,14,52,0.92)",borderColor:"rgba(124,108,255,0.45)",borderWidth:1,padding:[8,12],textStyle:{color:"#eaf0ff",fontSize:12},axisPointer:{type:"shadow",shadowStyle:{color:"rgba(120,110,255,0.12)"}}},
+ legend:{bottom:2,left:"center",icon:"rect",itemWidth:10,itemHeight:10,textStyle:{color:"#cfd8ff",fontSize:12},data:["发电量"]},
+ grid:{left:8,right:12,top:14,bottom:26,containLabel:true},
+ xAxis:{type:"category",data:["电厂1", "电厂2", "电厂3", "电厂4", "电厂5", "电厂6", "电厂7", "电厂8", "电厂9"],axisLabel:{color:"#cfd8ff",fontSize:11.5,interval:0},axisLine:{lineStyle:{color:"rgba(255,255,255,0.2)"}},axisTick:{show:false}},
+ yAxis:{type:"value",max:350,axisLabel:{color:"#8a90c0",fontSize:11},splitLine:{lineStyle:{color:"rgba(255,255,255,0.08)",type:"dashed"}}},
+ series:[{name:"发电量",type:"bar",data:[348, 220, 280, 48, 180, 320, 270, 130, 250],barWidth:20,
+   itemStyle:{borderRadius:[3,3,0,0],color:new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:"#9a7bff"},{offset:1,color:"#5b2fd6"}])}}]
+});window.addEventListener("resize",function(){c.resize();});})();(function(){var el=document.getElementById("c9");if(!el)return;var c=echarts.init(el);c.setOption({
+ tooltip:{trigger:"axis",backgroundColor:"rgba(18,14,52,0.92)",borderColor:"rgba(124,108,255,0.45)",borderWidth:1,padding:[8,12],textStyle:{color:"#eaf0ff",fontSize:12},axisPointer:{type:"line",lineStyle:{color:"rgba(140,130,255,0.55)",type:"dashed"}}},
+ color:["#8a6bff","#ffd94d"],
+ legend:{top:4,right:20,icon:"rect",itemWidth:10,itemHeight:10,textStyle:{color:"#cfd8ff",fontSize:12}},
+ grid:{left:16,right:30,top:40,bottom:26,containLabel:true},
+ xAxis:{type:"category",data:["2022-07-01", "2022-07-02", "2022-07-03", "2022-07-04", "2022-07-05", "2022-07-06", "2022-07-07", "2022-07-08", "2022-07-09", "2022-07-10", "2022-07-11", "2022-07-12", "2022-07-13", "2022-07-14", "2022-07-15", "2022-07-16", "2022-07-17", "2022-07-18", "2022-07-19", "2022-07-20"],boundaryGap:false,axisLabel:{color:"#8a90c0",fontSize:11},axisLine:{lineStyle:{color:"rgba(255,255,255,0.2)"}},axisTick:{show:false}},
+ yAxis:{type:"value",min:0,max:1000,interval:200,axisLabel:{color:"#8a90c0",fontSize:11,formatter:function(v){return v>=1000?"1,000":v;}},splitLine:{lineStyle:{color:"rgba(255,255,255,0.08)",type:"dashed"}}},
+ series:[{name:"发电量",type:"line",data:[420, 835, 486, 682, 109, 739, 717, 750, 811, 648, 945, 222, 174, 642, 790, 586, 984, 494, 447, 755],showSymbol:false,lineStyle:{width:2}},
+         {name:"用电量",type:"line",data:[251, 948, 694, 511, 358, 725, 504, 639, 556, 775, 325, 897, 404, 254, 926, 329, 207, 126, 355, 353],showSymbol:false,lineStyle:{width:2}}]
+});window.addEventListener("resize",function(){c.resize();});})();
+</script>
+</body></html>

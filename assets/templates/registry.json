@@ -1,0 +1,112 @@
+{
+  "version": "1.0",
+  "total": 11,
+  "templates": [
+    {
+      "id": "045",
+      "name": "Credit Risk Locating (Bank)",
+      "layout": "float",
+      "deps": [
+        "jquery",
+        "echarts"
+      ],
+      "skeleton": "skeleton_credit_risk"
+    },
+    {
+      "id": "003",
+      "name": "Cool Data Center",
+      "layout": "float",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "skeleton_data_center"
+    },
+    {
+      "id": "064",
+      "name": "Device Environment Monitor",
+      "layout": "absolute",
+      "deps": [
+        "echarts",
+        "jquery"
+      ],
+      "skeleton": "skeleton_device_monitor"
+    },
+    {
+      "id": "021",
+      "name": "Generic BigData Dashboard",
+      "layout": "float",
+      "deps": [
+        "echarts",
+        "jquery"
+      ],
+      "skeleton": "skeleton_generic"
+    },
+    {
+      "id": "099",
+      "name": "LPL Match Visualization",
+      "layout": "float",
+      "deps": [
+        "echarts",
+        "jquery"
+      ],
+      "skeleton": "skeleton_lpl"
+    },
+    {
+      "id": "ph01",
+      "name": "Pharma Enterprise Supervision",
+      "layout": "absolute",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "skeleton_pharma"
+    },
+    {
+      "id": "pp01",
+      "name": "Power Plant Data Center",
+      "layout": "absolute",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "skeleton_power_plant"
+    },
+    {
+      "id": "090",
+      "name": "Enterprise Revenue Statistics",
+      "layout": "float",
+      "deps": [
+        "echarts",
+        "jquery"
+      ],
+      "skeleton": "skeleton_revenue"
+    },
+    {
+      "id": "sc01",
+      "name": "Smart City Supervision",
+      "layout": "absolute",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "skeleton_smart_city"
+    },
+    {
+      "id": "068",
+      "name": "Telecom Store Efficiency",
+      "skeleton": "skeleton_telecom_store",
+      "layout": "float",
+      "deps": [
+        "jquery"
+      ]
+    },
+    {
+      "id": "092",
+      "name": "Weather Station Dashboard",
+      "layout": "absolute",
+      "deps": [
+        "jquery",
+        "echarts",
+        "china-map"
+      ],
+      "skeleton": "skeleton_weather"
+    }
+  ]
+}

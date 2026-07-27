@@ -1,0 +1,97 @@
+{
+  "id": "092",
+  "name": "skeleton_weather",
+  "description": "气象站数据监控大屏 - DreamCoders WEATHER STATION，三列布局，含仪表盘/蜡烛图/中国地图/雷达图/水球图",
+  "layoutType": "three-column",
+  "deps": [
+    "jquery",
+    "echarts",
+    "echarts-china-map"
+  ],
+  "entryFile": "index.html",
+  "dataMapping": {
+    "title": ".headTitle",
+    "pressure.relative": ".hpa-rel",
+    "pressure.absolute": ".hpa-abs",
+    "testSite.area": ".area",
+    "testSite.date": ".date",
+    "testSite.siteId": ".idNum",
+    "testSite.days": ".days",
+    "temperature.indoorMax": ".temperatureN",
+    "temperature.dewPoint": ".dewpoint",
+    "temperature.windChill": ".windchill",
+    "temperature.heatNumber": ".heatnumber",
+    "wind.speed.current": "#nowWind",
+    "wind.speed.highest": "#highWind",
+    "wind.gust.current": "#nowGust",
+    "wind.gust.highest": "#highGust",
+    "rainfall.day.current": "#nowDay",
+    "rainfall.day.highest": "#highDay",
+    "rainfall.week.current": "#nowWeek",
+    "rainfall.week.highest": "#highWeek",
+    "rainfall.month.current": "#nowMonth",
+    "rainfall.month.highest": "#highMonth",
+    "rainfall.year.current": "#nowYear",
+    "rainfall.year.highest": "#highYear"
+  },
+  "echartsInstances": [
+    {
+      "id": "temChart",
+      "dom": "temChart",
+      "type": "gauge",
+      "desc": "温度仪表盘"
+    },
+    {
+      "id": "humChart",
+      "dom": "humChart",
+      "type": "gauge",
+      "desc": "湿度仪表盘"
+    },
+    {
+      "id": "tempKChart",
+      "dom": "tempKChart",
+      "type": "candlestick",
+      "desc": "温度蜡烛图"
+    },
+    {
+      "id": "dityKChart",
+      "dom": "dityKChart",
+      "type": "candlestick",
+      "desc": "湿度蜡烛图"
+    },
+    {
+      "id": "mapChart",
+      "dom": "map",
+      "type": "map+effectScatter",
+      "desc": "中国地图"
+    },
+    {
+      "id": "windChart",
+      "dom": "windChart",
+      "type": "radar",
+      "desc": "风向雷达图"
+    }
+  ],
+  "canvasInstances": [
+    {
+      "id": "rainfallOne",
+      "library": "WaterPolo",
+      "desc": "日降雨量水球"
+    },
+    {
+      "id": "rainfallTwo",
+      "library": "WaterPolo",
+      "desc": "周降雨量水球"
+    },
+    {
+      "id": "rainfallThree",
+      "library": "WaterPolo",
+      "desc": "月降雨量水球"
+    },
+    {
+      "id": "rainfallFour",
+      "library": "WaterPolo",
+      "desc": "年降雨量水球"
+    }
+  ]
+}

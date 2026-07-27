@@ -1,0 +1,32 @@
+{
+  "name": "skeleton_pharma",
+  "entryFile": "index.html",
+  "layout": "absolute-1920x1080",
+  "deps": ["echarts"],
+  "description": "药品企业大数据监管平台（内置源，免 --source-dir）。1920x1080 绝对定位，缩放适配。",
+  "elements": {
+    "title": { "anchor": "[data-f=title]", "type": "text" },
+    "sectionTitles": {
+      "anchor": "[data-f=sec-*]",
+      "type": "text",
+      "keys": ["deviceClass", "yearlyCheck", "checkDetail", "sampleTotal", "unqualified", "registration"]
+    },
+    "classKpis": {
+      "anchor": "[data-f=kpi-0..3]",
+      "type": "kpi_list",
+      "description": "左侧分类 KPI：一类/二类/三类企业 + 出动检查人次，按数组顺序对应 kpi-0..3，更新 changeText 数值（单位保留）"
+    },
+    "centerKpis": {
+      "anchor": "[data-f=ckpi-0..5]",
+      "type": "kpi_list",
+      "description": "中央 6 块：药品生产企业/医疗器械企业/化妆品生产企业/一类/二类/三类药品企业"
+    },
+    "charts": [
+      { "domId": "chart_804928", "type": "donut_pie", "description": "今年抽检详情（百分比按合计动态算）", "inject": { "series[0].data": "checkDetailPie.pieData" } },
+      { "domId": "chart_302528", "type": "grouped_bar", "description": "历年抽检次数（3 环节 × 年份）", "inject": { "xAxis.data": "yearlyBar.years", "series": "yearlyBar.series" } },
+      { "domId": "chart_256128", "type": "area_line", "description": "抽查样品总量（面积折线）", "inject": { "xAxis.data": "sampleLine.years", "series[0].data": "sampleLine.values" } },
+      { "domId": "chart_939712", "type": "waterfall", "description": "不合格药品瀑布图（assist/合计由注入器重算）", "inject": { "xAxis.data": "waterfall.years", "increase": "waterfall.increase", "decrease": "waterfall.decrease" } },
+      { "domId": "chart_870976", "type": "stacked_hbar", "description": "注册申请（3 类堆叠横向柱）", "inject": { "yAxis.data": "registrationBar.years", "series": "registrationBar.series" } }
+    ]
+  }
+}

@@ -1,18 +1,27 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+env/
 
-# Other files and folders
-.settings/
+# --- Generated dashboard output (build artifacts; regenerate via scripts/build_dashboard.py) ---
+output/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
+# --- Claude Code ---
+# Local-only settings; .claude/agents/ IS tracked as a project asset.
+.claude/settings.local.json
 
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
