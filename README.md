@@ -117,7 +117,8 @@ py scripts/excel_to_json.py any.xlsx any.json
     <td width="50%" align="center"><img src="examples/智能看板.png" width="100%"/><br><sub><code>skeleton_smart_dashboard</code> · 智能看板新中心</sub></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="examples/电信营业厅.png" width="50%"/><br><sub><code>skeleton_telecom_store</code> · 营业厅、门店效能分析</sub></td>
+    <td width="50%" align="center"><img src="examples/电信营业厅.png" width="100%"/><br><sub><code>skeleton_telecom_store</code> · 营业厅、门店效能分析</sub></td>
+    <td width="50%" align="center"><img src="examples/新能源.png" width="100%"/><br><sub><code>skeleton_new_energy_vehicle</code> · 新能源汽车工业经济运行</sub></td>
   </tr>
 </table>
 
