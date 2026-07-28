@@ -1,0 +1,14 @@
+/* 模板主题变量 - 物业管理数据中心 (源自 DataEase 导出) */
+:root {
+  --bg-color: #01040F;
+  --primary-color: #5B8FF9;
+  --primary-light: rgba(91, 143, 249, 0.4);
+  --text-color: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --panel-bg: rgba(255, 255, 255, 0.03);
+  --accent-1: #5B8FF9;
+  --accent-2: #5AD8A6;
+  --accent-3: #F6BD16;
+  --accent-4: #E8684A;
+}

@@ -1,0 +1,32 @@
+/* skeleton_new_consumption 主题变量壳
+   主要样式已在 index.css（reset）+ index.html 内联 style + render.js 内联 ECharts option。
+   构建管道会在 </head> 前注入本文件。保持极薄，避免覆盖 DataEase 原始视觉。 */
+:root {
+  --bg-color: #EEF1F8;
+  --panel-bg: rgba(238, 241, 248, 1);
+  --primary-color: #5CABF7;
+  --accent-color: #FEB306;
+  --title-color: #0F0C24;
+  --text-color: #2A2A2A;
+  --border-color: #BCBBBB;
+}
+
+/* 等待数据接入的占位提示（与 render.js emptyTip 配合） */
+.empty-tip {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: #999; font-size: 12px; text-align: center; line-height: 1.6;
+}
+
+/* 顶部数据接入提示 banner（render.js 在 hasEmpty 时显示） */
+#banner {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: #FFF7E6; color: #8C6E2A; font-size: 12px;
+  padding: 4px 12px; border-bottom: 1px solid #FFD591;
+}
+
+/* 表格（render.js renderTable 生成 .de-data） */
+table.de-data { width: 100%; border-collapse: collapse; font-size: 11px; color: #2A2A2A; }
+table.de-data th { background: rgba(91,171,247,0.18); padding: 4px 6px; text-align: left; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.08); }
+table.de-data td { padding: 3px 6px; border-bottom: 1px solid rgba(0,0,0,0.05); }

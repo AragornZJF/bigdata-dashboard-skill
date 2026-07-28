@@ -1,0 +1,36 @@
+{
+  "name": "skeleton_smart_dashboard",
+  "entryFile": "index.html",
+  "layout": "3-column-flex (rem 响应式, 1024-1920)",
+  "deps": ["jquery", "echarts", "china-map"],
+  "description": "智能看板新中心（内置源，免 --source-dir）。源自 BigDataView 069，jquery+ECharts 3 栏布局：左栏设备总览/故障监控/点位饼图，中栏中国地图/用户柱图，右栏订单/销售额折线/渠道/仪表/热榜。injector 友好键注入。",
+  "origin": "BigDataView/big-data-view web/069 智能看板新中心",
+  "dataContract": "友好键 object：title / overview[] / point{total,monthNew,pie[]} / monitor{fault[],exception[]} / users{total,monthNew,cities[],data[]} / order{day365/day90/day30/day1:{orders,amount}} / sales{year/quarter/month/week:[[...],[...]]} / channel[{value,name}] / quarter{percent,sales,growth} / ranking{hot[],provinces[]}",
+  "elements": {
+    "title": { "anchor": "document.title", "type": "text" },
+    "overview": { "anchor": ".overview .item h4", "type": "kpi_list", "count": 4 },
+    "point": {
+      "anchor": ".point",
+      "type": "mixed",
+      "chart": { "selector": ".point .pie", "type": "rose_pie", "inject": { "series[0].data": "point.pie" } },
+      "kpis": [".point .data .item:eq(0) h4", ".point .data .item:eq(1) h4"]
+    },
+    "monitor": { "anchor": ".monitor .content .marquee", "type": "table_pair", "note": "fault→故障设备监控, exception→异常设备监控; 注入器双份复制以维持滚动" },
+    "users": {
+      "anchor": ".users",
+      "type": "mixed",
+      "chart": { "selector": ".users .bar", "type": "bar", "inject": { "xAxis[0].data": "users.cities", "series[0].data": "users.data" } },
+      "kpis": [".users .data .item:eq(0) h4", ".users .data .item:eq(1) h4"]
+    },
+    "order": { "anchor": ".order .item h4", "type": "kpi_pair", "note": "初始注入 day365；tab 切换用源内置演示序列" },
+    "sales": { "anchor": ".sales .line", "type": "line_2series", "inject": { "series[0].data": "sales.year[0]", "series[1].data": "sales.year[1]" }, "note": "初始注入 year；tab 切换用源内置演示序列" },
+    "channel": { "anchor": ".channel .data .item h4", "type": "kpi_list", "count": 4, "suffix": "%" },
+    "quarter": { "anchor": ".quarter", "type": "mixed", "label": ".quarter .box .label", "kpis": [".quarter .data .item:eq(0) h4", ".quarter .data .item:eq(1) h4"] },
+    "ranking": { "anchor": ".top", "type": "mixed", "hot": ".top .all ul", "provinces": ".top .province .sup" }
+  },
+  "notes": [
+    "地图(.geo)走 china.js 注册的 'china' map，装饰性，未纳入数据注入",
+    "order/sales 的 tab 自动轮播已在 index.js 移除，保证注入数据稳定；手动点 tab 仍切源内置演示数据",
+    "pie/bar 图表原有的 Gitee 推广点击跳转已移除"
+  ]
+}

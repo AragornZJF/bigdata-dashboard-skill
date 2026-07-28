@@ -91,7 +91,6 @@
     {
       "id": "068",
       "name": "Telecom Store Efficiency",
-      "dir": "068 中国电信厅店营业效能分析",
       "skeleton": "skeleton_telecom_store",
       "layout": "float",
       "deps": [

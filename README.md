@@ -99,21 +99,6 @@ py scripts/excel_to_json.py any.xlsx any.json
 
 > "自带源"指无需额外 `--source-dir` 即可直接构建；前 8 个模板（含 `weather` 等）带 `injector.js`，支持完整数据注入。
 
-## 模板效果预览
-
-以下为部分内置模板的渲染成品（截图来自 `examples/` 目录）：
-
-<table>
-  <tr>
-    <td width="50%" align="center"><img src="examples/药品企业大数据监控平台.png" width="100%"/><br><sub><code>skeleton_pharma</code> · 药企监管、抽检、注册申请</sub></td>
-    <td width="50%" align="center"><img src="examples/某发电厂数据管理中心.png" width="100%"/><br><sub><code>skeleton_power_plant</code> · 电厂、能源、机组监控</sub></td>
-  </tr>
-  <tr>
-    <td width="50%" align="center"><img src="examples/智慧城市综合监控一体化平台.png" width="100%"/><br><sub><code>skeleton_smart_city</code> · 城管、政务监管、实时告警</sub></td>
-    <td width="50%" align="center"><img src="examples/大数据可视化数据分析平台.png" width="100%"/><br><sub><code>skeleton_generic</code> · 任意通用数据展示</sub></td>
-  </tr>
-</table>
-
 ---
 
 ## 进一步阅读

@@ -1,0 +1,20 @@
+{
+  "title": "物业管理数据中心数据契约",
+  "description": "图表数据已嵌入 skeleton.html 内联脚本；可通过 window.DASHBOARD_DATA.charts[] 覆盖，id 对应 DOM id。",
+  "fields": {
+    "title": {
+      "type": "string"
+    },
+    "charts": {
+      "type": "array"
+    }
+  },
+  "chart_ids": [
+    "chart_0",
+    "chart_1",
+    "chart_2",
+    "chart_3",
+    "chart_4",
+    "chart_5"
+  ]
+}

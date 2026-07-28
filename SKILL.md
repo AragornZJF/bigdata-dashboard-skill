@@ -102,9 +102,11 @@ python scripts/build_dashboard.py <用户目录>/<行业>_data.json \
 | 智慧城市综合监管      | `skeleton_smart_city`     | 城管、政务监管、实时告警（**自带源**） | `assets/templates/data/skeleton_smart_city/`     |
 | 发电厂数据管理        | `skeleton_power_plant`    | 电厂、能源、机组监控（**自带源**）     | `assets/templates/data/skeleton_power_plant/`    |
 | 药品企业监管          | `skeleton_pharma`         | 药企监管、抽检、注册申请（**自带源**） | `assets/templates/data/skeleton_pharma/`         |
+| 新消费市场洞察        | `skeleton_new_consumption` | 新消费、零售、品牌洞察（**自带源**）   | `assets/templates/data/skeleton_new_consumption/` |
+| 智能看板新中心      | `skeleton_smart_dashboard` | 设备监控、销售运营、3 栏科技风（**自带源**） | `assets/templates/data/skeleton_smart_dashboard/` |
 
-> 注：带 `injector.js` 的 8 个模板（revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma）支持**完整数据注入**；`generic / data_center / lpl` 走布局引擎，图表数据为通用结构（statCards / charts / tables）。
-> `skeleton_smart_city` / `skeleton_power_plant` / `skeleton_pharma` / `skeleton_weather` 源文件已合并至骨架目录，无需 `--source-dir`；其余 7 个骨架需 `--source-dir` 提供原始 HTML 目录。
+> 注：带 `injector.js` 的 8 个模板（revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / new_consumption / smart_dashboard）支持**完整数据注入**；`generic / data_center / lpl` 走布局引擎，图表数据为通用结构（statCards / charts / tables）。
+> `skeleton_smart_city` / `skeleton_power_plant` / `skeleton_pharma` / `skeleton_weather` / `skeleton_new_consumption` / `skeleton_smart_dashboard` 源文件已合并至骨架目录，无需 `--source-dir`；其余骨架需 `--source-dir` 提供原始 HTML 目录。
 
 ---
 
@@ -231,6 +233,8 @@ python scripts/build_dashboard.py data.json --template "skeleton_credit_risk" --
 | 游戏/电竞     | `skeleton_lpl`                                                        |
 | IoT/设备监测  | `skeleton_device_monitor`（4图表+地图+环境指标+维保表格）             |
 | 电厂/能源     | `skeleton_power_plant`（发电厂数据管理，自带源）                      |
+| 消费/零售     | `skeleton_new_consumption`（新消费市场洞察，自带源）                 |
+| 智能看板/设备 | `skeleton_smart_dashboard`（3 栏设备/销售运营，自带源）              |
 | 销售/电商     | `skeleton_telecom_store`                                              |
 | 教育/校园     | `skeleton_data_center`                                                |
 | 银行/金融     | `skeleton_credit_risk`                                                |
@@ -348,7 +352,7 @@ bigdata-dashboard/
 
 1. **布局配置优先**：有 `layout.rows` -> 直接渲染；旧格式 -> 自动升级
 2. **源模板需指定**：必须用 `--template` 参数显式选择
-3. **自带源 vs 外部源**：4 个骨架（smart_city/power_plant/pharma/weather）自带源文件，免 `--source-dir`；其余 7 个需通过 `--source-dir` 指定外部源目录
+3. **自带源 vs 外部源**：6 个骨架（smart_city/power_plant/pharma/weather/new_consumption/smart_dashboard）自带源文件，免 `--source-dir`；其余需通过 `--source-dir` 指定外部源目录
 4. **CSS 变量主题**：`--primary-color` `--bg-color` `--panel-bg` 等变量控制全套配色
 5. **响应式字体**：基于 `rem`/`vw`/`vh` 单位
 6. **ECharts 自适应**：所有图表自动绑定 resize

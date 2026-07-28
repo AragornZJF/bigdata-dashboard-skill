@@ -1,0 +1,26 @@
+{
+  "source": "BigDataView/big-data-view web/069 智能看板新中心",
+  "name": "智能看板新中心",
+  "layout_type": "3-column-flex",
+  "echarts_version": "bundled (echarts.min.js)",
+  "canvas": {
+    "responsive": "rem 基准 (clientWidth/80)，1024-1920 自适应",
+    "background": "#0a1a44 (深蓝)"
+  },
+  "origin": "BigDataView 开源大屏集合 069",
+  "deps": ["jquery.min.js", "echarts.min.js", "china.js (地图 GeoJSON)", "mymap.js"],
+  "chart_count": 5,
+  "charts": [
+    { "selector": ".point .pie", "type": "rose_pie", "name": "点位分布(南丁格尔玫瑰)" },
+    { "selector": ".users .bar", "type": "bar", "name": "全国用户总量" },
+    { "selector": ".sales .line", "type": "line_2series", "name": "销售额统计(预期/实际)" },
+    { "selector": ".quarter .gauge", "type": "gauge_pie", "name": "一季度销售进度(装饰)" },
+    { "selector": ".map .geo", "type": "china_map", "name": "设备数据统计(中国地图,装饰)" }
+  ],
+  "theme_colors": {
+    "primary": "#006cff",
+    "accent_cyan": "#00f2f1",
+    "accent_red": "#ed3f35",
+    "text_blue": "#4c9bfd"
+  }
+}

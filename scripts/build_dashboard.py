@@ -178,11 +178,16 @@ def _inline_assets(html, *search_dirs):
                     js_content = f.read()
                 stats["js"] += 1
                 print(f"  [inline js] {src} ({len(js_content)} bytes)")
-                # 关键：JS 文件内部可能包含字面量 </script>（如 echarts.js 中的字符串），
-                # 直接内联会让 HTML 解析器提前闭合 <script> 标签，破坏整段 JS，
-                # 导致 echarts 等库"未定义"。转义为 <\/script>（JS 中 \/ 等价于 /，
-                # 但 HTML 解析器不再将其视为标签结束）。
-                js_content = re.sub(r'</script', r'<\\/script', js_content, flags=re.IGNORECASE)
+                # 关键：JS 文件内部可能包含字面量 </script> / </body> / </html>
+                # （如 echarts.js 的 saveAsImage 回退里有 d='<body>...</body>'）。
+                # 直接内联会造成两类破坏：
+                # (1) HTML 解析器遇到 </script> 提前闭合 <script> 块，整段 JS 失效；
+                # (2) 构建后续用 rfind("</body>") 定位真实闭合标签注入 DASHBOARD_DATA 时，
+                #     若源 HTML 把 <script> 放在真实 </body> 之后（如 BigDataView 069），
+                #     rfind 反而命中库里的字面量，把注入器塞进库字符串中段，截断整段 JS。
+                # 一律转义为 <\/tag>（JS 中 \/ 等价于 /，运行时字符串值不变；
+                # HTML 解析器与本管道的 rfind 都不再把它们当作标签边界）。
+                js_content = re.sub(r'</(script|body|html)', lambda m: '<\\/' + m.group(1), js_content, flags=re.IGNORECASE)
                 # 保留其他属性（如 id, type），只替换 src
                 tag_open = m.group(0).replace(f'src="{src}"', '').replace(f"src='{src}'", '')
                 # 清理空的 script 标签属性
@@ -500,9 +505,11 @@ def _build_source_template(data, template_name, source_dir, output_path):
         result = {}
         theme_css = ""
 
-    # 注入主题 CSS
+    # 注入模板主题 CSS（每个骨架的 theme.css，由 template_adapter 自动生成）
     if theme_css:
-        skeleton = skeleton.replace("</head>", f"<style>\n{theme_css}\n</style>\n</head>")
+        idx = skeleton.rfind("</head>")
+        if idx != -1:
+            skeleton = skeleton[:idx] + f"<style>\n{theme_css}\n</style>\n" + skeleton[idx:]
 
     # === 关键：内联所有外部资源 ===
     print("内联外部资源...")

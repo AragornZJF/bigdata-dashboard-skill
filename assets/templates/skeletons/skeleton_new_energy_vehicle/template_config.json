@@ -1,0 +1,56 @@
+{
+  "id": "110",
+  "name": "skeleton_new_energy_vehicle",
+  "description": "新能源汽车工业经济运行情况 - 深色科技风，左KPI+中3图+右3图布局，工业经济运行监控",
+  "layoutType": "three-column",
+  "deps": ["echarts"],
+  "entryFile": "index.html",
+  "elements": {
+    "title": {
+      "selector": ".main-title",
+      "type": "text"
+    },
+    "datetime": {
+      "selector": ".datetime",
+      "type": "text"
+    },
+    "statCards": [
+      {"id": "card_auto_prod", "valueSelector": ".card-auto-prod .card-value", "labelSelector": ".card-auto-prod .card-label", "growthSelector": ".card-auto-prod .card-growth"},
+      {"id": "card_auto_sale", "valueSelector": ".card-auto-sale .card-value", "labelSelector": ".card-auto-sale .card-label", "growthSelector": ".card-auto-sale .card-growth"},
+      {"id": "card_nev_prod", "valueSelector": ".card-nev-prod .card-value", "labelSelector": ".card-nev-prod .card-label", "growthSelector": ".card-nev-prod .card-growth"},
+      {"id": "card_nev_sale", "valueSelector": ".card-nev-sale .card-value", "labelSelector": ".card-nev-sale .card-label", "growthSelector": ".card-nev-sale .card-growth"}
+    ],
+    "charts": [
+      {"domId": "chartSalesMonthly", "type": "bar", "description": "中心上方-新能源汽车月度销量对比(2022 vs 2023)"},
+      {"domId": "chartManufacturerRetail", "type": "hbar", "description": "右侧上方-1-7月新能源乘用车厂商零售排行"},
+      {"domId": "chartPowerTypeTrend", "type": "line", "description": "右侧中部-各动力类型新能源乘用车月度走势"},
+      {"domId": "chartPenetration", "type": "line", "description": "左下方-新能源汽车渗透率走势"},
+      {"domId": "chartFuelVsNEV", "type": "bar", "description": "中下方-新能源车与燃油车销量对比"},
+      {"domId": "chartPowerTypeShare", "type": "pie", "description": "右下方-各动力类型新能源乘用车销量占比"}
+    ],
+    "dataMapping": {
+      "title": ".main-title",
+      "datetime": ".datetime",
+      "statCards[0].label": ".card-auto-prod .card-label",
+      "statCards[0].value": ".card-auto-prod .card-value",
+      "statCards[0].growth": ".card-auto-prod .card-growth",
+      "statCards[1].label": ".card-auto-sale .card-label",
+      "statCards[1].value": ".card-auto-sale .card-value",
+      "statCards[1].growth": ".card-auto-sale .card-growth",
+      "statCards[2].label": ".card-nev-prod .card-label",
+      "statCards[2].value": ".card-nev-prod .card-value",
+      "statCards[2].growth": ".card-nev-prod .card-growth",
+      "statCards[3].label": ".card-nev-sale .card-label",
+      "statCards[3].value": ".card-nev-sale .card-value",
+      "statCards[3].growth": ".card-nev-sale .card-growth"
+    },
+    "blockTitles": {
+      "chartSalesMonthly": ".block-sales-monthly .block-title",
+      "chartManufacturerRetail": ".block-manufacturer .block-title",
+      "chartPowerTypeTrend": ".block-power-type .block-title",
+      "chartPenetration": ".block-penetration .block-title",
+      "chartFuelVsNEV": ".block-fuel-vs-nev .block-title",
+      "chartPowerTypeShare": ".block-type-share .block-title"
+    }
+  }
+}

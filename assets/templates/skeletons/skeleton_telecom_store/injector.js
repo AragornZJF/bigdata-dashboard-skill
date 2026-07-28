@@ -43,15 +43,10 @@
     if (dateEl) dateEl.textContent = D.dataDate;
   }
 
-  // ===== 合并到全局 data 变量（而非替换）=====
-  // 以模板内置的完整 _FALLBACK 为底座，再用用户数据 D 覆盖顶层字段。
-  // 不能直接 window.data = D —— 那会丢掉模板默认的 staffHandleInfo /
-  // channelDeviceInfo / channelHandleInfo 等字段，导致 loadChannelBaseInfo
-  // 读取 data.staffHandleInfo.channelJfMap 时抛 Cannot read properties of undefined。
-  // 这也与“未提供的字段保持模板原值”的注入策略保持一致。
-  var base = (typeof window._FALLBACK === 'object' && window._FALLBACK) ? window._FALLBACK : {};
-  window.data = Object.assign({}, base, D);
-  // 确保 code=0 以触发 loadPageData() 的 data.code === 0 分支正常渲染
+  // ===== 替换全局 data 变量 =====
+  // office_efficiency_index.js 中的 loadPageData() 使用 data.code === 0 判断
+  window.data = D;
+  // 确保 code=0 以触发正常渲染
   if (window.data.code === undefined) {
     window.data.code = 0;
   }
