@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新能源汽车工业经济运行情况</title>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="dashboard-wrapper">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="main-title">新能源汽车工业经济运行情况</div>
+        <div class="datetime">2026-07-28</div>
+        <div class="header-decoration"></div>
+    </div>
+
+    <!-- LEFT COLUMN - KPI CARDS -->
+    <div class="left-column">
+        <div class="section-header">核心指标</div>
+        <div class="kpi-cards">
+            <div class="kpi-card card-auto-prod">
+                <div class="card-label">汽车产量</div>
+                <div class="card-value-row">
+                    <span class="card-value">1,395.8</span>
+                    <span class="card-unit">万辆</span>
+                </div>
+                <div class="card-growth">+2.4%</div>
+            </div>
+            <div class="kpi-card card-auto-sale">
+                <div class="card-label">汽车销量</div>
+                <div class="card-value-row">
+                    <span class="card-value">1,404.7</span>
+                    <span class="card-unit">万辆</span>
+                </div>
+                <div class="card-growth">+3.8%</div>
+            </div>
+            <div class="kpi-card card-nev-prod">
+                <div class="card-label">新能源汽车产量</div>
+                <div class="card-value-row">
+                    <span class="card-value">529.6</span>
+                    <span class="card-unit">万辆</span>
+                </div>
+                <div class="card-growth">+30.5%</div>
+            </div>
+            <div class="kpi-card card-nev-sale">
+                <div class="card-label">新能源汽车销量</div>
+                <div class="card-value-row">
+                    <span class="card-value">537.4</span>
+                    <span class="card-unit">万辆</span>
+                </div>
+                <div class="card-growth">+33.2%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTER COLUMN -->
+    <div class="center-column">
+        <div class="panel block-sales-monthly">
+            <div class="block-title">新能源汽车月度销量对比（2022 vs 2023）</div>
+            <div class="chart-container" id="chartSalesMonthly"></div>
+        </div>
+        <div class="panel block-fuel-vs-nev">
+            <div class="block-title">新能源车与燃油车销量对比</div>
+            <div class="chart-container" id="chartFuelVsNEV"></div>
+        </div>
+        <div class="panel block-penetration">
+            <div class="block-title">新能源汽车渗透率走势</div>
+            <div class="chart-container" id="chartPenetration"></div>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
+        <div class="panel block-manufacturer">
+            <div class="block-title">1-7月新能源乘用车厂商零售排行</div>
+            <div class="chart-container" id="chartManufacturerRetail"></div>
+        </div>
+        <div class="panel block-power-type">
+            <div class="block-title">各动力类型新能源乘用车月度走势</div>
+            <div class="chart-container" id="chartPowerTypeTrend"></div>
+        </div>
+        <div class="panel block-type-share">
+            <div class="block-title">各动力类型新能源乘用车销量占比</div>
+            <div class="chart-container" id="chartPowerTypeShare"></div>
+        </div>
+    </div>
+</div>
+
+<script src="echarts.min.js"></script>
+<script>
+// ===== CHART INITIALIZATION =====
+(function() {
+    var charts = {};
+
+    // 1. 月度销量对比 - 柱状图
+    charts.chartSalesMonthly = echarts.init(document.getElementById('chartSalesMonthly'));
+    charts.chartSalesMonthly.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' } },
+        legend: { data: ['2022年', '2023年'], textStyle: { color: 'rgba(255,255,255,0.7)' }, top: 5, right: 20 },
+        grid: { top: 40, left: 50, right: 30, bottom: 30 },
+        xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 11 } },
+        yAxis: { type: 'value', name: '万辆',
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.7)' } },
+        series: [
+            { name: '2022年', type: 'bar', data: [34.7,33.4,48.8,29.9,44.7,59.6,58.8,66.6,70.8,71.7,78.4,81.4],
+                itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1, [{offset:0,color:'#1e88e5'},{offset:1,color:'#1565c0'}]) } },
+            { name: '2023年', type: 'bar', data: [40.8,52.5,65.3,63.6,71.2,80.6,78.0,84.6,90.4,95.6,102.9,119.1],
+                itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1, [{offset:0,color:'#00e5ff'},{offset:1,color:'#0091ea'}]) } }
+        ]
+    });
+
+    // 2. 新能源车与燃油车销量对比 - 柱状图
+    charts.chartFuelVsNEV = echarts.init(document.getElementById('chartFuelVsNEV'));
+    charts.chartFuelVsNEV.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' } },
+        legend: { data: ['燃油车', '新能源汽车'], textStyle: { color: 'rgba(255,255,255,0.7)' }, top: 5, right: 15 },
+        grid: { top: 40, left: 45, right: 20, bottom: 30 },
+        xAxis: { type: 'category', data: ['Q1','Q2','Q3','Q4'],
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.7)' } },
+        yAxis: { type: 'value', name: '万辆',
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.7)' } },
+        series: [
+            { name: '燃油车', type: 'bar', data: [490.2,475.6,460.3,451.8],
+                itemStyle: { color: '#ff7043' } },
+            { name: '新能源汽车', type: 'bar', data: [158.6,215.4,249.0,317.5],
+                itemStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1, [{offset:0,color:'#00e5ff'},{offset:1,color:'#0091ea'}]) } }
+        ]
+    });
+
+    // 3. 渗透率走势 - 折线图
+    charts.chartPenetration = echarts.init(document.getElementById('chartPenetration'));
+    charts.chartPenetration.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' }, formatter: '{b}<br/>{a}: {c}%' },
+        grid: { top: 30, left: 40, right: 20, bottom: 30 },
+        xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月'],
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10 } },
+        yAxis: { type: 'value', max: 40, axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10, formatter: '{value}%' },
+            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } } },
+        series: [{ name: '渗透率', type: 'line', smooth: true, data: [24.7,26.6,26.1,29.0,27.5,30.1,31.8],
+            lineStyle: { color: '#00e5ff', width: 2 }, itemStyle: { color: '#00e5ff' },
+            areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1, [{offset:0,color:'rgba(0,229,255,0.25)'},{offset:1,color:'rgba(0,229,255,0)'}]) } }]
+    });
+
+    // 4. 厂商零售排行 - 横向柱状图
+    charts.chartManufacturerRetail = echarts.init(document.getElementById('chartManufacturerRetail'));
+    var manuData = [
+        { name: '比亚迪', value: 138.8 },
+        { name: '特斯拉中国', value: 52.6 },
+        { name: '广汽埃安', value: 28.4 },
+        { name: '上汽通用五菱', value: 25.1 },
+        { name: '吉利汽车', value: 22.7 },
+        { name: '长安汽车', value: 19.3 },
+        { name: '理想汽车', value: 17.5 },
+        { name: '蔚来汽车', value: 12.8 }
+    ];
+    charts.chartManufacturerRetail.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' } },
+        grid: { top: 10, left: 80, right: 40, bottom: 20 },
+        xAxis: { type: 'value', axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10 } },
+        yAxis: { type: 'category', data: manuData.map(function(d){return d.name;}).reverse(),
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 11 } },
+        series: [{ type: 'bar', data: manuData.map(function(d){return d.value;}).reverse(),
+            barWidth: 12,
+            itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0, [{offset:0,color:'#0091ea'},{offset:1,color:'#00e5ff'}]) },
+            label: { show: true, position: 'right', color: 'rgba(255,255,255,0.8)', fontSize: 10, formatter: '{c}万' } }]
+    });
+
+    // 5. 各动力类型月度走势 - 折线图
+    charts.chartPowerTypeTrend = echarts.init(document.getElementById('chartPowerTypeTrend'));
+    charts.chartPowerTypeTrend.setOption({
+        tooltip: { trigger: 'axis', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' } },
+        legend: { data: ['纯电动', '插电混动', '增程式'], textStyle: { color: 'rgba(255,255,255,0.7)' }, top: 3, right: 15, itemWidth: 10, itemHeight: 6 },
+        grid: { top: 35, left: 40, right: 20, bottom: 25 },
+        xAxis: { type: 'category', data: ['1月','2月','3月','4月','5月','6月','7月'],
+            axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10 } },
+        yAxis: { type: 'value', axisLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            splitLine: { lineStyle: { color: 'rgba(255,255,255,0.08)' } },
+            axisLabel: { color: 'rgba(255,255,255,0.6)', fontSize: 10 } },
+        series: [
+            { name: '纯电动', type: 'line', smooth: true, data: [30.2,38.1,43.7,38.9,43.6,49.2,45.1],
+                lineStyle: { color: '#00e5ff', width: 2 }, itemStyle: { color: '#00e5ff' } },
+            { name: '插电混动', type: 'line', smooth: true, data: [9.5,12.8,18.3,20.1,24.56,27.65,28.8],
+                lineStyle: { color: '#ffa726', width: 2 }, itemStyle: { color: '#ffa726' } },
+            { name: '增程式', type: 'line', smooth: true, data: [2.1,3.0,3.3,4.6,4.1,4.2,4.9],
+                lineStyle: { color: '#ab47bc', width: 2 }, itemStyle: { color: '#ab47bc' } }
+        ]
+    });
+
+    // 6. 各动力类型销量占比 - 饼图
+    charts.chartPowerTypeShare = echarts.init(document.getElementById('chartPowerTypeShare'));
+    charts.chartPowerTypeShare.setOption({
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(6,48,109,0.9)', borderColor: '#00d4ff', textStyle: { color: '#fff' } },
+        legend: { orient: 'horizontal', bottom: 5, textStyle: { color: 'rgba(255,255,255,0.7)', fontSize: 11 } },
+        series: [{
+            type: 'pie', radius: ['35%', '60%'], center: ['50%', '42%'],
+            label: { color: 'rgba(255,255,255,0.8)', fontSize: 11 },
+            labelLine: { lineStyle: { color: 'rgba(255,255,255,0.3)' } },
+            data: [
+                { value: 309.2, name: '纯电动', itemStyle: { color: '#00e5ff' } },
+                { value: 173.5, name: '插电混动', itemStyle: { color: '#ffa726' } },
+                { value: 32.7, name: '增程式', itemStyle: { color: '#ab47bc' } },
+                { value: 22.0, name: '其他', itemStyle: { color: '#78909c' } }
+            ]
+        }]
+    });
+
+    // 响应式
+    window.addEventListener('resize', function() {
+        Object.keys(charts).forEach(function(id) {
+            if (charts[id]) charts[id].resize();
+        });
+    });
+
+    // 暴露给注入器
+    window.__CHARTS__ = charts;
+})();
+</script>
+</body>
+</html>

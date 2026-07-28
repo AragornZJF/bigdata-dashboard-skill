@@ -261,6 +261,115 @@ def _inline_assets(html, *search_dirs):
     html = re.sub(r'style="([^"]*)"', inline_style_attr, html)
     html = re.sub(r"style='([^']*)'", inline_style_attr, html)
 
+    # --- 6. 内联 JS 代码中动态引用的图片路径 ---
+    # 源模板 JS 常通过 .attr("src","../static/images/foo.png") 或
+    # 字符串拼接 '<img src="../static/images/'+img+'"/>' 动态设置图片，
+    # 这些路径不在 HTML <img> 标签中，步骤 3 无法捕获。
+    # 扫描所有已内联的 <script> 块（无 src 属性），替换其中的图片路径为 data URI。
+    def inline_js_images(m):
+        tag_open = m.group(1)  # <script ...>
+        js_code = m.group(2)
+        # 跳过仍有 src 的外联标签
+        if re.search(r'\ssrc=', tag_open):
+            return tag_open + js_code + '</script>'
+        def replace_img_path(pm):
+            img_path = pm.group(2)
+            abs_path = _resolve_asset_path(img_path, *search_dirs)
+            if abs_path:
+                try:
+                    with open(abs_path, 'rb') as f:
+                        img_data = f.read()
+                    mime = _get_mime_type(abs_path)
+                    b64 = base64.b64encode(img_data).decode('ascii')
+                    stats["image"] += 1
+                    print(f"  [inline js-img] {img_path} ({len(img_data)} bytes -> {mime})")
+                    return pm.group(1) + f'data:{mime};base64,{b64}' + pm.group(3)
+                except Exception:
+                    pass
+            return pm.group(0)
+        # 匹配 (["'])../path/to/image.png(["'])  -- 完整路径在引号内
+        js_code = re.sub(r'(["\'])(\.\.?/[^"\']+\.(?:png|jpg|jpeg|gif|svg|bmp))(["\'])', replace_img_path, js_code)
+        # 匹配字符串拼接: 'path/' + var  ->  MAP[var] +
+        # 源模板 JS 用 '<img src="../static/images/'+gradeImg+'"/>' 动态拼图名
+        # 策略：收集所有 ../path/ 形式的目录前缀，为每个目录构建 base64 映射对象，
+        # 注入到 JS 顶部，然后将 'path/' + var 替换为 MAP[var] +
+        dir_maps = {}  # prefix -> {var: map_expr}
+        def collect_img_dir(dm):
+            prefix = dm.group(2)
+            var_name = dm.group(4)
+            if prefix not in dir_maps:
+                clean = prefix.strip().lstrip('./').lstrip('../').rstrip('/')
+                dir_abs = None
+                for sd in search_dirs:
+                    if not sd:
+                        continue
+                    candidate = os.path.join(sd, clean)
+                    if os.path.isdir(candidate):
+                        dir_abs = candidate
+                        break
+                    for root, dirs, files in os.walk(sd):
+                        for d in dirs:
+                            full = os.path.join(root, d)
+                            rel = os.path.relpath(full, sd).replace('\\', '/')
+                            if rel.endswith(clean):
+                                dir_abs = full
+                                break
+                        if dir_abs:
+                            break
+                    if dir_abs:
+                        break
+                if not dir_abs or not os.path.isdir(dir_abs):
+                    return dm.group(0)
+                img_files = [f for f in os.listdir(dir_abs)
+                             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg', '.bmp'))]
+                if not img_files:
+                    return dm.group(0)
+                entries = []
+                for fname in img_files:
+                    fpath = os.path.join(dir_abs, fname)
+                    try:
+                        with open(fpath, 'rb') as f:
+                            img_data = f.read()
+                        mime = _get_mime_type(fpath)
+                        b64 = base64.b64encode(img_data).decode('ascii')
+                        stats["image"] += 1
+                        print(f"  [inline js-img] {prefix}{fname} ({len(img_data)} bytes -> {mime})")
+                        entries.append(f'"{fname}":"data:{mime};base64,{b64}"')
+                    except Exception:
+                        pass
+                if entries:
+                    map_name = f"__IMG_MAP_{len(dir_maps)}__"
+                    dir_maps[prefix] = f'var {map_name}={{{",".join(entries)}}};'
+                    dir_maps[prefix + "__var__"] = map_name
+            return dm.group(0)  # 先只收集，不替换
+
+        # 第一遍：收集所有目录映射
+        re.sub(r'(["\'])(\.\.?/[^"\']+/)(["\'])\s*\+\s*(\w+)', collect_img_dir, js_code)
+
+        # 注入映射声明到 JS 顶部
+        if dir_maps:
+            map_decls = '\n'.join(v for k, v in dir_maps.items() if '__var__' not in k)
+            js_code = map_decls + '\n' + js_code
+
+        # 第二遍：替换 'prefix' + var 为 MAP[var] +
+        # 原始: ...'<img src="prefix' + var + '"/>
+        # 正则匹配: "prefix' + var +  (含外层引号)
+        # 替换为: "' + MAP[var] +  (恢复 JS 字符串拼接)
+        def do_replace_img_dir(dm):
+            prefix = dm.group(2)
+            var_name = dm.group(4)
+            map_key = prefix + "__var__"
+            if map_key not in dir_maps:
+                return dm.group(0)
+            map_name = dir_maps[map_key]
+            # "prefix' + var +  ->  "' + MAP[var] +
+            # 用 "'+MAP[var]+ 替换，恢复 JS 字符串拼接
+            return f'"{chr(39)} + {map_name}[{var_name}] + '
+        js_code = re.sub(r'(["\'])(\.\.?/[^"\']+/)(["\'])\s*\+\s*(\w+)\s*\+\s*', do_replace_img_dir, js_code)
+        return tag_open + js_code + '</script>'
+
+    html = re.sub(r'(<script[^>]*>)([\s\S]*?)</script>', inline_js_images, html)
+
     return html, stats
 
 
@@ -513,8 +622,11 @@ def _build_source_template(data, template_name, source_dir, output_path):
 
     # === 关键：内联所有外部资源 ===
     print("内联外部资源...")
-    # 搜索目录顺序：先骨架目录（自带源模板），再 --source-dir（布局引擎型模板依赖）
+    # 搜索目录顺序：先源模板目录，再骨架目录（补充缺失资源），再 --source-dir
     search_dirs = [str(template_path)]
+    skeleton_dir = Path(SKELETONS_DIR) / skeleton_dir_name
+    if skeleton_dir.exists() and skeleton_dir != template_path:
+        search_dirs.append(str(skeleton_dir))
     if source_dir and os.path.isdir(source_dir) and Path(source_dir) != template_path:
         search_dirs.append(str(source_dir))
     skeleton, inline_stats = _inline_assets(skeleton, *search_dirs)

@@ -41,8 +41,7 @@ body {
     content: '';
     position: absolute;
     inset: 0;
-    background: url('data:image/png;base64,__BG_PLACEHOLDER__') no-repeat center center / cover;
-    opacity: 0.6;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -217,21 +216,21 @@ body {
 .block-sales-monthly {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 52%;
+    height: 53%;
 }
 
 .block-fuel-vs-nev {
     position: absolute;
     bottom: 0; left: 0;
-    width: 55%;
-    height: 45%;
+    width: 57%;
+    height: 46%;
 }
 
 .block-penetration {
     position: absolute;
     bottom: 0; right: 0;
     width: 42%;
-    height: 45%;
+    height: 46%;
 }
 
 /* ===== RIGHT COLUMN PANELS ===== */
