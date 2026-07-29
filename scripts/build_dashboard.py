@@ -83,7 +83,7 @@ def build_dashboard(data_json_path, theme="dark", output_path=None, title=None,
         theme: "dark" / "light"（布局引擎主题）
         output_path: 输出 HTML 路径
         title: 大屏标题
-        template_name: 源模板名称/ID/英文名（如 "skeleton_weather" 或 "092"）
+        template_name: 源模板名称/ID/英文名（如 "weather" 或 "092"）
         source_dir: 源模板目录（默认 BigDataView_/web/）
     """
     # 支持直接传入 Excel(.xlsx/.xls) 或 JSON 数据文件
@@ -840,9 +840,9 @@ if __name__ == "__main__":
         print("  python build_dashboard.py data.json --theme dark --output dashboard.html")
         print()
         print("  # 模式2: 源模板适配（从骨架模板中选一个）")
-        print("  python build_dashboard.py data.json --template 'skeleton_weather'")
-        print("  python build_dashboard.py data.json --template 'skeleton_power_plant'")
-        print("  python build_dashboard.py data.json --template 'skeleton_weather' --source-dir 'path/to/web/'")
+        print("  python build_dashboard.py data.json --template 'weather'")
+        print("  python build_dashboard.py data.json --template 'power_plant'")
+        print("  python build_dashboard.py data.json --template 'weather' --source-dir 'path/to/web/'")
         print()
         print("Options:")
         print("  --list                   列出所有可用模板（含骨架/自定义/源模板）")

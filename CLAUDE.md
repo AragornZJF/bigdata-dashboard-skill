@@ -22,7 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 # 构建（模式1：布局引擎，默认 / 模式2：骨架模板）
 py scripts/build_dashboard.py data.json --theme dark --output dashboard.html
-py scripts/build_dashboard.py data.json --template skeleton_pharma --output dashboard.html
+py scripts/build_dashboard.py data.json --template pharma --output dashboard.html
 
 # Excel 输入会被自动识别，无需预先转 JSON
 py scripts/build_dashboard.py data.xlsx --output dashboard.html
@@ -66,9 +66,9 @@ py scripts/excel_to_json.py any.xlsx any.json                # 统一入口：_m
 
 ## 模板清单：哪些需要 `--source-dir`
 
-共 11 个骨架。**7 个自带源文件**（无需 `--source-dir`）：`skeleton_smart_city`、`skeleton_power_plant`、`skeleton_pharma`、`skeleton_weather`、`skeleton_lpl`、`skeleton_generic`、`skeleton_data_center`。
+共 11 个骨架。**7 个自带源文件**（无需 `--source-dir`）：`smart_city`、`power_plant`、`pharma`、`weather`、`lpl`、`generic`、`data_center`。
 
-其余 4 个（`skeleton_revenue`、`skeleton_device_monitor`、`skeleton_credit_risk`、`skeleton_telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录。
+其余 4 个（`revenue`、`device_monitor`、`credit_risk`、`telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录。
 
 **11 个含 `injector.js`**（完整数据注入）：revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / generic / data_center / lpl。
 

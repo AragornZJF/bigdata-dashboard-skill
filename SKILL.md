@@ -50,7 +50,7 @@ description: "数字大屏/数据可视化驾驶舱生成器。当用户要求�
 ### 第 1 步 · 选行业模板
 
 用 `AskUserQuestion`（或编号列表）展示下方「行业模板菜单」让用户选择。
-`--template` 支持三种写法：编号（如 `092`）、英文骨架名（如 `skeleton_revenue`）、中文名（如 `企业营收大数据统计可视化大屏`）。
+`--template` 支持三种写法：编号（如 `092`）、英文骨架名（如 `revenue`）、中文名（如 `企业营收大数据统计可视化大屏`）。
 
 ### 第 2 步 · 发数据模板（Excel + JSON）
 
@@ -91,22 +91,22 @@ python scripts/build_dashboard.py <用户目录>/<行业>_data.json \
 
 | 菜单选项              | `--template`              | 适用场景                                                | 数据模板目录                              |
 | --------------------- | ------------------------- | ------------------------------------------------------- | ----------------------------------------- |
-| 企业营收 / 销售额大屏 | `skeleton_revenue`        | 营收、销售、业绩总览                                    | `assets/templates/data/skeleton_revenue/`        |
-| 设备环境监测          | `skeleton_device_monitor` | IoT、机房、设备运维                                     | `assets/templates/data/skeleton_device_monitor/` |
-| 气象站监控            | `skeleton_weather`        | 气象、环境、水文监测                                    | `assets/templates/data/skeleton_weather/`        |
-| 银行信用风险          | `skeleton_credit_risk`    | 企业信用、风险预警                                      | `assets/templates/data/skeleton_credit_risk/`    |
-| 电信厅店效能          | `skeleton_telecom_store`  | 营业厅、门店效能分析                                    | `assets/templates/data/skeleton_telecom_store/`  |
-| 通用可视化            | `skeleton_generic`        | 任意通用数据展示                                        | `assets/templates/data/skeleton_generic/`        |
-| 酷炫数据中心          | `skeleton_data_center`    | 数据中心、资源监控                                      | `assets/templates/data/skeleton_data_center/`    |
-| 电竞 / LPL            | `skeleton_lpl`            | 赛事、战队数据                                          | `assets/templates/data/skeleton_lpl/`            |
-| 智慧城市综合监管      | `skeleton_smart_city`     | 城管、政务监管、实时告警（**自带源**） | `assets/templates/data/skeleton_smart_city/`     |
-| 发电厂数据管理        | `skeleton_power_plant`    | 电厂、能源、机组监控（**自带源**）     | `assets/templates/data/skeleton_power_plant/`    |
-| 药品企业监管          | `skeleton_pharma`         | 药企监管、抽检、注册申请（**自带源**） | `assets/templates/data/skeleton_pharma/`         |
-| 新消费市场洞察        | `skeleton_new_consumption` | 新消费、零售、品牌洞察（**自带源**）   | `assets/templates/data/skeleton_new_consumption/` |
-| 智能看板新中心      | `skeleton_smart_dashboard` | 设备监控、销售运营、3 栏科技风（**自带源**） | `assets/templates/data/skeleton_smart_dashboard/` |
+| 企业营收 / 销售额大屏 | `revenue`        | 营收、销售、业绩总览                                    | `assets/templates/data/revenue/`        |
+| 设备环境监测          | `device_monitor` | IoT、机房、设备运维                                     | `assets/templates/data/device_monitor/` |
+| 气象站监控            | `weather`        | 气象、环境、水文监测                                    | `assets/templates/data/weather/`        |
+| 银行信用风险          | `credit_risk`    | 企业信用、风险预警                                      | `assets/templates/data/credit_risk/`    |
+| 电信厅店效能          | `telecom_store`  | 营业厅、门店效能分析                                    | `assets/templates/data/telecom_store/`  |
+| 通用可视化            | `generic`        | 任意通用数据展示                                        | `assets/templates/data/generic/`        |
+| 酷炫数据中心          | `data_center`    | 数据中心、资源监控                                      | `assets/templates/data/data_center/`    |
+| 电竞 / LPL            | `lpl`            | 赛事、战队数据                                          | `assets/templates/data/lpl/`            |
+| 智慧城市综合监管      | `smart_city`     | 城管、政务监管、实时告警（**自带源**） | `assets/templates/data/smart_city/`     |
+| 发电厂数据管理        | `power_plant`    | 电厂、能源、机组监控（**自带源**）     | `assets/templates/data/power_plant/`    |
+| 药品企业监管          | `pharma`         | 药企监管、抽检、注册申请（**自带源**） | `assets/templates/data/pharma/`         |
+| 新消费市场洞察        | `new_consumption` | 新消费、零售、品牌洞察（**自带源**）   | `assets/templates/data/new_consumption/` |
+| 智能看板新中心      | `smart_dashboard` | 设备监控、销售运营、3 栏科技风（**自带源**） | `assets/templates/data/smart_dashboard/` |
 
 > 注：带 `injector.js` 的 8 个模板（revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / new_consumption / smart_dashboard）支持**完整数据注入**；`generic / data_center / lpl` 走布局引擎，图表数据为通用结构（statCards / charts / tables）。
-> `skeleton_smart_city` / `skeleton_power_plant` / `skeleton_pharma` / `skeleton_weather` / `skeleton_new_consumption` / `skeleton_smart_dashboard` 源文件已合并至骨架目录，无需 `--source-dir`；其余骨架需 `--source-dir` 提供原始 HTML 目录。
+> `smart_city` / `power_plant` / `pharma` / `weather` / `new_consumption` / `smart_dashboard` 源文件已合并至骨架目录，无需 `--source-dir`；其余骨架需 `--source-dir` 提供原始 HTML 目录。
 
 ---
 
@@ -215,31 +215,31 @@ python scripts/build_dashboard.py --list
 python scripts/build_dashboard.py --list-data-templates
 
 # 从已适配的 11 个骨架中选一个
-python scripts/build_dashboard.py data.json --template "skeleton_weather"
-python scripts/build_dashboard.py data.json --template "skeleton_power_plant"
+python scripts/build_dashboard.py data.json --template "weather"
+python scripts/build_dashboard.py data.json --template "power_plant"
 
 # 指定外部源目录（骨架无自带源时需要）
-python scripts/build_dashboard.py data.json --template "skeleton_credit_risk" --source-dir "path/to/web/"
+python scripts/build_dashboard.py data.json --template "credit_risk" --source-dir "path/to/web/"
 ```
 
 **模板选择建议**：
 
 | 场景          | 推荐模板（--template 值）                                             |
 | ------------- | --------------------------------------------------------------------- |
-| 通用数据展示  | `skeleton_generic`                                                    |
-| 酷炫数据中心  | `skeleton_data_center`                                                |
-| 气象/环境监测 | `skeleton_weather`（自带源）                                          |
-| 政务/监管     | `skeleton_smart_city`（智慧城市综合监管，自带源）                     |
-| 游戏/电竞     | `skeleton_lpl`                                                        |
-| IoT/设备监测  | `skeleton_device_monitor`（4图表+地图+环境指标+维保表格）             |
-| 电厂/能源     | `skeleton_power_plant`（发电厂数据管理，自带源）                      |
-| 消费/零售     | `skeleton_new_consumption`（新消费市场洞察，自带源）                 |
-| 智能看板/设备 | `skeleton_smart_dashboard`（3 栏设备/销售运营，自带源）              |
-| 销售/电商     | `skeleton_telecom_store`                                              |
-| 教育/校园     | `skeleton_data_center`                                                |
-| 银行/金融     | `skeleton_credit_risk`                                                |
-| 电信营业效能  | `skeleton_telecom_store`                                              |
-| 企业营收统计  | `skeleton_revenue`                                                    |
+| 通用数据展示  | `generic`                                                    |
+| 酷炫数据中心  | `data_center`                                                |
+| 气象/环境监测 | `weather`（自带源）                                          |
+| 政务/监管     | `smart_city`（智慧城市综合监管，自带源）                     |
+| 游戏/电竞     | `lpl`                                                        |
+| IoT/设备监测  | `device_monitor`（4图表+地图+环境指标+维保表格）             |
+| 电厂/能源     | `power_plant`（发电厂数据管理，自带源）                      |
+| 消费/零售     | `new_consumption`（新消费市场洞察，自带源）                 |
+| 智能看板/设备 | `smart_dashboard`（3 栏设备/销售运营，自带源）              |
+| 销售/电商     | `telecom_store`                                              |
+| 教育/校园     | `data_center`                                                |
+| 银行/金融     | `credit_risk`                                                |
+| 电信营业效能  | `telecom_store`                                              |
+| 企业营收统计  | `revenue`                                                    |
 
 ---
 
@@ -289,7 +289,7 @@ custom/
 1. **注册表**：运行 `python scripts/template_scanner.py <source_dir>` 生成 `registry.json`
 2. **自动适配**：`build_dashboard.py --template NAME` 自动调用 `template_adapter.py` 适配源模板
 3. **已适配骨架**：预置在 `assets/templates/skeletons/<id>_english_name/`（纯英文目录名），含 `template_config.json` + `injector.js`，构建时直接复用
-4. **数据注入层**（部分模板支持）：对于已配置 `injector.js` 的模板（如 `skeleton_device_monitor`），会在构建时自动附加运行时注入脚本，通过 `window.DASHBOARD_DATA` 在页面加载后动态刷新 DOM 文本和 ECharts 图表数据，无需修改原始 JS 文件。
+4. **数据注入层**（部分模板支持）：对于已配置 `injector.js` 的模板（如 `device_monitor`），会在构建时自动附加运行时注入脚本，通过 `window.DASHBOARD_DATA` 在页面加载后动态刷新 DOM 文本和 ECharts 图表数据，无需修改原始 JS 文件。
 
 ### 数据注入工作原理
 
@@ -322,17 +322,17 @@ bigdata-dashboard/
 │   ├── xlsx_to_json.py          # 填写后的 Excel → 数据 JSON（反向）
 │   └── excel_to_json.py         # 任意 Excel → 数据 JSON 统一入口（_meta/legacy/启发式三分支）
 ├── assets/templates/data/              # 各行业数据填写模板（给用户填的业务数据样本）
-│   ├── skeleton_revenue/        # 每个含: example.json + example.xlsx + README.md（字段映射说明）
-│   ├── skeleton_device_monitor/
-│   ├── skeleton_weather/
-│   ├── skeleton_credit_risk/
-│   ├── skeleton_telecom_store/
-│   ├── skeleton_generic/
-│   ├── skeleton_data_center/
-│   ├── skeleton_lpl/
-│   ├── skeleton_smart_city/
-│   ├── skeleton_power_plant/
-│   └── skeleton_pharma/
+│   ├── revenue/        # 每个含: example.json + example.xlsx + README.md（字段映射说明）
+│   ├── device_monitor/
+│   ├── weather/
+│   ├── credit_risk/
+│   ├── telecom_store/
+│   ├── generic/
+│   ├── data_center/
+│   ├── lpl/
+│   ├── smart_city/
+│   ├── power_plant/
+│   └── pharma/
 ├── assets/
 │   ├── renderer.html            # 动态渲染引擎（模式1 核心）
 │   └── templates/

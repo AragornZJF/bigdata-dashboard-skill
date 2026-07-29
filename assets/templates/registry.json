@@ -10,7 +10,7 @@
         "jquery",
         "echarts"
       ],
-      "skeleton": "skeleton_credit_risk"
+      "skeleton": "credit_risk"
     },
     {
       "id": "003",
@@ -19,7 +19,7 @@
       "deps": [
         "echarts"
       ],
-      "skeleton": "skeleton_data_center"
+      "skeleton": "data_center"
     },
     {
       "id": "064",
@@ -29,7 +29,7 @@
         "echarts",
         "jquery"
       ],
-      "skeleton": "skeleton_device_monitor"
+      "skeleton": "device_monitor"
     },
     {
       "id": "021",
@@ -39,7 +39,7 @@
         "echarts",
         "jquery"
       ],
-      "skeleton": "skeleton_generic"
+      "skeleton": "generic"
     },
     {
       "id": "099",
@@ -49,7 +49,7 @@
         "echarts",
         "jquery"
       ],
-      "skeleton": "skeleton_lpl"
+      "skeleton": "lpl"
     },
     {
       "id": "ph01",
@@ -58,7 +58,7 @@
       "deps": [
         "echarts"
       ],
-      "skeleton": "skeleton_pharma"
+      "skeleton": "pharma"
     },
     {
       "id": "pp01",
@@ -67,7 +67,7 @@
       "deps": [
         "echarts"
       ],
-      "skeleton": "skeleton_power_plant"
+      "skeleton": "power_plant"
     },
     {
       "id": "090",
@@ -77,7 +77,7 @@
         "echarts",
         "jquery"
       ],
-      "skeleton": "skeleton_revenue"
+      "skeleton": "revenue"
     },
     {
       "id": "sc01",
@@ -86,13 +86,13 @@
       "deps": [
         "echarts"
       ],
-      "skeleton": "skeleton_smart_city"
+      "skeleton": "smart_city"
     },
     {
       "id": "068",
       "name": "Telecom Store Efficiency",
       "dir": "068 中国电信厅店营业效能分析",
-      "skeleton": "skeleton_telecom_store",
+      "skeleton": "telecom_store",
       "layout": "float",
       "deps": [
         "jquery"
@@ -107,7 +107,7 @@
         "echarts",
         "china-map"
       ],
-      "skeleton": "skeleton_weather"
+      "skeleton": "weather"
     }
   ]
 }

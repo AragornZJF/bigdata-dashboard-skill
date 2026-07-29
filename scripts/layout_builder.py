@@ -273,7 +273,7 @@ GENERIC_PALETTE_LIGHT = ["#395ee6", "#27c24c", "#ea4d4d", "#ff8c42",
 def is_generic_shape(data):
     """检测通用数据格式: {title, statCards[], charts[], tables[]}
 
-    这是 excel_to_json._from_generic 与 skeleton_generic/data_center/lpl
+    这是 excel_to_json._from_generic 与 generic/data_center/lpl
     数据模板共用的结构。charts 必须是 list（dict 形态的 charts 属于
     源模板 injector 契约，不走布局引擎）。
     """

@@ -18,17 +18,17 @@ tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch, TaskCreate, Tas
 3. **构建大屏**：运行 `build_dashboard.py`，产出**自包含单文件 HTML**（无 CDN 依赖，可直接双击打开），并在浏览器中预览。
 
 ## 内置模板速查（名称即 `--template` 参数值）
-- `skeleton_pharma` 医药 / 药品企业监管
-- `skeleton_power_plant` 能源 / 电厂 / 发电
-- `skeleton_smart_city` 智慧城市 / 城市治理
-- `skeleton_revenue` 财税 / 营收
-- `skeleton_device_monitor` 设备监控 / 物联网
-- `skeleton_weather` 气象 / 环境
-- `skeleton_credit_risk` 金融 / 信贷风控
-- `skeleton_telecom_store` 通信 / 门店运营
-- `skeleton_data_center` 数据中心
-- `skeleton_lpl` 赛事 / 电竞
-- `skeleton_generic` 通用（布局引擎驱动，适用任意场景）
+- `pharma` 医药 / 药品企业监管
+- `power_plant` 能源 / 电厂 / 发电
+- `smart_city` 智慧城市 / 城市治理
+- `revenue` 财税 / 营收
+- `device_monitor` 设备监控 / 物联网
+- `weather` 气象 / 环境
+- `credit_risk` 金融 / 信贷风控
+- `telecom_store` 通信 / 门店运营
+- `data_center` 数据中心
+- `lpl` 赛事 / 电竞
+- `generic` 通用（布局引擎驱动，适用任意场景）
 
 **说明**：带 `injector.js` 的 8 个模板（pharma、power_plant、smart_city、revenue、device_monitor、weather、credit_risk、telecom_store）为"完整模板"，数据注入由模板自身完成；`generic` / `data_center` / `lpl` 走通用布局引擎。`pharma` / `power_plant` / `smart_city` 三个模板在 `assets/templates/sources/` 下自带源文件，无需额外 `--source-dir`。
 

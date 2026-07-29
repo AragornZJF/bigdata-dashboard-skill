@@ -54,23 +54,23 @@ py scripts/build_dashboard.py <你的数据>.json --theme dark --output dashboar
 
 ```bash
 # 7 个自带源的模板：无需 --source-dir
-py scripts/build_dashboard.py data.json --template skeleton_pharma --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_smart_city --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_power_plant --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_weather --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_lpl --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_generic --output out.html
-py scripts/build_dashboard.py data.json --template skeleton_data_center --output out.html
+py scripts/build_dashboard.py data.json --template pharma --output out.html
+py scripts/build_dashboard.py data.json --template smart_city --output out.html
+py scripts/build_dashboard.py data.json --template power_plant --output out.html
+py scripts/build_dashboard.py data.json --template weather --output out.html
+py scripts/build_dashboard.py data.json --template lpl --output out.html
+py scripts/build_dashboard.py data.json --template generic --output out.html
+py scripts/build_dashboard.py data.json --template data_center --output out.html
 
 # 其余 7 个模板：需要 --source-dir 指定原始 HTML 目录
-py scripts/build_dashboard.py data.json --template skeleton_credit_risk --source-dir path/to/web/ --output out.html
+py scripts/build_dashboard.py data.json --template credit_risk --source-dir path/to/web/ --output out.html
 ```
 
 ### Excel ⇄ JSON 双向转换
 
 ```bash
 # 由 example.json 生成可填写的 Excel 模板（多 sheet，含字段说明）
-py scripts/make_xlsx_template.py assets/templates/data/skeleton_pharma/example.json user_data.xlsx
+py scripts/make_xlsx_template.py assets/templates/data/pharma/example.json user_data.xlsx
 
 # 把填写好的 Excel 转回 JSON
 py scripts/xlsx_to_json.py user_data.xlsx user_data.json
@@ -85,17 +85,17 @@ py scripts/excel_to_json.py any.xlsx any.json
 
 | 模板名 | 适用场景 | 自带源 |
 |---|---|---|
-| `skeleton_pharma` | 药企监管、抽检、注册申请 | ✅ |
-| `skeleton_power_plant` | 电厂、能源、机组监控 | ✅ |
-| `skeleton_smart_city` | 城管、政务监管、实时告警 | ✅ |
-| `skeleton_weather` | 气象、环境、水文监测 | ✅ |
-| `skeleton_lpl` | 赛事、电竞、战队数据 | ✅ |
-| `skeleton_generic` | 任意通用数据展示 | ✅ |
-| `skeleton_data_center` | 数据中心、资源监控 | ✅ |
-| `skeleton_revenue` | 营收、销售、业绩总览 | — |
-| `skeleton_device_monitor` | IoT、机房、设备运维 | — |
-| `skeleton_credit_risk` | 企业信用、风险预警 | — |
-| `skeleton_telecom_store` | 营业厅、门店效能分析 | — |
+| `pharma` | 药企监管、抽检、注册申请 | ✅ |
+| `power_plant` | 电厂、能源、机组监控 | ✅ |
+| `smart_city` | 城管、政务监管、实时告警 | ✅ |
+| `weather` | 气象、环境、水文监测 | ✅ |
+| `lpl` | 赛事、电竞、战队数据 | ✅ |
+| `generic` | 任意通用数据展示 | ✅ |
+| `data_center` | 数据中心、资源监控 | ✅ |
+| `revenue` | 营收、销售、业绩总览 | — |
+| `device_monitor` | IoT、机房、设备运维 | — |
+| `credit_risk` | 企业信用、风险预警 | — |
+| `telecom_store` | 营业厅、门店效能分析 | — |
 
 > "自带源"指无需额外 `--source-dir` 即可直接构建；前 8 个模板（含 `weather` 等）带 `injector.js`，支持完整数据注入。
 
@@ -105,20 +105,20 @@ py scripts/excel_to_json.py any.xlsx any.json
 
 <table>
   <tr>
-    <td width="50%" align="center"><img src="examples/药品企业大数据监控平台.png" width="100%"/><br><sub><code>skeleton_pharma</code> · 药企监管、抽检、注册申请</sub></td>
-    <td width="50%" align="center"><img src="examples/某发电厂数据管理中心.png" width="100%"/><br><sub><code>skeleton_power_plant</code> · 电厂、能源、机组监控</sub></td>
+    <td width="50%" align="center"><img src="examples/药品企业大数据监控平台.png" width="100%"/><br><sub><code>pharma</code> · 药企监管、抽检、注册申请</sub></td>
+    <td width="50%" align="center"><img src="examples/某发电厂数据管理中心.png" width="100%"/><br><sub><code>power_plant</code> · 电厂、能源、机组监控</sub></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="examples/智慧城市综合监控一体化平台.png" width="100%"/><br><sub><code>skeleton_smart_city</code> · 城管、政务监管、实时告警</sub></td>
-    <td width="50%" align="center"><img src="examples/大数据可视化数据分析平台.png" width="100%"/><br><sub><code>skeleton_generic</code> · 任意通用数据展示</sub></td>
+    <td width="50%" align="center"><img src="examples/智慧城市综合监控一体化平台.png" width="100%"/><br><sub><code>smart_city</code> · 城管、政务监管、实时告警</sub></td>
+    <td width="50%" align="center"><img src="examples/大数据可视化数据分析平台.png" width="100%"/><br><sub><code>generic</code> · 任意通用数据展示</sub></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="examples/2022年新消费市场.png" width="100%"/><br><sub><code>skeleton_new_consumption</code> · 新消费市场洞察</sub></td>
-    <td width="50%" align="center"><img src="examples/智能看板.png" width="100%"/><br><sub><code>skeleton_smart_dashboard</code> · 智能看板新中心</sub></td>
+    <td width="50%" align="center"><img src="examples/2022年新消费市场.png" width="100%"/><br><sub><code>new_consumption</code> · 新消费市场洞察</sub></td>
+    <td width="50%" align="center"><img src="examples/智能看板.png" width="100%"/><br><sub><code>smart_dashboard</code> · 智能看板新中心</sub></td>
   </tr>
   <tr>
-    <td width="50%" align="center"><img src="examples/电信营业厅.png" width="100%"/><br><sub><code>skeleton_telecom_store</code> · 营业厅、门店效能分析</sub></td>
-    <td width="50%" align="center"><img src="examples/新能源.png" width="100%"/><br><sub><code>skeleton_new_energy_vehicle</code> · 新能源汽车工业经济运行</sub></td>
+    <td width="50%" align="center"><img src="examples/电信营业厅.png" width="100%"/><br><sub><code>telecom_store</code> · 营业厅、门店效能分析</sub></td>
+    <td width="50%" align="center"><img src="examples/新能源.png" width="100%"/><br><sub><code>new_energy_vehicle</code> · 新能源汽车工业经济运行</sub></td>
   </tr>
 </table>
 
