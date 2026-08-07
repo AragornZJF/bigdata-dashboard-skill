@@ -53,6 +53,32 @@ py scripts/excel_to_json.py any.xlsx any.json                # 统一入口：_m
 
 **模式1** 根据数据形状自动决定最优布局。**模式2** 复用预置 HTML 骨架，通过 `injector.js` 注入数据。
 
+## 目录结构
+
+```
+bigdata-dashboard/
+├── SKILL.md / CLAUDE.md      # 技能说明书 / 工程指南
+├── scripts/                  # 执行层（8 个 Python 脚本）
+│   ├── build_dashboard.py    # 构建入口（模式1 布局引擎 / 模式2 骨架适配）
+│   ├── data_processor.py     # Excel/JSON 解析
+│   ├── layout_builder.py     # 数据 → 布局配置
+│   ├── excel_to_json.py      # 任意 Excel → JSON（_meta/legacy/启发式三分支）
+│   ├── xlsx_to_json.py       # 模板回填 Excel → JSON（反向）
+│   ├── make_xlsx_template.py # 数据 JSON → 可填写 Excel 模板
+│   ├── template_adapter.py   # 源模板 → 数据可注入骨架
+│   └── template_scanner.py   # 扫描源模板 → registry.json
+├── assets/
+│   ├── renderer.html         # 动态渲染引擎（模式1 核心）
+│   └── templates/
+│       ├── registry.json     # 模板注册表（template_scanner 产物）
+│       ├── data/             # 15 个数据样本：example.json + example.xlsx + README.md
+│       ├── skeletons/        # 15 个渲染骨架：injector.js + template_config.json + theme.css（11 个含完整源资源）
+│       └── custom/           # 自定义模板扩展点
+└── references/
+    ├── layout_schema.md      # 布局配置 + 用户数据契约规范
+    └── data_schema.md        # 旧数据格式规范
+```
+
 ## 双目录模式（关键，最易踩坑）
 
 `assets/templates/data/<skeleton>/` 与 `assets/templates/skeletons/<skeleton>/` 一一对应但职责不同。混淆这两者是头号错误来源：
@@ -60,17 +86,17 @@ py scripts/excel_to_json.py any.xlsx any.json                # 统一入口：_m
 | 目录 | 内容 | 用途 | 谁读取 |
 |---|---|---|---|
 | `templates/data/<skeleton>/` | `example.json` `example.xlsx` `README.md` | **给用户填写的业务数据样本** + 字段映射文档 | 仅 SKILL.md 流程中 `cp` 给用户 |
-| `templates/skeletons/<skeleton>/` | `skeleton.html` `theme.css` `injector.js` `template_config.json`（4 个模板还含源 `index.html` / `echarts.min.js` / `static-resources/`） | **渲染层配置** | `build_dashboard.py` 构建时 |
+| `templates/skeletons/<skeleton>/` | `skeleton.html` `theme.css` `injector.js` `template_config.json`（11 个自带源模板还含完整源资源，如 `index.html` / `echarts.min.js` / `static-resources/`） | **渲染层配置** | `build_dashboard.py` 构建时 |
 
 字段映射链路：`example.json` 业务字段 → `injector.js` → `template_config.json` 中的 DOM selector / echarts 实例 id。每个模板的字段映射细节见对应 `templates/data/<skeleton>/README.md`。
 
 ## 模板清单：哪些需要 `--source-dir`
 
-共 11 个骨架。**7 个自带源文件**（无需 `--source-dir`）：`smart_city`、`power_plant`、`pharma`、`weather`、`lpl`、`generic`、`data_center`。
+共 15 个骨架。**11 个自带源文件**（无需 `--source-dir`）：`smart_city`、`power_plant`、`pharma`、`weather`、`lpl`、`generic`、`data_center`、`new_consumption`、`smart_dashboard`、`new_energy_vehicle`、`property_management`。
 
 其余 4 个（`revenue`、`device_monitor`、`credit_risk`、`telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录。
 
-**11 个含 `injector.js`**（完整数据注入）：revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / generic / data_center / lpl。
+**15 个骨架全部含 `injector.js`**（完整数据注入）：revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / generic / data_center / lpl / new_consumption / smart_dashboard / new_energy_vehicle / property_management。
 
 ## 数据注入机制
 

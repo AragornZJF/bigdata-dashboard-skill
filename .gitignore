@@ -15,6 +15,9 @@ output/
 # Local-only settings; .claude/agents/ IS tracked as a project asset.
 .claude/settings.local.json
 
+# --- Pi (task runtime state; not a project asset) ---
+.pi/
+
 # --- IDE / Editor ---
 .vscode/
 .idea/

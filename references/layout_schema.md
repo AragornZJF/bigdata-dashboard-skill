@@ -1,5 +1,32 @@
 # 数字大屏布局配置手册
 
+## 用户数据契约（DASHBOARD_DATA 输入）
+
+> 这是用户数据（JSON / Excel）的**输入格式**，由 `data_processor.py` 解析、`layout_builder.py` 转换为下方布局配置。用户填数据时只需关心本节。
+
+```json
+{
+  "title": "大屏标题",
+  "statCards": [{ "label": "指标", "value": "1,286", "unit": "万元" }],
+  "charts": [
+    { "id": "c1", "type": "bar", "title": "柱状图", "data": [{ "name": "一月", "value": 120 }] },
+    { "id": "c2", "type": "hbar", "title": "TOP 排行（倒序+柱子右侧数值）", "data": [{ "name": "广东", "value": 9860 }] },
+    { "id": "c3", "type": "pie", "title": "占比", "data": [{ "name": "A", "value": 40 }] }
+  ],
+  "tables": [{ "headers": ["列1", "列2"], "rows": [["a", "b"]] }]
+}
+```
+
+- `charts[].type` 支持：`bar`（柱状）/ `line`（折线）/ `area`（面积）/ `pie`（饼图）/ `rose`（玫瑰图）/ `hbar`（横向柱状，自动倒序、柱子右侧显示数值）/ `scatter`
+- `charts[].data` 也支持多系列 `{ "categories": [...], "series": [{ "name": "...", "data": [...] }] }`，或直接给一个完整 ECharts option（含 `series`/`xAxis` 即原样使用）
+- 布局规则：statCards 通栏置顶（无则跳过）；图表+表格按每行最多 3 个自动均分行列
+
+## 渲染行为约定
+
+- **布局配置优先**：数据含 `layout.rows` 时直接渲染；旧版 `window.DASHBOARD_DATA` 由 `layout_builder.py` 自动升级为布局配置，无需手动迁移
+- **响应式字体**：基于 `rem` / `vw` / `vh` 单位自适应不同分辨率
+- **图表自适应**：所有 ECharts 实例自动绑定 window resize，无需手动处理
+
 ## 概述
 
 布局配置（Layout Config）是渲染引擎 `renderer.html` 的输入，通过 `window.DASHBOARD_CONFIG` 全局对象注入。

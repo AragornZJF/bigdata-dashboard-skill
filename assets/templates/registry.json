@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "total": 11,
+  "total": 15,
   "templates": [
     {
       "id": "045",
@@ -52,6 +52,24 @@
       "skeleton": "lpl"
     },
     {
+      "id": "nc01",
+      "name": "新消费市场洞察报告",
+      "layout": "float",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "new_consumption"
+    },
+    {
+      "id": "nev01",
+      "name": "新能源汽车工业经济运行情况",
+      "layout": "absolute",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "new_energy_vehicle"
+    },
+    {
       "id": "ph01",
       "name": "Pharma Enterprise Supervision",
       "layout": "absolute",
@@ -68,6 +86,15 @@
         "echarts"
       ],
       "skeleton": "power_plant"
+    },
+    {
+      "id": "pm01",
+      "name": "物业管理数据中心",
+      "layout": "float",
+      "deps": [
+        "echarts"
+      ],
+      "skeleton": "property_management"
     },
     {
       "id": "090",
@@ -87,6 +114,18 @@
         "echarts"
       ],
       "skeleton": "smart_city"
+    },
+    {
+      "id": "sd01",
+      "name": "智能看板新中心",
+      "dir": "069 智能看板新中心",
+      "layout": "3-column-flex",
+      "deps": [
+        "jquery",
+        "echarts",
+        "china-map"
+      ],
+      "skeleton": "smart_dashboard"
     },
     {
       "id": "068",

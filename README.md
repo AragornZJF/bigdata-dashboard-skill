@@ -7,7 +7,7 @@
 ## 这个 Skill 用来干什么
 
 - **数据可视化**：把表格数据转成 ECharts 驱动的统计卡片、柱/线/面积/饼/玫瑰/散点图、横向排行、表格、环形仪表等 9 类组件
-- **行业模板**：内置 11 套已适配骨架（医药监管、智慧城市、发电厂、气象、设备监测、企业营收、信贷风控、电信门店、数据中心、电竞赛事、通用），开箱即用
+- **行业模板**：内置 15 套已适配骨架（医药监管、智慧城市、发电厂、气象、设备监测、企业营收、信贷风控、电信门店、数据中心、电竞赛事、通用、新消费、智能看板、新能源、物业管理），开箱即用
 - **双输入支持**：Excel（`.xlsx`）与 JSON 都可直接喂给构建脚本，Excel 自动识别三种结构
 - **完全自包含**：产物单文件 HTML，体积通常 1–8 MB，可直接邮件 / U 盘分发
 - **可扩展**：`assets/templates/custom/` 下放一个 `metadata.json` 即可定义自己的模板
@@ -35,7 +35,7 @@ Claude 会自动调用 **`bigdata-dashboard-expert`** 子智能体接管整个�
 ① 选行业模板  →  ② 发数据模板让用户填  →  ③ 构建并预览
 ```
 
-1. **选模板**：Claude 根据你的行业 / 场景，从 11 个内置模板中推荐最合适的一个并说明理由。
+1. **选模板**：Claude 根据你的行业 / 场景，从 15 个内置模板中推荐最合适的一个并说明理由。
 2. **准备数据**：
    - 你已有数据 → 直接发 `.xlsx` 或 `.json`，Claude 帮你转成模板需要的结构。
    - 你没数据 → Claude 把模板自带的 `example.json` / `example.xlsx` 发给你，告诉你「填 Excel 或 JSON 任一即可」，附字段映射说明。
@@ -53,7 +53,7 @@ py scripts/build_dashboard.py <你的数据>.json --theme dark --output dashboar
 ### 指定模板生成（想要特定风格）
 
 ```bash
-# 7 个自带源的模板：无需 --source-dir
+# 11 个自带源的模板：无需 --source-dir
 py scripts/build_dashboard.py data.json --template pharma --output out.html
 py scripts/build_dashboard.py data.json --template smart_city --output out.html
 py scripts/build_dashboard.py data.json --template power_plant --output out.html
@@ -61,8 +61,12 @@ py scripts/build_dashboard.py data.json --template weather --output out.html
 py scripts/build_dashboard.py data.json --template lpl --output out.html
 py scripts/build_dashboard.py data.json --template generic --output out.html
 py scripts/build_dashboard.py data.json --template data_center --output out.html
+py scripts/build_dashboard.py data.json --template new_consumption --output out.html
+py scripts/build_dashboard.py data.json --template smart_dashboard --output out.html
+py scripts/build_dashboard.py data.json --template new_energy_vehicle --output out.html
+py scripts/build_dashboard.py data.json --template property_management --output out.html
 
-# 其余 7 个模板：需要 --source-dir 指定原始 HTML 目录
+# 其余 4 个模板：需要 --source-dir 指定原始 HTML 目录
 py scripts/build_dashboard.py data.json --template credit_risk --source-dir path/to/web/ --output out.html
 ```
 
@@ -83,21 +87,13 @@ py scripts/excel_to_json.py any.xlsx any.json
 
 ## 内置模板速查
 
-| 模板名 | 适用场景 | 自带源 |
-|---|---|---|
-| `pharma` | 药企监管、抽检、注册申请 | ✅ |
-| `power_plant` | 电厂、能源、机组监控 | ✅ |
-| `smart_city` | 城管、政务监管、实时告警 | ✅ |
-| `weather` | 气象、环境、水文监测 | ✅ |
-| `lpl` | 赛事、电竞、战队数据 | ✅ |
-| `generic` | 任意通用数据展示 | ✅ |
-| `data_center` | 数据中心、资源监控 | ✅ |
-| `revenue` | 营收、销售、业绩总览 | — |
-| `device_monitor` | IoT、机房、设备运维 | — |
-| `credit_risk` | 企业信用、风险预警 | — |
-| `telecom_store` | 营业厅、门店效能分析 | — |
+完整菜单（15 个模板：中文名 / 骨架名 / 适用场景 / 自带源标记 / 场景→模板建议）见 **`references/templates_menu.md`**（唯一权威源）。要点：
 
-> "自带源"指无需额外 `--source-dir` 即可直接构建；前 8 个模板（含 `weather` 等）带 `injector.js`，支持完整数据注入。
+- **11 个自带源**（无需 `--source-dir`）：`pharma`、`power_plant`、`smart_city`、`weather`、`lpl`、`generic`、`data_center`、`new_consumption`、`smart_dashboard`、`new_energy_vehicle`、`property_management`
+- **4 个需 `--source-dir`**：`revenue`、`device_monitor`、`credit_risk`、`telecom_store`
+- 全部 15 个模板均带 `injector.js`，支持完整数据注入
+
+> "自带源"指无需额外 `--source-dir` 即可直接构建。
 
 ## 模板效果预览
 
