@@ -1,0 +1,162 @@
+{
+  "template": "credit_risk",
+  "description": "银行信用风险定位大屏，四Tab布局（经营动态/偿债能力/可变现资产/外部关联），含折线图、饼图、力导向图、多表格",
+  "entryFile": "sanlian.html",
+  "dataPoints": {
+    "company": {
+      "nameSel": ".title.ttbg",
+      "type": "html_with_span"
+    },
+    "header": {
+      "textSel": ".header .hefont",
+      "type": "text"
+    },
+    "indicators": [
+      {
+        "name": "盈利对利息覆盖能力",
+        "dateSel": ".czl .fxzt:eq(0) .litime p",
+        "statusSel": ".czl .fxzt:eq(0) .listate p",
+        "valueSel": ".czl .fxzt:eq(0) .linumber p",
+        "iconSel": ".czl .fxzt:eq(0) .baojing",
+        "type": "indicator"
+      },
+      {
+        "name": "流动性还本付息能力",
+        "dateSel": ".czl .fxzt:eq(1) .litime p",
+        "statusSel": ".czl .fxzt:eq(1) .listate p",
+        "valueSel": ".czl .fxzt:eq(1) .linumber p",
+        "iconSel": ".czl .fxzt:eq(1) .baojing",
+        "type": "indicator"
+      },
+      {
+        "name": "清偿性还本付息能力",
+        "dateSel": ".czl .fxzt:eq(2) .litime p",
+        "statusSel": ".czl .fxzt:eq(2) .listate p",
+        "valueSel": ".czl .fxzt:eq(2) .linumber p",
+        "iconSel": ".czl .fxzt:eq(2) .baojing",
+        "type": "indicator"
+      }
+    ],
+    "debtSources": {
+      "tableSel": ".tb_pos table.table1",
+      "headers": [
+        "类别",
+        "金额(亿元)",
+        "任务覆盖率"
+      ],
+      "rowCount": 6,
+      "type": "table"
+    },
+    "debtItems": {
+      "tableSel": ".tb_pos2 table.table1",
+      "headers": [
+        "类别",
+        "金额(亿元)"
+      ],
+      "rowCount": 5,
+      "type": "table"
+    },
+    "opinionList": {
+      "listSel": ".gxlist ul",
+      "type": "list_with_sentiment"
+    },
+    "inventoryTable": {
+      "tableSel": ".lines1tb .tb table.table1",
+      "type": "complex_table",
+      "rowGroups": [
+        "原材料",
+        "制成品"
+      ]
+    },
+    "indexTable": {
+      "tableSel": ".lines4tb .tb table.table1",
+      "type": "table"
+    },
+    "charts": {
+      "profitCoverage": {
+        "id": "line1",
+        "title": "盈利对利息覆盖能力",
+        "type": "line_with_bands",
+        "variables": [
+          "option",
+          "linedata"
+        ],
+        "tab": "czbt"
+      },
+      "liquidityCoverage": {
+        "id": "line2",
+        "title": "流动性还本付息能力",
+        "type": "line_with_bands",
+        "variables": [
+          "optioncenter",
+          "linedatacenter"
+        ],
+        "tab": "czbt"
+      },
+      "solvencyCoverage": {
+        "id": "line3",
+        "title": "清偿性还本付息能力",
+        "type": "line_with_bands",
+        "variables": [
+          "optionbtm",
+          "linedatabtm"
+        ],
+        "tab": "czbt"
+      },
+      "inventoryBarLine": {
+        "id": "lins1",
+        "title": "库存情况",
+        "type": "bar_line_mixed",
+        "variables": [
+          "option1"
+        ],
+        "tab": "jybt"
+      },
+      "productivityIndex": {
+        "id": "lins2",
+        "title": "产品或服务产能指数",
+        "type": "line_area",
+        "variables": [],
+        "tab": "jybt"
+      },
+      "consumptionIndex": {
+        "id": "lins3",
+        "title": "产品或服务消费指数",
+        "type": "line_area",
+        "variables": [],
+        "tab": "jybt"
+      },
+      "profitabilityIndex": {
+        "id": "lins4",
+        "title": "盈利能力指数",
+        "type": "line_area",
+        "variables": [],
+        "tab": "jybt"
+      },
+      "totalAssetsPie": {
+        "id": "pie1",
+        "title": "总资产",
+        "type": "pie",
+        "variables": [
+          "option2"
+        ],
+        "tab": "kbbt"
+      },
+      "liquidAssetsPie": {
+        "id": "pie2",
+        "title": "可变现资产",
+        "type": "pie",
+        "variables": [
+          "option22"
+        ],
+        "tab": "kbbt"
+      },
+      "relationGraph": {
+        "id": "guanxi",
+        "title": "三链图",
+        "type": "force_graph",
+        "tab": "wbgl"
+      }
+    }
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "title": "物业管理数据中心",
+  "charts": [
+    {
+      "id": "chart_0",
+      "option": {
+        "tooltip": {
+          "trigger": "item",
+          "formatter": "{b}: {c} ({d}%)"
+        },
+        "legend": {
+          "type": "scroll",
+          "orient": "vertical",
+          "right": "3%",
+          "top": "middle",
+          "textStyle": {
+            "color": "#ccc",
+            "fontSize": 10
+          },
+          "itemWidth": 8,
+          "itemHeight": 8
+        },
+        "series": [
+          {
+            "type": "pie",
+            "radius": [
+              "38%",
+              "62%"
+            ],
+            "center": [
+              "38%",
+              "50%"
+            ],
+            "data": [
+              {
+                "name": "良好",
+                "value": 2737
+              },
+              {
+                "name": "一般",
+                "value": 960
+              },
+              {
+                "name": "残旧",
+                "value": 427
+              },
+              {
+                "name": "危房",
+                "value": 3
+              }
+            ],
+            "label": {
+              "show": false
+            },
+            "labelLine": {
+              "show": false
+            },
+            "itemStyle": {
+              "borderColor": "#01040F",
+              "borderWidth": 2
+            }
+          }
+        ],
+        "color": [
+          "#5B8FF9",
+          "#5AD8A6",
+          "#5D7092",
+          "#F6BD16",
+          "#E8684A",
+          "#6DC8EC",
+          "#945FB9"
+        ]
+      }
+    },
+    {
+      "id": "chart_1",
+      "option": {
+        "tooltip": {
+          "trigger": "axis"
+        },
+        "legend": {
+          "textStyle": {
+            "color": "#fff"
+          },
+          "top": 0
+        },
+        "grid": {
+          "left": "3%",
+          "right": "4%",
+          "bottom": "3%",
+          "top": "15%",
+          "containLabel": true
+        },
+        "xAxis": {
+          "type": "category",
+          "data": [
+            "环保专项",
+            "燃气安全",
+            "防水专项",
+            "用电安全"
+          ],
+          "axisLabel": {
+            "color": "#ccc"
+          }
+        },
+        "yAxis": {
+          "type": "value",
+          "axisLabel": {
+            "color": "#ccc"
+          },
+          "splitLine": {
+            "lineStyle": {
+              "color": "rgba(255,255,255,0.08)"
+            }
+          }
+        },
+        "series": [
+          {
+            "name": "计划数",
+            "type": "bar",
+            "data": [
+              3302,
+              3944,
+              4010,
+              2958
+            ],
+            "smooth": false
+          },
+          {
+            "name": "执行数",
+            "type": "bar",
+            "data": [
+              3228,
+              3693,
+              3686,
+              2346
+            ],
+            "smooth": false
+          },
+          {
+            "name": "整改数",
+            "type": "bar",
+            "data": [
+              293,
+              262,
+              29,
+              819
+            ],
+            "smooth": false
+          }
+        ],
+        "color": [
+          "#5B8FF9",
+          "#5AD8A6",
+          "#5D7092",
+          "#F6BD16",
+          "#E8684A"
+        ]
+      }
+    },
+    {
+      "id": "chart_2",
+      "option": {
+        "tooltip": {
+          "trigger": "axis"
+        },
+        "legend": {
+          "textStyle": {
+            "color": "#fff"
+          },
+          "top": 0
+        },
+        "grid": {
+          "left": "3%",
+          "right": "4%",
+          "bottom": "3%",
+          "top": "15%",
+          "containLabel": true
+        },
+        "xAxis": {
+          "type": "category",
+          "data": [
+            "1月",
+            "7月",
+            "3月",
+            "5月",
+            "2月",
+            "4月",
+            "6月"
+          ],
+          "axisLabel": {
+            "color": "#ccc"
+          }
+        },
+        "yAxis": {
+          "type": "value",
+          "axisLabel": {
+            "color": "#ccc"
+          },
+          "splitLine": {
+            "lineStyle": {
+              "color": "rgba(255,255,255,0.08)"
+            }
+          }
+        },
+        "series": [
+          {
+            "name": "巡检数",
+            "type": "line",
+            "data": [
+              5093,
+              7399,
+              5861,
+              4360,
+              4478,
+              8919,
+              9432
+            ],
+            "smooth": true
+          },
+          {
+            "name": "验收数",
+            "type": "line",
+            "data": [
+              870,
+              203,
+              584,
+              934,
+              805,
+              1070,
+              328
+            ],
+            "smooth": true
+          }
+        ],
+        "color": [
+          "#5B8FF9",
+          "#5AD8A6",
+          "#5D7092",
+          "#F6BD16",
+          "#E8684A"
+        ]
+      }
+    },
+    {
+      "id": "chart_3",
+      "option": {
+        "tooltip": {
+          "trigger": "item",
+          "formatter": "{b}: {c} ({d}%)"
+        },
+        "legend": {
+          "type": "scroll",
+          "orient": "vertical",
+          "right": "3%",
+          "top": "middle",
+          "textStyle": {
+            "color": "#ccc",
+            "fontSize": 10
+          },
+          "itemWidth": 8,
+          "itemHeight": 8
+        },
+        "series": [
+          {
+            "type": "pie",
+            "radius": [
+              "38%",
+              "62%"
+            ],
+            "center": [
+              "38%",
+              "50%"
+            ],
+            "data": [
+              {
+                "name": "商铺",
+                "value": 1703
+              },
+              {
+                "name": "住宅",
+                "value": 1157
+              },
+              {
+                "name": "单车房",
+                "value": 231
+              },
+              {
+                "name": "土地",
+                "value": 583
+              },
+              {
+                "name": "车库",
+                "value": 386
+              },
+              {
+                "name": "其他",
+                "value": 67
+              }
+            ],
+            "label": {
+              "show": false
+            },
+            "labelLine": {
+              "show": false
+            },
+            "itemStyle": {
+              "borderColor": "#01040F",
+              "borderWidth": 2
+            }
+          }
+        ],
+        "color": [
+          "#5B8FF9",
+          "#5AD8A6",
+          "#5D7092",
+          "#F6BD16",
+          "#E8684A",
+          "#6DC8EC",
+          "#945FB9"
+        ]
+      }
+    },
+    {
+      "id": "chart_4",
+      "option": {
+        "tooltip": {
+          "trigger": "item",
+          "formatter": "{b}: {c} ({d}%)"
+        },
+        "legend": {
+          "type": "scroll",
+          "orient": "vertical",
+          "right": "3%",
+          "top": "middle",
+          "textStyle": {
+            "color": "#ccc",
+            "fontSize": 10
+          },
+          "itemWidth": 8,
+          "itemHeight": 8
+        },
+        "series": [
+          {
+            "type": "pie",
+            "radius": [
+              "38%",
+              "62%"
+            ],
+            "center": [
+              "38%",
+              "50%"
+            ],
+            "data": [
+              {
+                "name": "已出租",
+                "value": 3568
+              },
+              {
+                "name": "可出租空置",
+                "value": 184
+              },
+              {
+                "name": "出借",
+                "value": 351
+              },
+              {
+                "name": "不可出租空置",
+                "value": 24
+              }
+            ],
+            "label": {
+              "show": false
+            },
+            "labelLine": {
+              "show": false
+            },
+            "itemStyle": {
+              "borderColor": "#01040F",
+              "borderWidth": 2
+            }
+          }
+        ],
+        "color": [
+          "#5B8FF9",
+          "#5AD8A6",
+          "#5D7092",
+          "#F6BD16",
+          "#E8684A",
+          "#6DC8EC",
+          "#945FB9"
+        ]
+      }
+    },
+    {
+      "id": "chart_5",
+      "option": {
+        "xAxis": {
+          "type": "value",
+          "axisLabel": {
+            "color": "#ccc"
+          }
+        },
+        "yAxis": {
+          "type": "value",
+          "axisLabel": {
+            "color": "#ccc"
+          }
+        },
+        "series": [
+          {
+            "type": "scatter",
+            "data": [
+              [
+                142
+              ],
+              [
+                143
+              ],
+              [
+                694
+              ],
+              [
+                489
+              ],
+              [
+                246
+              ],
+              [
+                201
+              ],
+              [
+                246
+              ],
+              [
+                864
+              ],
+              [
+                248
+              ],
+              [
+                103
+              ],
+              [
+                751
+              ]
+            ],
+            "symbolSize": 8
+          }
+        ],
+        "color": [
+          "#F6BD16"
+        ]
+      }
+    }
+  ],
+  "tables": []
+}

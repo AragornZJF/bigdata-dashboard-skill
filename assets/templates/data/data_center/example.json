@@ -1,0 +1,87 @@
+{
+  "title": "智能大屏数据中心",
+  "statCards": [
+    { "label": "服务器总数", "value": "1,286", "unit": "台", "sublabel1": "在线 1,202", "sublabel2": "离线 84" },
+    { "label": "存储使用率", "value": "76.8", "unit": "%", "sublabel1": "总量 1.2 PB", "sublabel2": "可用 278 TB" },
+    { "label": "今日访问量", "value": "528,309", "unit": "次", "sublabel1": "峰值 12,800/s", "sublabel2": "同比 +18%" },
+    { "label": "平均响应", "value": "42", "unit": "ms", "sublabel1": "SLA 99.95%", "sublabel2": "同比 -8 ms" }
+  ],
+  "sectionTitles": [
+    "近 15 日访问量趋势",
+    "区域访问排行",
+    "带宽流量监控",
+    "业务收益统计",
+    "数据来源分布",
+    "实时告警列表"
+  ],
+  "charts": [
+    {
+      "id": "chartmain",
+      "type": "bar",
+      "data": [
+        { "name": "1日", "value": 220 },
+        { "name": "2日", "value": 182 },
+        { "name": "3日", "value": 191 },
+        { "name": "4日", "value": 234 },
+        { "name": "5日", "value": 290 },
+        { "name": "6日", "value": 330 },
+        { "name": "7日", "value": 310 },
+        { "name": "8日", "value": 123 },
+        { "name": "9日", "value": 442 },
+        { "name": "10日", "value": 321 },
+        { "name": "11日", "value": 290 },
+        { "name": "12日", "value": 149 },
+        { "name": "13日", "value": 210 },
+        { "name": "14日", "value": 122 },
+        { "name": "15日", "value": 200 }
+      ]
+    },
+    {
+      "id": "chartmain_zhe",
+      "type": "line",
+      "categories": ["00:00", "02:00", "04:00", "06:00", "08:00", "10:00", "12:00"],
+      "series": [
+        { "name": "入站流量", "data": [280, 102, 191, 134, 390, 230, 210] },
+        { "name": "出站流量", "data": [100, 132, 131, 234, 290, 330, 110] }
+      ]
+    },
+    {
+      "id": "chartmain_bing",
+      "type": "pie",
+      "data": [
+        { "name": "用户访问", "value": 1048 },
+        { "name": "API 调用", "value": 735 },
+        { "name": "数据同步", "value": 580 },
+        { "name": "系统监控", "value": 484 },
+        { "name": "其他", "value": 300 }
+      ]
+    }
+  ],
+  "ranking": [
+    { "name": "华北节点", "percent": 98.5 },
+    { "name": "华东节点", "percent": 88.5 },
+    { "name": "华南节点", "percent": 68.5 },
+    { "name": "华中节点", "percent": 40.5 },
+    { "name": "西部节点", "percent": 22.5 },
+    { "name": "东北节点", "percent": 10.5 }
+  ],
+  "miniStats": [
+    { "label": "今日 CPU 均值", "value": "63" },
+    { "label": "本月 CPU 峰值", "value": "92" },
+    { "label": "历史 CPU 极值", "value": "98" },
+    { "label": "今日内存均值", "value": "71" },
+    { "label": "本月内存峰值", "value": "88" },
+    { "label": "历史内存极值", "value": "96" }
+  ],
+  "table": {
+    "headers": ["实例名", "状态", "CPU", "内存", "区域"],
+    "rows": [
+      ["web-prod-01", "运行", "56%", "62%", "华北"],
+      ["web-prod-02", "运行", "48%", "55%", "华东"],
+      ["api-gateway-01", "运行", "72%", "68%", "华南"],
+      ["worker-queue-03", "告警", "95%", "82%", "华中"],
+      ["db-master-01", "运行", "61%", "78%", "华北"],
+      ["cache-redis-02", "运行", "33%", "44%", "华东"]
+    ]
+  }
+}

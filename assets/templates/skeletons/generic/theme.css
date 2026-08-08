@@ -1,0 +1,12 @@
+/* 模板主题变量 */
+:root {
+    --bg-color: #000d4a;
+    --bg-secondary: rgba(6, 48, 109, 0.5);
+    --primary-color: #0EFCFF;
+    --primary-light: #0EFCFF80;
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --border-color: rgba(14, 253, 255, 0.2);
+    --panel-bg: rgba(6, 48, 109, 0.3);
+    --stat-card-bg: rgba(14, 253, 255, 0.05);
+}

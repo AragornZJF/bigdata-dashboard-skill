@@ -1,0 +1,14 @@
+{
+  "source": "",
+  "name": "物业管理数据中心",
+  "layout_type": "float",
+  "echarts_version": "auto",
+  "canvas": {
+    "width": 1600,
+    "height": 900,
+    "background": "#01040F"
+  },
+  "origin": "DataEase .DET export",
+  "component_count": 52,
+  "chart_count": 6
+}

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+/* ============================================================
+   THEME SYSTEM — CSS Variables
+   ============================================================ */
+:root{}
+
+/* === Dark Theme (default) === */
+:root[data-theme="dark"]{
+  --bg-body: #000d4a;
+  --bg-body-img: url(https://raw.githubusercontent.com/jianlli/BigDataView_/master/web/021%20%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%80%9A%E7%94%A8%E6%A8%A1%E7%89%88/images/bg.jpg);
+  --bg-header: url(https://raw.githubusercontent.com/jianlli/BigDataView_/master/web/021%20%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%80%9A%E7%94%A8%E6%A8%A1%E7%89%88/images/head_bg.png);
+  --bg-card: rgba(6,48,109,.5);
+  --border-card: rgba(73,188,247,.15);
+  --text-primary: #fff;
+  --text-secondary: rgba(255,255,255,.7);
+  --text-muted: rgba(255,255,255,.5);
+  --accent: #49bcf7;
+  --accent-glow: rgba(73,188,247,.3);
+  --card-radius: 0;
+  --card-shadow: none;
+  --stat-bg-1: url(https://raw.githubusercontent.com/jianlli/BigDataView_/master/web/021%20%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%80%9A%E7%94%A8%E6%A8%A1%E7%89%88/images/bg01.png);
+  --stat-bg-2: url(https://raw.githubusercontent.com/jianlli/BigDataView_/master/web/021%20%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%80%9A%E7%94%A8%E6%A8%A1%E7%89%88/images/bg02.png);
+  --stat-value-color: #fef000;
+  --stat-label-color: #fff;
+  --summary-bar-bg: linear-gradient(to right,#14b6ff,#9cefff);
+  --summary-bar-track: #1a3a5c;
+  --summary-bar-border: #00deff;
+  --summary-value-color: #f7e80d;
+  --big-number-color: #fef000;
+  --big-number-bg: transparent;
+  --gauge-empty: transparent;
+  --gauge-colors: #eaff00, #ea4d4d, #395ee6;
+  --chart-text: rgba(255,255,255,.6);
+  --chart-split: rgba(255,255,255,.1);
+  --rank-gold: #ed405d;
+  --rank-silver: #f78c44;
+  --rank-bronze: #49bcf7;
+  --rank-bar-bg: linear-gradient(to right,#14b6ff,#9cefff);
+  --rank-bar-track: rgba(255,255,255,.1);
+  --trend-up: #52c41a;
+  --trend-down: #ea4d4d;
+  --header-height: 1.05rem;
+  --header-font: .4rem;
+  --widget-title-size: .2rem;
+  --font-family: "Microsoft YaHei","微软雅黑",sans-serif;
+  --scrollbar-thumb: #5bc0de;
+  --scrollbar-track: #1a2a5a;
+}
+
+/* === Light Theme === */
+:root[data-theme="light"]{
+  --bg-body: #f0f2f5;
+  --bg-body-img: none;
+  --bg-header: linear-gradient(135deg,#1a3a5c,#2d6aa0);
+  --bg-card: #fff;
+  --border-card: rgba(0,0,0,.06);
+  --text-primary: #333;
+  --text-secondary: #8c8c8c;
+  --text-muted: #bfbfbf;
+  --accent: #1890ff;
+  --accent-glow: rgba(24,144,255,.15);
+  --card-radius: 8px;
+  --card-shadow: 0 1px 4px rgba(0,0,0,.06);
+  --stat-bg-1: linear-gradient(135deg,#e6f7ff,#f0f5ff);
+  --stat-bg-2: linear-gradient(135deg,#e6fffb,#f0fff5);
+  --stat-value-color: #1890ff;
+  --stat-label-color: #8c8c8c;
+  --summary-bar-bg: linear-gradient(to right,#1890ff,#69c0ff);
+  --summary-bar-track: #e8e8e8;
+  --summary-bar-border: #d9d9d9;
+  --summary-value-color: #1890ff;
+  --big-number-color: #1890ff;
+  --big-number-bg: linear-gradient(135deg,#e6f7ff,#f0f5ff);
+  --gauge-empty: #f0f0f0;
+  --gauge-colors: #1890ff, #ff4d4f, #36cfc9;
+  --chart-text: #8c8c8c;
+  --chart-split: #f0f0f0;
+  --rank-gold: #ff4d4f;
+  --rank-silver: #fa8c16;
+  --rank-bronze: #1890ff;
+  --rank-bar-bg: linear-gradient(to right,#1890ff,#69c0ff);
+  --rank-bar-track: #f0f0f0;
+  --trend-up: #52c41a;
+  --trend-down: #ff4d4f;
+  --header-height: 0.85rem;
+  --header-font: .32rem;
+  --widget-title-size: .18rem;
+  --font-family: "Microsoft YaHei","微软雅黑",-apple-system,sans-serif;
+  --scrollbar-thumb: #bfbfbf;
+  --scrollbar-track: #f0f2f5;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;padding:0;margin:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background: var(--bg-body);
+  background-image: var(--bg-body-img);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+}
+li{list-style:none}
+a{text-decoration:none;color:var(--accent)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background-color:var(--scrollbar-thumb);border-radius:3px}
+::-webkit-scrollbar-track{background-color:var(--scrollbar-track)}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.dash-header{
+  height: var(--header-height);
+  background: var(--bg-header);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="light"] .dash-header{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.dash-header h1{
+  color: #fff;
+  font-size: var(--header-font);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  text-align: center;
+}
+.dash-header .dash-time{
+  position: absolute;
+  right: .2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.85);
+  font-size: .22rem;
+}
+
+/* ============================================================
+   LAYOUT GRID
+   ============================================================ */
+.dash-body{padding:.15rem;height:calc(100% - var(--header-height));overflow:hidden}
+.dash-row{display:flex;gap:var(--row-gap, 10px)}
+.dash-col{display:flex;flex-direction:column;gap:var(--widget-gap, 10px);overflow:hidden}
+.dash-col:last-child{margin-right:0}
+
+/* ============================================================
+   WIDGET CARD BASE
+   ============================================================ */
+.widget-card{
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 0 .15rem .15rem .15rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.widget-title{
+  font-size: var(--widget-title-size);
+  color: var(--text-primary);
+  line-height: .5rem;
+  position: relative;
+  padding-left: .15rem;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+.widget-title::before{
+  position: absolute;
+  height: .18rem;
+  width: 3px;
+  background: var(--accent);
+  border-radius: 3px;
+  content: "";
+  left: 0;
+  top: 50%;
+  margin-top: -.09rem;
+}
+.widget-body{flex:1;overflow:hidden;position:relative}
+
+/* Interactive title that also functions as a chart title */
+[data-theme="light"] .widget-title{color:var(--accent)}
+
+/* ============================================================
+   WIDGET: stat-cards
+   ============================================================ */
+.stat-card-grid{
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  align-items: stretch;
+}
+.stat-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: var(--stat-bg-1);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.stat-card.alt{background:var(--stat-bg-2);background-size:100% 100%}
+[data-theme="light"] .stat-card{border-radius:8px;border:1px solid rgba(24,144,255,.08)}
+.stat-card h3{
+  font-size: .2rem;
+  text-align: center;
+}
+.stat-card h3 span{
+  color: var(--stat-label-color);
+  font-size: .14rem;
+  display: block;
+  font-weight: normal;
+}
+.stat-card h3{color:var(--stat-value-color)}
+.stat-card .stat-unit{font-size:.14rem;color:var(--text-secondary)}
+.stat-card.alt h3{text-align:right}
+
+/* ============================================================
+   WIDGET: big-number
+   ============================================================ */
+.big-number-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  background: var(--big-number-bg);
+  border-radius: var(--card-radius);
+  padding: .1rem;
+}
+[data-theme="light"] .big-number-box{border:1px solid rgba(24,144,255,.08)}
+.big-number-box p{
+  padding: .1rem 0 .05rem .1rem;
+  font-size: .18rem;
+  color: var(--text-secondary);
+}
+.big-number-box h1{
+  height: calc(100% - .5rem);
+  border-bottom: 1px solid var(--border-card);
+  border-top: 1px solid var(--border-card);
+  display: flex;
+  align-items: center;
+  color: var(--big-number-color);
+  font-family: Gotham,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: normal;
+  letter-spacing: 2px;
+  font-size: .75rem;
+  justify-content: center;
+}
+.big-number-box .big-unit{font-size:.3rem;margin-left:.05rem;color:var(--text-secondary)}
+
+/* ============================================================
+   WIDGET: gauges (ring progress)
+   ============================================================ */
+.gauge-grid{display:flex;height:100%}
+.gauge-item{flex:1;display:flex;flex-direction:column}
+.gauge-item .gauge-label{
+  text-align:center;
+  color:var(--text-secondary);
+  font-size:.14rem;
+  padding:.2rem 0 .02rem 0;
+  font-weight:500
+}
+.gauge-chart{flex:1;position:relative}
+
+/* ============================================================
+   WIDGET: summary-bars
+   ============================================================ */
+.summary-list{height:100%;display:flex;flex-direction:column}
+.summary-item{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:.06rem 0;
+}
+[data-theme="dark"] .summary-item{border-bottom:1px solid rgba(255,255,255,.05)}
+[data-theme="light"] .summary-item{border-bottom:1px solid #f0f0f0}
+.summary-item:last-child{border-bottom:none}
+.summary-main{width:75%}
+.summary-main p{font-size:.18rem;color:var(--text-primary);margin-bottom:.04rem}
+.sbar-outer{
+  width:70%;
+  border:1px solid var(--summary-bar-border);
+  height:.28rem;
+  padding:.05rem;
+  border-radius:1rem;
+  background:var(--summary-bar-track);
+  display:inline-block;
+  vertical-align:middle;
+  margin:.06rem 0;
+}
+.sbar-inner{
+  display:block;
+  height:100%;
+  background:var(--summary-bar-bg);
+  border-radius:1rem;
+}
+.sbar-value{
+  color:var(--summary-value-color);
+  font-size:.2rem;
+  font-weight:600;
+  padding-left:.1rem;
+  line-height:.28rem;
+}
+.summary-trend{text-align:center;width:25%}
+.summary-trend p{font-size:.14rem;color:var(--text-muted);justify-content:center;display:flex;align-items:center}
+.summary-trend .trend-val{font-family:Impact;font-size:.28rem}
+.summary-trend .trend-val.up{color:var(--trend-up)}
+.summary-trend .trend-val.down{color:var(--trend-down)}
+.summary-trend .trend-val i{font-style:normal;font-size:.16rem}
+
+/* ============================================================
+   WIDGET: chart (ECharts)
+   ============================================================ */
+.chart-container{height:100%;width:100%}
+
+/* ============================================================
+   WIDGET: ranking
+   ============================================================ */
+.ranking-list{height:100%;display:flex;flex-direction:column}
+.ranking-item{
+  flex:1;
+  display:flex;
+  align-items:center;
+}
+.rank-num{
+  width:.3rem;
+  height:.3rem;
+  text-align:center;
+  line-height:.3rem;
+  background:#878787;
+  border-radius:5px;
+  margin-right:.1rem;
+  font-size:.16rem;
+  color:#fff;
+  font-weight:600;
+  flex-shrink:0;
+}
+.ranking-item:nth-child(1) .rank-num{background:var(--rank-gold)}
+.ranking-item:nth-child(2) .rank-num{background:var(--rank-silver)}
+.ranking-item:nth-child(3) .rank-num{background:var(--rank-bronze)}
+.rank-info{flex:1;min-width:0}
+.rank-name{
+  color:var(--text-muted);
+  font-size:.14rem;
+  padding-bottom:.04rem;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.rank-bar-wrap{display:flex;align-items:center}
+.rank-bar-outer{flex:1;height:.15rem;background:var(--rank-bar-track);border-radius:.5rem;overflow:hidden}
+.rank-bar-inner{height:100%;background:var(--rank-bar-bg);border-radius:.5rem}
+.rank-value{padding-left:.1rem;color:var(--accent);font-size:.18rem;font-weight:600;flex-shrink:0}
+
+/* ============================================================
+   WIDGET: table
+   ============================================================ */
+.dash-table{width:100%;border-collapse:collapse;font-size:.14rem}
+.dash-table th{
+  text-align:left;
+  padding:.1rem .15rem;
+  color:var(--text-secondary);
+  font-weight:600;
+  border-bottom:1px solid var(--border-card);
+  white-space:nowrap;
+}
+.dash-table td{
+  padding:.1rem .15rem;
+  border-bottom:1px solid var(--border-card);
+  color:var(--text-primary);
+}
+[data-theme="light"] .dash-table td{border-bottom-color:#f0f0f0}
+[data-theme="light"] .dash-table th{border-bottom-color:#e8e8e8}
+.dash-table tbody tr:hover{background:var(--accent-glow)}
+
+/* ============================================================
+   WIDGET: text / markdown-like
+   ============================================================ */
+.text-widget{padding:.15rem;font-size:.16rem;line-height:1.8;color:var(--text-secondary);overflow-y:auto}
+.text-widget h3{color:var(--text-primary);font-size:.2rem;margin-bottom:.1rem}
+
+/* ============================================================
+   RESPONSIVE FONT
+   ============================================================ */
+.responsive{font-size:calc(100vw/20)}
+</style>
+</head>
+<body>
+<div id="dash-root"></div>
+
+<script>
+// ==================== CONFIG ====================
+var CFG = window.DASHBOARD_CONFIG || { title: "数据可视化大屏" };
+
+// Detach custom theme early so CSS vars are ready before paint
+(function applyTheme(){
+  var theme = CFG.theme || {};
+  var mode = theme.mode || "dark";
+  document.documentElement.setAttribute("data-theme", mode);
+  // Inject inline custom CSS vars
+  if (theme.custom) {
+    var rules = [":root[data-theme=" + JSON.stringify(mode) + "]{"];
+    for (var k in theme.custom) { rules.push(k + ":" + theme.custom[k] + ";"); }
+    rules.push("}");
+    var s = document.createElement("style");
+    s.textContent = rules.join("");
+    document.head.appendChild(s);
+  }
+})();
+
+// ==================== UTILITY ====================
+function $(id){ return document.getElementById(id); }
+function el(tag, cls, html){ var e=document.createElement(tag);if(cls)e.className=cls;if(html)e.innerHTML=html;return e; }
+var charts = []; // track echarts instances for resize
+
+// ==================== CLOCK ====================
+(function clock(){
+  var t = setInterval(function(){
+    var d = new Date();
+    var h = $("dash-clock");
+    if (h) h.textContent = d.getFullYear()+"年"+pad(d.getMonth()+1)+"月"+pad(d.getDate())+"日"+
+      pad(d.getHours())+"时"+pad(d.getMinutes())+"分"+pad(d.getSeconds())+"秒";
+  }, 1000);
+  function pad(n){ return n<10?"0"+n:n; }
+})();
+
+// ==================== RESPONSIVE ====================
+(function responsive(){
+  function rs(){ document.documentElement.style.fontSize = window.innerWidth/20 + "px"; }
+  rs();
+  window.addEventListener("resize", function(){
+    rs();
+    charts.forEach(function(c){ c.resize(); });
+  });
+})();
+
+// ==================== LAYOUT ENGINE ====================
+function buildDashboard(){
+  var root = $("dash-root");
+  var cfg = CFG;
+
+  // --- Header ---
+  var header = el("div", "dash-header");
+  header.innerHTML = '<h1>' + (cfg.title || "数据可视化大屏") + '</h1><div class="dash-time" id="dash-clock"></div>';
+  root.appendChild(header);
+
+  // --- Body ---
+  var body = el("div", "dash-body");
+
+  var layout = cfg.layout || {};
+  var headerH = (layout.header||{}).height || "1.05rem";
+  document.documentElement.style.setProperty("--header-height",
+    typeof headerH === "number" ? headerH + "px" : headerH);
+
+  var rows = layout.rows || [];
+
+  // If no explicit layout, try legacy DASHBOARD_DATA auto-layout
+  if (!rows.length && (cfg.statsLeft || cfg.chartCenter1 || cfg.ranking)) {
+    rows = buildLegacyLayout(cfg);
+  }
+
+  // Apply global row/col gaps
+  document.documentElement.style.setProperty("--row-gap", (layout.rowGap||10)+"px");
+  document.documentElement.style.setProperty("--widget-gap", (layout.widgetGap||10)+"px");
+
+  rows.forEach(function(rowCfg, ri){
+    var row = el("div", "dash-row");
+    row.style.height = parseHeight(rowCfg.height, ri, rows);
+    row.style.padding = parsePadding(rowCfg.padding);
+
+    var cols = rowCfg.cols || [];
+    cols.forEach(function(colCfg){
+      var col = el("div", "dash-col");
+      col.style.flex = colCfg.flex || 1;
+
+      var widgets = colCfg.widgets || [];
+      widgets.forEach(function(wCfg){
+        var card = renderWidget(wCfg);
+        col.appendChild(card);
+      });
+
+      row.appendChild(col);
+    });
+
+    body.appendChild(row);
+  });
+
+  root.appendChild(body);
+
+  // Init ECharts after DOM is ready
+  setTimeout(initCharts, 50);
+}
+
+// ---- height parsing ----
+function parseHeight(h, idx, allRows){
+  if (!h) return (1/allRows.length*100).toFixed(1) + "%";
+  if (typeof h === "number") return h + "px";
+  if (h === "auto") return "auto";
+  if (String(h).endsWith("px") || String(h).endsWith("%") || String(h).endsWith("rem") || String(h).endsWith("vh")) return String(h);
+  if (String(h).endsWith("fr")) return "auto"; // flex row within dash-row
+  return h;
+}
+
+function parsePadding(p){
+  if (!p) return "0";
+  if (Array.isArray(p)) return p.map(function(v){return typeof v=="number"?v+"px":v}).join(" ");
+  if (typeof p === "number") return p+"px";
+  return p;
+}
+
+// ==================== WIDGET RENDERERS ====================
+function renderWidget(w){
+  var type = w.type || "text";
+  var card = el("div", "widget-card");
+
+  // Auto-height handling
+  if (w.height) {
+    card.style.height = typeof w.height === "number" ? w.height + "px" : w.height;
+    card.style.flexShrink = "0";
+  } else {
+    card.style.flex = "1";
+  }
+
+  // Title
+  if (w.title !== false && (w.title || w.label)) {
+    var t = el("div", "widget-title");
+    t.textContent = w.title || w.label || "";
+    card.appendChild(t);
+  }
+
+  // Body
+  var body = el("div", "widget-body");
+  var data = w.data || w;
+  var chartId = "chart_" + (w.id || Math.random().toString(36).slice(2));
+
+  switch (type) {
+    case "stat-cards":    renderStatCards(body, data); break;
+    case "summary-bars":  renderSummaryBars(body, data); break;
+    case "big-number":    renderBigNumber(body, data); break;
+    case "gauges":        renderGauges(body, data, chartId); break;
+    case "chart":         renderChartPlaceholder(body, data, chartId, w); break;
+    case "ranking":       renderRanking(body, data); break;
+    case "table":         renderTable(body, data); break;
+    case "text":          renderText(body, data); break;
+    default: body.innerHTML = '<div class="text-widget">Unknown widget: '+type+'</div>';
+  }
+
+  card.appendChild(body);
+  return card;
+}
+
+// ---- stat-cards ----
+function renderStatCards(body, data){
+  var items = data.items || data.statsLeft || data.statsRight || [];
+  if (!items.length) { body.innerHTML='<div class="text-widget">No stats data</div>'; return; }
+  var perRow = data.cardsPerRow || Math.min(items.length, 4);
+  var width = (100/perRow).toFixed(4) + "%";
+  var altBg = data.altBackground !== false;
+  var grid = el("div", "stat-card-grid");
+  items.forEach(function(item, i){
+    var card = el("div", altBg && (i%2===1) ? "stat-card alt" : "stat-card");
+    card.style.width = width;
+    var h = '<h3><span>'+item.label+'</span>'+item.value;
+    if (item.unit) h += '<span class="stat-unit">'+item.unit+'</span>';
+    h += '</h3>';
+    card.innerHTML = h;
+    grid.appendChild(card);
+  });
+  body.appendChild(grid);
+}
+
+// ---- summary-bars ----
+function renderSummaryBars(body, data){
+  var items = data.items || data.summaryItems || data.summaryData || [];
+  var list = el("div", "summary-list");
+  items.forEach(function(s){
+    var div = el("div", "summary-item");
+    var trendUp = s.trendUp !== false;
+    var absTrend = Math.abs(s.trend||0);
+    div.innerHTML =
+      '<div class="summary-main">'+
+        '<p>'+s.label+'</p>'+
+        '<div class="sbar-outer"><span class="sbar-inner" style="width:'+(s.pct||50)+'%"></span></div>'+
+        '<span class="sbar-value">'+s.value+(s.unit||'')+'</span>'+
+      '</div>'+
+      '<div class="summary-trend">'+
+        '<p>'+(s.trendLabel||'同比')+'</p>'+
+        '<p><span class="trend-val '+(trendUp?'up':'down')+'">'+absTrend+'<i>%</i> '+(trendUp?'▲':'▼')+'</span></p>'+
+      '</div>';
+    list.appendChild(div);
+  });
+  body.appendChild(list);
+}
+
+// ---- big-number ----
+function renderBigNumber(body, data){
+  var label = data.label || "核心指标";
+  var value = data.value || 0;
+  var unit = data.unit || "";
+  var box = el("div", "big-number-box");
+  box.innerHTML = '<p>'+label+'</p><h1>'+value.toLocaleString();
+  if (unit) box.getElementsByTagName("h1")[0].innerHTML += '<span class="big-unit">'+unit+'</span>';
+  box.innerHTML += '</h1>';
+  body.appendChild(box);
+}
+
+// ---- gauges ----
+function renderGauges(body, data, baseId){
+  var items = data.items || data.gauges || [];
+  if (!items.length) { body.innerHTML='<div class="text-widget">No gauge data</div>'; return; }
+  var grid = el("div", "gauge-grid");
+  var colors = (data.colors || "").split(",").map(function(s){return s.trim()}).filter(Boolean);
+  if (!colors.length) colors = ["#eaff00","#ea4d4d","#395ee6"]; // dark default
+  items.forEach(function(g, i){
+    var item = el("div", "gauge-item");
+    item.innerHTML = '<div class="gauge-label">'+g.label+'</div><div class="gauge-chart" id="'+baseId+'_'+i+'"></div>';
+    grid.appendChild(item);
+  });
+  body.appendChild(grid);
+
+  // Store for deferred init
+  if (!body._gaugeCharts) body._gaugeCharts = [];
+  body._gaugeCharts.push({ items: items, baseId: baseId, colors: colors });
+}
+
+// ---- chart (ECharts) ----
+function renderChartPlaceholder(body, data, chartId, widgetCfg){
+  var container = el("div", "chart-container");
+  container.id = chartId;
+  body.appendChild(container);
+
+  // Store chart config for deferred init
+  if (!body._chartConfigs) body._chartConfigs = [];
+  var chartData = data.echarts || data.chartOption || data.config || data;
+  // If data itself is an ECharts option (has series/xAxis), use it directly
+  if (data.series || data.xAxis || data.yAxis) chartData = data;
+  if (data.type && !chartData.series) {
+    // Auto-build simple chart config
+    chartData = buildSimpleChart(data);
+  }
+  body._chartConfigs.push({ id: chartId, config: chartData, title: widgetCfg.title });
+}
+
+function buildSimpleChart(data){
+  // Minimal auto-builder for simple data format
+  var type = data.chartType || data.type || "bar";
+  var xData = data.xData || data.categories || [];
+  var seriesArr = data.seriesData || data.series || [];
+  var legendData = seriesArr.map(function(s){return s.name||""});
+
+  return {
+    tooltip: { trigger: "axis" },
+    legend: { data: legendData, top: 0, textStyle: { color: "var(--chart-text)" } },
+    grid: { left: "3%", top: "30", right: "4%", bottom: "0", containLabel: true },
+    xAxis: { type: "category", data: xData, axisLabel: { color: "inherit" } },
+    yAxis: { type: "value", splitLine: { lineStyle: { color: "inherit" } } },
+    series: seriesArr.map(function(s, i){
+      return {
+        name: s.name || ("系列"+(i+1)),
+        type: type,
+        data: s.data || s.values || [],
+        smooth: type==="line",
+        itemStyle: { borderRadius: type==="bar"?[6,6,0,0]:0 }
+      };
+    })
+  };
+}
+
+// ---- ranking ----
+function renderRanking(body, data){
+  var items = data.items || data.ranking || [];
+  var title = data.title || "排行榜";
+  var maxItems = data.maxItems || Math.min(items.length, 8);
+  var displayItems = items.slice(0, maxItems);
+
+  var maxV = Math.max.apply(null, displayItems.map(function(x){return x.value||0}));
+  if (maxV===0) maxV=1;
+
+  var list = el("div", "ranking-list");
+  displayItems.forEach(function(r, i){
+    var pct = (r.value/maxV*100).toFixed(0);
+    var li = el("div", "ranking-item");
+    li.innerHTML =
+      '<span class="rank-num">'+(i+1)+'</span>'+
+      '<div class="rank-info">'+
+        '<div class="rank-name">'+r.name+'</div>'+
+        '<div class="rank-bar-wrap">'+
+          '<div class="rank-bar-outer"><div class="rank-bar-inner" style="width:'+pct+'%"></div></div>'+
+          '<span class="rank-value">'+r.value+'</span>'+
+        '</div>'+
+      '</div>';
+    list.appendChild(li);
+  });
+  body.appendChild(list);
+}
+
+// ---- table ----
+function renderTable(body, data){
+  var cols = data.columns || [];
+  var rows = data.rows || data.items || [];
+  var table = el("table", "dash-table");
+  var thead = '<thead><tr>';
+  cols.forEach(function(c){ thead += '<th>'+c+'</th>'; });
+  thead += '</tr></thead>';
+  var tbody = '<tbody>';
+  rows.forEach(function(row){
+    tbody += '<tr>';
+    (Array.isArray(row)?row:Object.values(row)).forEach(function(cell){
+      tbody += '<td>'+cell+'</td>';
+    });
+    tbody += '</tr>';
+  });
+  tbody += '</tbody>';
+  table.innerHTML = thead + tbody;
+  body.appendChild(table);
+}
+
+// ---- text ----
+function renderText(body, data){
+  var div = el("div", "text-widget");
+  div.innerHTML = data.content || data.text || data.html || "";
+  body.appendChild(div);
+}
+
+// ==================== ECharts INIT (deferred) ====================
+function initCharts(){
+  // Gadge charts
+  var allBodies = document.querySelectorAll(".widget-body");
+  allBodies.forEach(function(body){
+    // Gauge init
+    if (body._gaugeCharts) {
+      body._gaugeCharts.forEach(function(gc){
+        gc.items.forEach(function(g, i){
+          var dom = document.getElementById(gc.baseId+"_"+i);
+          if (!dom) return;
+          var c = echarts.init(dom);
+          charts.push(c);
+          var themeMode = document.documentElement.getAttribute("data-theme");
+          var emptyClr = themeMode==="light"?"#f0f0f0":"transparent";
+          var colorArr = gc.colors;
+          c.setOption({
+            title:{ text: g.value+'%', x:'center', y:'center',
+              textStyle:{ fontWeight:'normal', color: themeMode==="light"?"#333":"#fff", fontSize:14 }},
+            series:[{ type:'pie', clockWise:true, radius:['62%','78%'], hoverAnimation:false,
+              label:{show:false}, labelLine:{show:false},
+              data:[
+                { value:g.value, name:'', itemStyle:{ color:colorArr[i]||'#49bcf7' }},
+                { value:100-g.value, itemStyle:{ color:emptyClr }}
+              ]
+            }]
+          });
+        });
+      });
+      body._gaugeCharts = null; // prevent re-init
+    }
+
+    // ECharts init
+    if (body._chartConfigs) {
+      body._chartConfigs.forEach(function(cc){
+        var dom = document.getElementById(cc.id);
+        if (!dom) return;
+        var c = echarts.init(dom);
+        charts.push(c);
+        c.setOption(cc.config || {});
+        // Set title
+        if (cc.title) {
+          // Find parent card and set title
+          var card = dom.closest(".widget-card");
+          if (card) {
+            var titleEl = card.querySelector(".widget-title");
+            if (titleEl && !titleEl.textContent) titleEl.textContent = cc.title;
+          }
+        }
+      });
+      body._chartConfigs = null;
+    }
+  });
+}
+
+// ==================== LEGACY AUTO-LAYOUT ====================
+function buildLegacyLayout(data){
+  // Auto-convert old DASHBOARD_DATA format to layout rows
+  var rows = [];
+  var leftCol = { flex: 3, widgets: [] };
+  var midCol = { flex: 4, widgets: [] };
+  var rightCol = { flex: 3, widgets: [] };
+
+  if (data.statsLeft && data.statsLeft.length)
+    leftCol.widgets.push({ type:"stat-cards", data:{ items:data.statsLeft, cardsPerRow:3 }, height:"15%" });
+
+  if (data.summaryItems && data.summaryItems.length)
+    leftCol.widgets.push({ type:"summary-bars", data:{ items:data.summaryItems }, height:"43%" });
+
+  if (data.chartLeft)
+    leftCol.widgets.push({ type:"chart", title: data.chartLeft._title||"趋势图", data: data.chartLeft, height:"42%" });
+
+  if (data.bigNumber || (data.gauges && data.gauges.length)) {
+    var midWidgets = [];
+    if (data.bigNumber) midWidgets.push({ type:"big-number", data: data.bigNumber });
+    if (data.gauges && data.gauges.length)
+      midWidgets.push({ type:"gauges", data:{ items:data.gauges } });
+    midCol.widgets.push({
+      type:"stat-cards",
+      title: false,
+      data: { items:[], cardsPerRow:2 },
+      height: "20%",
+      _customRender: renderMidTopRow(data)
+    });
+  }
+
+  if (data.chartCenter1)
+    midCol.widgets.push({ type:"chart", title: data.chartCenter1._title||"", data: data.chartCenter1, height:"38%" });
+
+  if (data.chartCenter2)
+    midCol.widgets.push({ type:"chart", title: data.chartCenter2._title||"数据趋势", data: data.chartCenter2, height:"42%" });
+
+  if (data.statsRight && data.statsRight.length)
+    rightCol.widgets.push({ type:"stat-cards", data:{ items:data.statsRight, cardsPerRow:3 }, height:"15%" });
+
+  if (data.chartRadar)
+    rightCol.widgets.push({ type:"chart", title: data.chartRadar._title||"雷达分析", data: data.chartRadar, height:"43%" });
+
+  if (data.ranking && data.ranking.items && data.ranking.items.length)
+    rightCol.widgets.push({ type:"ranking", title: data.ranking.title||"排行榜", data: data.ranking, height:"42%" });
+
+  rows.push({ height: "100%", cols: [leftCol, midCol, rightCol] });
+  return rows;
+}
+
+// Handle the special mid-top row (big number + gauges combo) for legacy layout
+function renderMidTopRow(data){
+  return function(card){
+    var body = card.querySelector(".widget-body");
+    if (!body) return;
+    body.style.display = "flex";
+    var left = document.createElement("div");
+    left.style.cssText = "width:50%;height:100%";
+    left.innerHTML = '<div class="big-number-box"><p>'+(data.bigNumber?data.bigNumber.label:"业绩总览")+'</p><h1>'+(data.bigNumber?data.bigNumber.value:"--")+'</h1></div>';
+    body.appendChild(left);
+
+    var right = document.createElement("div");
+    right.style.cssText = "width:50%;height:100%";
+    var gaugeGrid = document.createElement("div");
+    gaugeGrid.className = "gauge-grid";
+    var items = data.gauges || [];
+    var gaugeColors = ["#eaff00","#ea4d4d","#395ee6"];
+    items.forEach(function(g, i){
+      var item = document.createElement("div");
+      item.className = "gauge-item";
+      var id = "legacy_gauge_"+i;
+      item.innerHTML = '<div class="gauge-label">'+g.label+'</div><div class="gauge-chart" id="'+id+'"></div>';
+      gaugeGrid.appendChild(item);
+    });
+    right.appendChild(gaugeGrid);
+    body.appendChild(right);
+    // Deferred init
+    setTimeout(function(){
+      items.forEach(function(g, i){
+        var dom = document.getElementById("legacy_gauge_"+i);
+        if (!dom) return;
+        var c = echarts.init(dom);
+        charts.push(c);
+        c.setOption({
+          title:{ text: g.value+'%', x:'center', y:'center', textStyle:{fontWeight:'normal',color:'#fff',fontSize:14}},
+          series:[{type:'pie',clockWise:true,radius:['65%','80%'],hoverAnimation:false,
+            label:{show:false},labelLine:{show:false},
+            data:[{value:g.value,itemStyle:{color:gaugeColors[i]||'#49bcf7'}},{value:100-g.value,itemStyle:{color:'transparent'}}]
+          }]
+        });
+      });
+    }, 150);
+  };
+}
+
+// ==================== BOOT ====================
+document.addEventListener("DOMContentLoaded", buildDashboard);
+</script>
+</body>
+</html>

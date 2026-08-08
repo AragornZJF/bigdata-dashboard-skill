@@ -1,0 +1,20 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:100%; height:100%; background:#000; overflow:hidden; font-family:"Microsoft YaHei",sans-serif; }
+#canvas { position:relative; width:1600px; height:900px; background-color:#ffffff; overflow:hidden; transform-origin: top left; }
+.de-text { color:#2A2A2A; font-size:14px; font-weight:400; white-space:normal; word-break:break-word; line-height:1.15; overflow:hidden; }
+.de-richtext { color:#2A2A2A; overflow:hidden; line-height:1.2; }
+.de-rect { box-sizing:border-box; }
+.de-pic { z-index:1; }
+.de-chart { overflow:hidden; background:transparent; border:none; z-index:2; }
+.de-text, .de-richtext, .de-date, .de-tabs { z-index:2; }
+.de-table { color:#2A2A2A; font-size:11px; padding:4px; }
+.de-kpi { display:flex; flex-direction:column; align-items:center; justify-content:center; color:#2A2A2A; overflow:hidden; padding:4px; text-align:center; }
+.de-kpi .kpi-val { font-size:22px; font-weight:800; line-height:1; color:#1094E5; white-space:nowrap; }
+.de-kpi .kpi-ttl { font-size:11px; color:#666; margin-top:3px; white-space:nowrap; }
+.de-kpi .kpi-name { font-size:14px; font-weight:600; color:#2A2A2A; line-height:1.25; padding:0 4px; word-break:break-word; }
+.empty-tip { color:#999; font-size:12px; opacity:.7; padding:8px; text-align:center; }
+table.de-data { width:100%; border-collapse:collapse; table-layout:auto; }
+table.de-data td,table.de-data th { border:1px solid #d0d4e0; padding:2px 4px; text-align:center; white-space:normal; word-break:break-all; line-height:1.2; }
+table.de-data th { background:#EEF1F8; color:#333; }
+#banner { position:fixed; top:0; left:0; right:0; background:rgba(180,40,40,.85); color:#fff;
+          font-size:13px; padding:6px 12px; z-index:9999; display:none; }

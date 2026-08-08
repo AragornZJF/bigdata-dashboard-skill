@@ -1,0 +1,69 @@
+{
+  "title": "2020 LPL 比赛数据可视化",
+  "sectionTitles": [
+    "个人数据堆叠图",
+    "英雄数据轮播",
+    "2020 LPL 夏季赛总冠军",
+    "战队胜负数据",
+    "个人击杀数据",
+    "战队排行榜",
+    "个人排行榜",
+    "MVP 种子选手"
+  ],
+  "heroData": [
+    { "name": "寒冰射手", "appearances": 205, "pickRate": "56%", "winRate": "51%" },
+    { "name": "残月之肃", "appearances": 159, "pickRate": "47%", "winRate": "57%" },
+    { "name": "深海泰坦", "appearances": 164, "pickRate": "38%", "winRate": "53%" },
+    { "name": "探险家", "appearances": 137, "pickRate": "37%", "winRate": "50%" },
+    { "name": "法外狂徒", "appearances": 135, "pickRate": "36%", "winRate": "49%" },
+    { "name": "盲僧", "appearances": 135, "pickRate": "36%", "winRate": "53%" },
+    { "name": "巨魔之王", "appearances": 124, "pickRate": "33%", "winRate": "45%" },
+    { "name": "不灭狂雷", "appearances": 124, "pickRate": "33%", "winRate": "45%" },
+    { "name": "山隐之焰", "appearances": 122, "pickRate": "33%", "winRate": "47%" },
+    { "name": "暗黑元首", "appearances": 102, "pickRate": "27%", "winRate": "53%" },
+    { "name": "齐天大圣", "appearances": 90, "pickRate": "24%", "winRate": "52%" },
+    { "name": "九尾妖狐", "appearances": 88, "pickRate": "23%", "winRate": "50%" }
+  ],
+  "gaugeLabels": [
+    "TES\n胜率最高",
+    "JDG\n击杀最高",
+    "SN\n插眼最多",
+    "TESknight\n击杀最多",
+    "IGTheShy\n死亡最多",
+    "V5y4\nKDA最高"
+  ],
+  "gaugeValues": [73, 68, 91, 88, 76, 82],
+  "teamTable": {
+    "headers": ["排名", "战队", "出场", "胜率"],
+    "rows": [
+      ["1", "TES", "45", "73%"],
+      ["2", "JDG", "48", "68%"],
+      ["3", "V5", "49", "61%"],
+      ["4", "IG", "44", "59%"],
+      ["5", "SN", "52", "59%"]
+    ]
+  },
+  "playerTable": {
+    "headers": ["排名", "队员", "位置", "总击杀"],
+    "rows": [
+      ["1", "TESknight", "中单", "239"],
+      ["2", "WEJiumeng", "ADC", "205"],
+      ["3", "TESJackeyLove", "ADC", "205"],
+      ["4", "JDGLokeN", "ADC", "205"],
+      ["5", "LGDxiye", "中单", "191"]
+    ]
+  },
+  "charts": [
+    {
+      "id": "echart1",
+      "type": "pie",
+      "data": [
+        { "name": "TES", "value": 32 },
+        { "name": "JDG", "value": 25 },
+        { "name": "V5", "value": 18 },
+        { "name": "IG", "value": 13 },
+        { "name": "SN", "value": 12 }
+      ]
+    }
+  ]
+}
