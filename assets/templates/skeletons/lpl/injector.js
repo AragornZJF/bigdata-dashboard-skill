@@ -94,13 +94,15 @@
         var inst = el && echarts.getInstanceByDom(el);
         if (!inst) return;
         // 原 zb 配置：series[0].data[0] 是 {value:胜利, name:'胜利', label:{formatter:val}}
-        // 我们更新第一个 data 点的 value + label.formatter，第二个点（loss）按 100-val 模拟
+        // series[0].data[1] 是 {value:战败, label:{formatter:'胜率XX%'}, itemStyle:{color:灰}}
+        // 只更新两个 data 点的 value + 第一个点的 label.formatter，保留其余样式
         var numVal = parseFloat(v);
         var opt = {
           series: [{
+            // 只提供 data 数组，ECharts 会按 index 合并到现有 data 点
             data: [
-              { value: numVal, name: '胜利', label: { normal: { formatter: numVal + '' } } },
-              { value: Math.max(0, 100 - numVal), name: '战败' }
+              { value: numVal, label: { normal: { formatter: numVal + '' } } },
+              { value: Math.max(0, 100 - numVal) }
             ]
           }]
         };
@@ -151,6 +153,8 @@
     }
 
     // ====== 7. ECharts 图表（echart1-5，按 id 匹配）======
+    // 原 js.js 已 init 并 setOption demo 配置（含 roseType/color/radius/label 等视觉样式）。
+    // 关键：只更新 series[].data，不替换整个 series 对象，否则视觉配置会被清空。
     if (D.charts && D.charts.length && window.echarts) {
       D.charts.forEach(function (c) {
         if (!c.id) return;
@@ -161,6 +165,7 @@
         if (c.option) {
           opt = c.option;
         } else if (c.type === 'pie') {
+          // 饼图：只更新 series[0].data，保留 color/radius/roseType/label 等
           opt.series = [{
             data: (c.data || []).map(function (d) { return { name: d.name, value: d.value }; })
           }];

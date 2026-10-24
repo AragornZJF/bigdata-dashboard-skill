@@ -10,7 +10,7 @@ $(document).ready(function(){
 	});
 
 
- $(window).load(function(){$(".loading").fadeOut()})  
+ $(window).on('load',function(){$(".loading").fadeOut()})
 $(function () {
     echarts_1()
     echarts_2()

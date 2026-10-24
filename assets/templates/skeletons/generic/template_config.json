@@ -1,0 +1,7 @@
+{
+  "name": "generic",
+  "entryFile": "index.html",
+  "layout": "float",
+  "deps": ["echarts", "jquery"],
+  "description": "大数据可视化系统数据分析通用模版（内置源，免 --source-dir）。BigDataView 021，通用统计大屏，支持 statCards/charts/tables。字段映射见 assets/templates/data/generic/README.md。"
+}

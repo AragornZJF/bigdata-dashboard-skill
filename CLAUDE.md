@@ -48,7 +48,7 @@ py scripts/excel_to_json.py any.xlsx any.json                # 统一入口：_m
    │   data_processor.py → layout_builder.py → renderer.html → dashboard.html
    │
    └─ 模式2 · 骨架适配（需 --template）
-       template_adapter.py → 注入 skeleton.html → dashboard.html
+       template_adapter.py → 注入骨架 index.html → dashboard.html
 ```
 
 **模式1** 根据数据形状自动决定最优布局。**模式2** 复用预置 HTML 骨架，通过 `injector.js` 注入数据。
@@ -69,10 +69,11 @@ bigdata-dashboard/
 │   └── template_scanner.py   # 扫描源模板 → registry.json
 ├── assets/
 │   ├── renderer.html         # 动态渲染引擎（模式1 核心）
+│   ├── vendor/               # 共享第三方库集中目录（echarts.min.js=5.5.0、jquery-3.2.1.min.js 及通用插件 jquery.numscroll / jquery.liMarquee / jquery.cxselect / autofit.umd）。各模板 HTML 以无前缀路径引用，构建时先查骨架目录再查 vendor；骨架 js/ 只留模板特有业务文件
 │   └── templates/
 │       ├── registry.json     # 模板注册表（template_scanner 产物）
 │       ├── data/             # 15 个数据样本：example.json + example.xlsx + README.md
-│       ├── skeletons/        # 15 个渲染骨架：injector.js + template_config.json + theme.css（11 个含完整源资源）
+│       ├── skeletons/        # 15 个渲染骨架：injector.js + template_config.json + metadata.json（11 个含完整源资源：index.html + 主题/静态资源）
 │       └── custom/           # 自定义模板扩展点
 └── references/
     ├── layout_schema.md      # 布局配置 + 用户数据契约规范
@@ -86,7 +87,7 @@ bigdata-dashboard/
 | 目录 | 内容 | 用途 | 谁读取 |
 |---|---|---|---|
 | `templates/data/<skeleton>/` | `example.json` `example.xlsx` `README.md` | **给用户填写的业务数据样本** + 字段映射文档 | 仅 SKILL.md 流程中 `cp` 给用户 |
-| `templates/skeletons/<skeleton>/` | `skeleton.html` `theme.css` `injector.js` `template_config.json`（11 个自带源模板还含完整源资源，如 `index.html` / `echarts.min.js` / `static-resources/`） | **渲染层配置** | `build_dashboard.py` 构建时 |
+| `templates/skeletons/<skeleton>/` | `index.html` `injector.js` `template_config.json` `metadata.json`（11 个自带源骨架含完整源资源；`theme.css` 仅在入口 HTML 引用时存在） | **渲染层配置** | `build_dashboard.py` 构建时 |
 
 字段映射链路：`example.json` 业务字段 → `injector.js` → `template_config.json` 中的 DOM selector / echarts 实例 id。每个模板的字段映射细节见对应 `templates/data/<skeleton>/README.md`。
 
@@ -94,7 +95,7 @@ bigdata-dashboard/
 
 共 15 个骨架。**11 个自带源文件**（无需 `--source-dir`）：`smart_city`、`power_plant`、`pharma`、`weather`、`lpl`、`generic`、`data_center`、`new_consumption`、`smart_dashboard`、`new_energy_vehicle`、`property_management`。
 
-其余 4 个（`revenue`、`device_monitor`、`credit_risk`、`telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录。
+其余 4 个（`revenue`、`device_monitor`、`credit_risk`、`telecom_store`）必须用 `--source-dir <path>` 指定原始 HTML 目录（这 4 个骨架目录**不含入口 HTML 与完整源资源**，仅含 `injector.js` 等渲染配置）。
 
 **15 个骨架全部含 `injector.js`**（完整数据注入）：revenue / device_monitor / weather / credit_risk / telecom_store / smart_city / power_plant / pharma / generic / data_center / lpl / new_consumption / smart_dashboard / new_energy_vehicle / property_management。
 
@@ -111,6 +112,8 @@ bigdata-dashboard/
 ## Gotchas（易踩点）
 
 - **`data_schema.json` 和 `metadata.json` 是 `template_adapter.py` 的副产物**，`build_dashboard.py` **不读取**，可直接忽略。其中 chart id 可能是占位符（如 `myChart` / `a` / `b`），DOM id 以 `template_config.json` 与 `templates/data/<skeleton>/README.md` 为准。
+- **骨架目录入口统一为 `index.html`**：11 个自带源骨架根目录放 `index.html`；需 `--source-dir` 的 4 个骨架目录无入口 HTML（构建时从源目录取，缺失会报错而非产出残缺文件）。
+- **第三方库统一放 `assets/vendor/`**（echarts 5.5.0、jquery 3.2.1 + 通用插件），骨架 `js/` 只留模板特有业务文件（如 js.js / render.js / china.js / index.js / mymap.js——同名文件在不同模板内容不同，不可共享）；HTML 以无前缀路径（`echarts.min.js` / `jquery-3.2.1.min.js` / `jquery.numscroll.js`）引用，构建时先查骨架目录再查 vendor。`theme.css` 仅在入口 HTML 显式 `<link>` 引用时保留，其余为死文件已清理。
 - **布局引擎会自动升级旧版 `window.DASHBOARD_DATA`** 格式 → `layout_config` schema，不要手动迁移旧数据。
 - **Excel 三分支识别**（`excel_to_json.py` 按优先级）：(1) 隐藏 `_meta` sheet（`make_xlsx_template.py` 产物）→ 完整还原原 JSON；(2) legacy sheet 名（`config`/`stats_left`/`summary`/`bignumber`/`gauges`/`ranking`）；(3) 启发式（2 列「文本+数值」且 ≤10 行的 sheet → statCards，其余「文本+数值」sheet → 柱状图，多列 sheet → 表格）。
 - **布局规则**：statCards 顶部通栏；charts + tables 按每行最多 3 个自动均分。

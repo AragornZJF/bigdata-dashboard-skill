@@ -2,7 +2,7 @@
 
 > 对应源模板：**021 大数据可视化系统数据分析通用模版**
 > 渲染骨架：`assets/templates/skeletons/generic/`（含 `injector.js`，已自带源资源）
-> 注入方式：skeleton.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
+> 注入方式：index.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
 
 ## 顶层字段
 
@@ -41,8 +41,8 @@
 | 子字段 | 说明 |
 |---|---|
 | `id` | ECharts 容器 DOM id，**必须用骨架真实 id**：`echarts1` / `echarts2` / `echarts3` / `lastecharts` / `pe01` / `pe02` / `pe03`（共 7 个槽位） |
-| `type` | `bar`（柱）/ `line`（线）/ `pie`（饼） |
-| `data` | 通用数据格式 `[{name, value}]` |
+| `type` | `bar`（柱）/ `line`（线）/ `pie`（饼）/ `radar`（雷达，对应 `lastecharts` 槽位） |
+| `data` | 通用数据格式 `[{name, value}]`；雷达图为 `[{name, value:[num,...]}]`（value 数组长度需匹配雷达轴数，当前 5 轴） |
 | `series` | 可选，多系列数组 `[{name, data}]`（仅 bar/line） |
 | `option` | 可选，透传完整 ECharts option（覆盖前两者） |
 

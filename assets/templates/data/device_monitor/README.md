@@ -1,7 +1,7 @@
 # device_monitor 数据填写说明
 
 > 对应源模板：**064 设备环境监测平台**
-> 渲染骨架：`assets/templates/skeletons/device_monitor/`（含 injector.js + template_config.json + skeleton.html）
+> 渲染骨架：`assets/templates/skeletons/device_monitor/`（含 injector.js + template_config.json；**需 --source-dir** 构建）
 
 ## 顶层字段
 

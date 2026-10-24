@@ -123,7 +123,7 @@ python scripts/build_dashboard.py data.json --template "credit_risk" --source-di
 
 ### 概念速览
 
-- **双目录职责**：`templates/data/<skeleton>/`（example.json + example.xlsx + README.md，给用户填的业务数据样本）与 `templates/skeletons/<skeleton>/`（skeleton.html + theme.css + injector.js + template_config.json，渲染层配置）一一对应但职责不同，由 `build_dashboard.py` 构建时读取后者
+- **双目录职责**：`templates/data/<skeleton>/`（example.json + example.xlsx + README.md，给用户填的业务数据样本）与 `templates/skeletons/<skeleton>/`（入口 index.html + injector.js + template_config.json + metadata.json，渲染层配置）一一对应但职责不同，由 `build_dashboard.py` 构建时读取后者；11 个自带源骨架含完整源资源，其余 4 个（revenue / device_monitor / credit_risk / telecom_store）需 `--source-dir`
 - **字段映射链路**：`example.json` 业务字段 → `injector.js` → `template_config.json` 中的 DOM selector / echarts 实例 id（详见各 `templates/data/<skeleton>/README.md`）
 - **数据注入**：全部 15 个骨架带 `injector.js`，构建时自动附加，读 `window.DASHBOARD_DATA` 用 `echarts.getInstanceByDom()` + `setOption()` 更新，不修改原始 JS、不暴露全局变量
 - **布局引擎自动升级**旧版 `window.DASHBOARD_DATA` → `layout_config` schema，不要手动迁移旧数据

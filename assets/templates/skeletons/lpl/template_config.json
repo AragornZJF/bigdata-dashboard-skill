@@ -1,0 +1,7 @@
+{
+  "name": "lpl",
+  "entryFile": "index.html",
+  "layout": "float",
+  "deps": ["echarts", "jquery"],
+  "description": "英雄联盟LPL比赛数据可视化（内置源，免 --source-dir）。BigDataView 099，电竞风格大屏。字段映射见 assets/templates/data/lpl/README.md。"
+}

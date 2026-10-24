@@ -2,7 +2,7 @@
   "source": "",
   "name": "物业管理数据中心",
   "layout_type": "float",
-  "echarts_version": "auto",
+  "echarts_version": "5.5.0 (shared assets/vendor/echarts.min.js)",
   "canvas": {
     "width": 1600,
     "height": 900,

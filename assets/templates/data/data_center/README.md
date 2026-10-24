@@ -2,7 +2,7 @@
 
 > 对应源模板：**003 酷炫智能大屏数据中心**
 > 渲染骨架：`assets/templates/skeletons/data_center/`（含 `injector.js`，已自带源资源）
-> 注入方式：skeleton.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
+> 注入方式：index.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
 
 ## 顶层字段
 

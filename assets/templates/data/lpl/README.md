@@ -2,7 +2,7 @@
 
 > 对应源模板：**099 英雄联盟 LPL 比赛数据可视化**
 > 渲染骨架：`assets/templates/skeletons/lpl/`（含 `injector.js`，已自带源资源）
-> 注入方式：skeleton.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
+> 注入方式：index.html 内嵌 `<script id="dashboard-data">/* DATA_PLACEHOLDER */</script>`，构建时由 build_dashboard.py 替换为 JSON 数据；`injector.js` 在 `</body>` 前追加，通过 `window.DASHBOARD_DATA` 更新 DOM 文本与 ECharts 实例。
 
 ## 顶层字段
 
@@ -32,7 +32,7 @@ DOM 中每个 `.zbN > span` 原本是 `"TES<br>胜率最高"`。本字段提供�
 
 ### gaugeValues 字段
 
- zb1-6 中心显示的数字（如 `73` 表示 73%）。injector 用 `{value, 100-value}` 更新饼图两点（胜利/战败）+ label.formatter。
+ zb1-6 中心显示的数字（如 `73` 表示 73%）。injector 只更新两数据点的 `value`（`100-value` 作为补足）+ 第一个点的 `label.formatter`，保留原样式（第二点的 name/label/itemStyle 不受影响）。
 
 ### charts 字段（部分图表）
 
