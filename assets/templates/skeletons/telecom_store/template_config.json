@@ -175,5 +175,6 @@
     "Star rating images (star1/star2/star3) are conditionally set based on scores",
     "Pie chart data is computed from channelJfMap (channelSum, channelOrder, channelTotal)",
     "Analysis text at top-right is computed by channelReportContent()"
-  ]
+  ],
+  "entryFile": "index.html"
 }

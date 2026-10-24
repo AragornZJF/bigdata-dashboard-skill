@@ -1,7 +1,7 @@
 # telecom_store 数据填写说明
 
 > 对应源模板：**068 中国电信厅店营业效能分析**
-> 渲染骨架：`assets/templates/skeletons/telecom_store/`（含 injector.js + template_config.json）
+> 渲染骨架：`assets/templates/skeletons/telecom_store/`（含 injector.js + template_config.json + 内置源，入口 index.html，免 --source-dir）
 > 注意：原模板 `index.html` 在 `page/` 子目录下；注入策略为**全局变量覆写**（替换 `window.data`）
 
 ## 顶层字段（最小可工作子集）

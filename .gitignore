@@ -11,6 +11,9 @@ env/
 # --- Generated dashboard output (build artifacts; regenerate via scripts/build_dashboard.py) ---
 output/
 
+# --- Generated diagrams (graph/ 由 graph/generate_flow_svgs.py 随时重生成) ---
+graph/
+
 # --- Claude Code ---
 # Local-only settings; .claude/agents/ IS tracked as a project asset.
 .claude/settings.local.json

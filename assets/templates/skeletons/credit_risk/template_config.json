@@ -1,7 +1,7 @@
 {
   "template": "credit_risk",
   "description": "银行信用风险定位大屏，四Tab布局（经营动态/偿债能力/可变现资产/外部关联），含折线图、饼图、力导向图、多表格",
-  "entryFile": "sanlian.html",
+  "entryFile": "index.html",
   "dataPoints": {
     "company": {
       "nameSel": ".title.ttbg",

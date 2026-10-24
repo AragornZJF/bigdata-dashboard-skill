@@ -12,52 +12,81 @@ description: "数字大屏/数据可视化驾驶舱生成器。当用户要求�
 
 | 用户情况 | 走哪条路 |
 |---|---|
-| 无数据，需要选行业模板 | ↓ **流程A · 交互式生成**（第 1 节） |
+| 无数据，需要选行业模板 | ↓ **流程A · 交互式生成**（第 1 节，Mock 先行 → 数据替换） |
 | 已有 Excel/JSON，无风格要求 | ↓ **流程B · 直接生成**（第 2 节） |
 | 已有数据 + 想要特定风格 | 流程B + `--template <骨架名>`（选模板见第 3 节菜单） |
 | 想扩展 / 自定义模板 | 第 5 节 模板扩展体系 |
 
-## 1. 流程A · 交互式生成（默认推荐）
+## 1. 流程A · 交互式生成（默认推荐，Mock 先行 → 数据替换）
 
-当用户要求「生成数据大屏 / 可视化大屏 / 数字驾驶舱」时，**不要直接套模板**，按下面三步引导：
+当用户要求「生成数据大屏 / 可视化大屏 / 数字驾驶舱」时，**不要直接套模板**，按「选模板 → Mock 先行预览 → 数据替换」推进：先让用户看到带演示数据的成品效果，满意后再换真实数据重建。
 
 ### 第 1 步 · 选行业模板
 
 用 `AskUserQuestion`（或编号列表）展示「行业模板菜单」（见第 3 节）让用户选择。
 `--template` 支持三种写法：编号（如 `092`）、英文骨架名（如 `revenue`）、中文名（如 `企业营收大数据统计可视化大屏`）。
 
-### 第 2 步 · 发数据模板（Excel + JSON）
+### 第 2 步 · Mock 数据先行（立即出屏预览）
 
-选定行业后，把对应的示例数据模板交给用户填写：
+选定模板后**不等用户数据**，直接用 Mock 数据生成大屏让用户先看风格效果：
+
+1. 读 `assets/templates/data/<skeleton>/README.md`（字段映射 + 校验约束）与 `example.json`（schema 骨架）
+2. 按「Mock 数据规范」（见下方 1.1 节）现场生成 Mock 数据，存为 `output/<skeleton>_mock_data.json`
+3. 构建 + 预览：
 
 ```bash
-# 0) 可选：程序化列出所有可用数据模板及其渲染策略（避免凭记忆）
-python scripts/build_dashboard.py --list-data-templates
+py scripts/build_dashboard.py output/<skeleton>_mock_data.json \
+    --template <skeleton> --output output/<skeleton>_dashboard.html
+```
 
-# 1) 复制 JSON 模板到用户工作区
-cp assets/templates/data/<skeleton>/example.json  <用户目录>/<行业>_data.json
+4. 明确告知用户：当前为演示数据，对风格满意后提供真实数据即可**原样替换重建**（布局风格不变）
 
-# 2) 生成可填写的 Excel 模板（多 sheet：说明 / 概览 / 各字段 / 复杂字段以 JSON 文本存放）
-python scripts/make_xlsx_template.py assets/templates/data/<skeleton>/example.json <用户目录>/<行业>_data.xlsx
+> 15 个内置模板全部自带源（入口 `index.html` 及源资源在骨架目录），均可直接构建，无需 `--source-dir`。
+
+### 1.1 Mock 数据规范（第 2 步执行标准）
+
+| 规则 | 说明 |
+|---|---|
+| Schema 合法 | 严格符合该模板 `example.json` 结构与 README 字段映射；数组长度、取值范围等约束必须满足（如 `wind.radar` 恰好 16 位、`waterPolo` 0-100），否则 injector 会静默跳过该字段 |
+| 序列够长 | 时间序列 ≥ 12 个点，保证均线（MA5/MA10）、轮播、趋势等效果完整呈现（`example.json` 中的单点示例仅为 schema 演示，不可照抄） |
+| 量级自洽 | 数值符合行业常识且内部逻辑一致（如降雨量 年 > 月 > 周 > 日；占比类合计 100%） |
+| 日期新鲜 | 日期/时间类字段用构建当天，序列向前倒推 |
+| 地理合理 | 地图点位落在模板主题区域（中国境内），`lng/lat` 为数值 |
+| 命名隔离 | Mock 数据存 `output/<skeleton>_mock_data.json`，用户数据存 `output/<skeleton>_user_data.json`，产物 `output/<skeleton>_dashboard.html`；**交付前确认产物非 Mock 数据** |
+
+### 第 3 步 · 数据替换（用户真实数据 → 同模板重建）
+
+用户对风格满意后提供真实数据（Excel / JSON 任一），替换重建：
+
+```bash
+# 用户数据为数据模板回填的 Excel（make_xlsx_template 产物）→ 完整还原 JSON
+py scripts/xlsx_to_json.py <用户>_data.xlsx output/<skeleton>_user_data.json
+
+# 任意 Excel → 统一入口转换（_meta / legacy / 启发式 三分支）
+py scripts/excel_to_json.py <用户>.xlsx output/<skeleton>_user_data.json
+
+# 同一模板、同一命令重建（风格不变，仅数据更新）
+py scripts/build_dashboard.py output/<skeleton>_user_data.json \
+    --template <skeleton> --output output/<skeleton>_dashboard.html
+```
+
+若用户明确想从空白模板填起（跳过 Mock 预览），仍可直接发数据模板：
+
+```bash
+# 可选：程序化列出所有可用数据模板及其渲染策略（避免凭记忆）
+py scripts/build_dashboard.py --list-data-templates
+
+# 复制 JSON 模板到用户工作区
+cp assets/templates/data/<skeleton>/example.json <用户目录>/<行业>_data.json
+
+# 生成可填写的 Excel 模板（多 sheet：说明 / 概览 / 各字段 / 复杂字段以 JSON 文本存放）
+py scripts/make_xlsx_template.py assets/templates/data/<skeleton>/example.json <用户目录>/<行业>_data.xlsx
 ```
 
 把 `<行业>_data.json` 和 `<行业>_data.xlsx` 一并交给用户，**明确告诉他「填 Excel 或 JSON 任一即可」**。
 Excel 中：「概览」表填标量（标题/标签/数值），「字段」表填数组（对象按列、数值按行），复杂嵌套字段为单元格内 JSON 文本可直接编辑。
 
 **字段映射说明**：每个 `assets/templates/data/<skeleton>/` 下都有 `README.md`，记录了 `example.json` 每个字段对应的渲染目标（DOM 选择器 / echarts 实例 id / canvas）和填写注意事项。用户填写时如不确定字段含义，可参考该 README。
-
-### 第 3 步 · 生成大屏
-
-用户填回数据后：
-
-```bash
-# 若用户返回的是 Excel，先转回 JSON
-python scripts/xlsx_to_json.py <用户目录>/<行业>_data.xlsx <用户目录>/<行业>_data.json
-
-# 再构建
-python scripts/build_dashboard.py <用户目录>/<行业>_data.json \
-    --template <skeleton> --output dashboard.html
-```
 
 构建产物为自包含单文件 HTML（无 CDN 依赖），可直接浏览器打开。
 
@@ -113,17 +142,17 @@ python scripts/build_dashboard.py <用户数据>.json --theme dark --output dash
 ```
 
 ```bash
-# 从已适配的 15 个骨架中选一个（11 个自带源免 --source-dir）
+# 从已适配的 15 个骨架中选一个（全部自带源，免 --source-dir）
 python scripts/build_dashboard.py data.json --template "weather"
 python scripts/build_dashboard.py data.json --template "power_plant"
 
 # 指定外部源目录（4 个骨架无自带源时需要）
-python scripts/build_dashboard.py data.json --template "credit_risk" --source-dir "path/to/web/"
+python scripts/build_dashboard.py data.json --template "credit_risk"   # 15 个模板全部自带源
 ```
 
 ### 概念速览
 
-- **双目录职责**：`templates/data/<skeleton>/`（example.json + example.xlsx + README.md，给用户填的业务数据样本）与 `templates/skeletons/<skeleton>/`（入口 index.html + injector.js + template_config.json + metadata.json，渲染层配置）一一对应但职责不同，由 `build_dashboard.py` 构建时读取后者；11 个自带源骨架含完整源资源，其余 4 个（revenue / device_monitor / credit_risk / telecom_store）需 `--source-dir`
+- **双目录职责**：`templates/data/<skeleton>/`（example.json + example.xlsx + README.md，给用户填的业务数据样本）与 `templates/skeletons/<skeleton>/`（入口 index.html + injector.js + template_config.json + metadata.json，渲染层配置）一一对应但职责不同，由 `build_dashboard.py` 构建时读取后者；15 个骨架全部自带源（入口 `index.html` + 完整源资源）
 - **字段映射链路**：`example.json` 业务字段 → `injector.js` → `template_config.json` 中的 DOM selector / echarts 实例 id（详见各 `templates/data/<skeleton>/README.md`）
 - **数据注入**：全部 15 个骨架带 `injector.js`，构建时自动附加，读 `window.DASHBOARD_DATA` 用 `echarts.getInstanceByDom()` + `setOption()` 更新，不修改原始 JS、不暴露全局变量
 - **布局引擎自动升级**旧版 `window.DASHBOARD_DATA` → `layout_config` schema，不要手动迁移旧数据
@@ -153,7 +182,7 @@ py scripts/excel_to_json.py any.xlsx any.json              # 任意 Excel → JS
 | 来源                          | 数量 | 说明                                   |
 | ----------------------------- | ---- | -------------------------------------- |
 | `renderer.html`               | 1    | 动态布局引擎（默认，模式1）            |
-| `assets/templates/skeletons/` | 15   | 已适配骨架（各含 injector.js + template_config.json），11 个自带源免 `--source-dir` |
+| `assets/templates/skeletons/` | 15   | 已适配骨架（各含 injector.js + template_config.json + index.html 源资源），全部免 `--source-dir` |
 | `assets/templates/data/`             | 15   | 用户填写的数据样本（example.json + example.xlsx + README.md），与 skeletons 一一对应 |
 | `assets/templates/custom/`    | 0    | 用户自定义模板扩展点（空架子，待填充） |
 
