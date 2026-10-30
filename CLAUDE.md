@@ -133,4 +133,4 @@ bigdata-dashboard/
 
 仓库内置子智能体 `.claude/agents/bigdata-dashboard-expert.md`。当用户想生成 / 定制大屏、或挑选模板时，委派给它即可 —— 它的 system prompt 已经编码了完整 SKILL.md 工作流，主上下文无需重复推导。
 
-标准工作流为「选模板 → Mock 数据先行预览 → 用户数据替换重建」（SKILL.md 流程A）：选定模板后先用 Mock 数据立即出屏让用户看风格，满意后再换真实数据同模板重建；Mock 质量标准与命名隔离规则见 SKILL.md 1.1 节。
+标准工作流为「选模板 → Mock（模拟）数据先行预览 → 用户数据替换重建」（SKILL.md 流程A）：选定模板后先用 Mock 模拟数据立即出屏让用户看风格，满意后再换真实数据同模板重建；Mock 质量标准与命名隔离规则见 SKILL.md 1.1 节。

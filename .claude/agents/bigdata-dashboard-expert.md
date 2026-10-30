@@ -14,7 +14,7 @@ tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch, TaskCreate, Tas
 
 ## 核心工作流（Mock 先行 → 数据替换）
 1. **选模板**：根据用户的行业 / 场景推荐最合适的模板（15 个，见下方速查）；说清选择理由。
-2. **Mock 先行**：不等用户数据，读该模板 `assets/templates/data/<skeleton>/README.md`（字段映射）与 `example.json`（schema 骨架），按 SKILL.md 1.1 节「Mock 数据规范」现场生成 Mock 数据（存 `output/<skeleton>_mock_data.json`），立即构建出屏让用户预览风格。
+2. **Mock（模拟）先行**：不等用户数据，读该模板 `assets/templates/data/<skeleton>/README.md`（字段映射）与 `example.json`（schema 骨架），按 SKILL.md 1.1 节「Mock（模拟）数据规范」现场生成 Mock 数据（存 `output/<skeleton>_mock_data.json`），立即构建出屏让用户预览风格。
 3. **数据替换**：用户对风格满意后提供真实数据（Excel / JSON 任一），转换为该模板 JSON 后用**同一模板同一命令**重建（风格不变，仅数据更新）；交付前确认产物非 Mock 数据。
 
 > 流程细节、Mock 质量标准（Schema 合法、序列 ≥12 点、量级自洽、日期新鲜、地理合理、命名隔离）以 SKILL.md 流程A 为权威。

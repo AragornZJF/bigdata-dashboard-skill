@@ -2,6 +2,38 @@
 
 把 Excel / JSON 数据一键渲染成震撼、专业、可直接浏览器打开的**单文件 HTML 数据大屏**。无 CDN 依赖，CSS / JS / 图片全部内联，双击即可展示，便于离线分发与汇报投屏。
 
+> 仓库：https://github.com/AragornZJF/bigdata-dashboard-skill
+
+---
+
+## 安装
+
+在 Claude Code 或 Codex 中直接说：
+
+> 请安装 https://github.com/AragornZJF/bigdata-dashboard-skill 技能
+
+代理会自动克隆并注册技能，之后直接说「生成一个数据大屏」即可触发。
+
+> 环境要求：Windows + Python（`py` launcher），无需第三方包。命令行直接用法见下文「核心工作流程」。
+
+---
+
+## 快速开始 · 生成智慧城市可视化大屏
+
+在 Claude Code 中说：
+
+> 用智慧城市模板生成一个可视化大屏
+
+先用 Mock（模拟）数据出屏预览，满意后提供真实数据（Excel / JSON）即可同模板替换重建。
+
+也可以命令行直接构建（用模板自带示例数据）：
+
+```bash
+mkdir -p output   # 首次使用先建输出目录
+py scripts/build_dashboard.py assets/templates/data/smart_city/example.json --template smart_city --output output/smart_city_dashboard.html
+start output/smart_city_dashboard.html
+```
+
 ---
 
 ## 这个 Skill 用来干什么
