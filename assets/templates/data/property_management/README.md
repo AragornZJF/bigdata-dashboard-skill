@@ -16,7 +16,7 @@ py scripts/build_dashboard.py your_data.xlsx --template property_management --ou
 
 ## 注入机制
 
-skeleton.html 已内联全部 52 个组件（6 图表 + 文本 + 图片 + 日期）的初始数据，
+index.html 已内联全部 52 个组件（6 图表 + 文本 + 图片 + 日期）的初始数据，
 打开即可看完整效果。`injector.js` 在运行时读取 `window.DASHBOARD_DATA`，
 按 `id` 定位图表 DOM，用 `echarts.getInstanceByDom() + setOption()` 覆盖数据。
 
@@ -97,12 +97,12 @@ skeleton.html 已内联全部 52 个组件（6 图表 + 文本 + 图片 + 日期
 ## 修改建议
 
 - **换数据**：改 `option.series[0].data` / `option.xAxis.data` 即可，颜色/样式保持原值。
-- **换标题**：在 skeleton.html 里找对应 `dv-text` 的 `<span>` 改文字，或在数据里加 `"title": "新标题"` 覆盖大屏标题。
-- **加图表**：在 skeleton.html 里复制一个 `<div id="chart_N" class="dv-chart" style="position:absolute;left:Xpx;top:Ypx;width:Wpx;height:Hpx;"></div>`，再加对应的 `echarts.init` 行。
+- **换标题**：在 index.html 里找对应 `dv-text` 的 `<span>` 改文字，或在数据里加 `"title": "新标题"` 覆盖大屏标题。
+- **加图表**：在 index.html 里复制一个 `<div id="chart_N" class="dv-chart" style="position:absolute;left:Xpx;top:Ypx;width:Wpx;height:Hpx;"></div>`，再加对应的 `echarts.init` 行。
 - **主题色**：改 `theme.css` 里的 CSS 变量 `--primary-color` / `--bg-color`。
 
 ## 注意事项
 
-1. 原 `.DET` 里另有 11 个图表配置（funnel / map / word-cloud / table-info 等）只有数据、**没摆到画布上**，转换时未渲染。需要时可在 skeleton.html 里手动加 div + init。
+1. 原 `.DET` 里另有 11 个图表配置（funnel / map / word-cloud / table-info 等）只有数据、**没摆到画布上**，转换时未渲染。需要时可在 index.html 里手动加 div + init。
 2. `map` / `word-cloud` 类型因 echarts.min.js 未含对应扩展模块，已降级为横向柱状；要还原需自行引入 `echarts/extension` 资源。
 3. 画布按 1600×900 设计，通过 `transform: scale()` 自适应屏幕，不保证超宽屏完美无拉伸。

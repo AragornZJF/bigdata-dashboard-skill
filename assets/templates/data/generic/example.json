@@ -4,7 +4,7 @@
     { "label": "用户总数", "value": "200万" },
     { "label": "数据总量", "value": "1,200TB" },
     { "label": "接入厂商", "value": "150家" },
-    { "label": "监测指标", "value": "251项" },1
+    { "label": "监测指标", "value": "251项" },
     { "label": "服务节点", "value": "34家" },
     { "label": "应用系统", "value": "150项" }
   ],
@@ -56,13 +56,10 @@
     },
     {
       "id": "lastecharts",
-      "type": "pie",
+      "type": "radar",
       "data": [
-        { "name": "华北", "value": 1048 },
-        { "name": "华东", "value": 735 },
-        { "name": "华南", "value": 580 },
-        { "name": "西部", "value": 484 },
-        { "name": "海外", "value": 300 }
+        { "name": "园区平均值", "value": [90, 80, 20, 10, 30] },
+        { "name": "当前园区", "value": [30, 20, 75, 80, 70] }
       ]
     },
     {

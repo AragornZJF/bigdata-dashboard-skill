@@ -1,7 +1,7 @@
 # credit_risk 数据填写说明
 
 > 对应源模板：**045 信用风险定位系统（银行版）**
-> 渲染骨架：`assets/templates/skeletons/credit_risk/`（含 injector.js + template_config.json + skeleton.html）
+> 渲染骨架：`assets/templates/skeletons/credit_risk/`（（含 injector.js + template_config.json + 内置源，入口 index.html，免 --source-dir））
 > 布局：四 Tab（经营动态 / 偿债能力 / 可变现资产 / 外部关联）
 
 ## 顶层字段

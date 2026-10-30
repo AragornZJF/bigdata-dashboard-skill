@@ -151,19 +151,32 @@ def _inline_assets(html, *search_dirs):
     """
     stats = {"css": 0, "js": 0, "image": 0, "font": 0}
 
-    # --- 1. 内联 CSS <link> ---
+    # --- 1. 内联 CSS <link>（及本地非 CSS link，如 favicon，转为 data URI）---
     def inline_link(m):
         href = m.group(1)
         abs_path = _resolve_asset_path(href, *search_dirs)
-        if abs_path and href.lower().endswith('.css'):
-            try:
-                with open(abs_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    css_content = f.read()
-                stats["css"] += 1
-                print(f"  [inline css] {href} ({len(css_content)} bytes)")
-                return f'<style>\n/* inlined from {href} */\n{css_content}\n</style>'
-            except Exception as e:
-                print(f"  [WARN] Failed to inline CSS {href}: {e}")
+        if abs_path:
+            if href.lower().endswith('.css'):
+                try:
+                    with open(abs_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        css_content = f.read()
+                    stats["css"] += 1
+                    print(f"  [inline css] {href} ({len(css_content)} bytes)")
+                    return f'<style>\n/* inlined from {href} */\n{css_content}\n</style>'
+                except Exception as e:
+                    print(f"  [WARN] Failed to inline CSS {href}: {e}")
+            else:
+                # 非 CSS 本地文件（favicon 等）→ data URI，保证产物自包含
+                try:
+                    mime = _get_mime_type(abs_path)
+                    with open(abs_path, 'rb') as f:
+                        import base64
+                        b64 = base64.b64encode(f.read()).decode('ascii')
+                    stats["image"] += 1
+                    print(f"  [inline link] {href} ({len(b64)} b64 bytes)")
+                    return m.group(0).replace(href, f"data:{mime};base64,{b64}")
+                except Exception as e:
+                    print(f"  [WARN] Failed to inline link {href}: {e}")
         return m.group(0)
 
     html = re.sub(r'<link[^>]*href=["\']([^"\']+)["\'][^>]*/?>', inline_link, html)
@@ -622,16 +635,40 @@ def _build_source_template(data, template_name, source_dir, output_path):
 
     # === 关键：内联所有外部资源 ===
     print("内联外部资源...")
-    # 搜索目录顺序：先源模板目录，再骨架目录（补充缺失资源），再 --source-dir
+    # 搜索目录顺序：先源模板目录，再骨架目录（补充缺失资源），再 --source-dir，最后共享 vendor 目录
     search_dirs = [str(template_path)]
     skeleton_dir = Path(SKELETONS_DIR) / skeleton_dir_name
     if skeleton_dir.exists() and skeleton_dir != template_path:
         search_dirs.append(str(skeleton_dir))
     if source_dir and os.path.isdir(source_dir) and Path(source_dir) != template_path:
         search_dirs.append(str(source_dir))
+    vendor_dir = os.path.join(SKILL_DIR, "assets", "vendor")
+    if os.path.isdir(vendor_dir):
+        search_dirs.append(vendor_dir)
     skeleton, inline_stats = _inline_assets(skeleton, *search_dirs)
     print(f"  内联完成: CSS={inline_stats['css']}, JS={inline_stats['js']}, "
           f"Image={inline_stats['image']}, Font={inline_stats['font']}")
+
+    # === 自包含校验：内联后仍残留的本地相对引用 = 缺少源资源 ===
+    # 先剔除所有 <script> 内容，避免 JS 字符串拼接（如 src='+o+'）被误判为 HTML 引用；
+    # 再排除 data:/#/javascript:/about:/http(s):// 与绝对路径占位（/xxx）
+    html_without_js = re.sub(r'<script[^>]*>.*?</script>', '', skeleton,
+                             flags=re.DOTALL | re.IGNORECASE)
+    unresolved = []
+    for m in re.finditer(
+        r'(?:src|href)=["\']((?!data:|#|javascript:|about:|https?:|//|/)[^\s"\'<>]+)["\']',
+        html_without_js, flags=re.IGNORECASE
+    ):
+        ref = m.group(1)
+        # 双保险：若该引用仍能被搜索目录解析到，说明只是未内联（非缺失），不阻断
+        if not _resolve_asset_path(ref, *search_dirs):
+            unresolved.append(ref)
+    if unresolved:
+        print(f"ERROR: 模板 '{template_name}' 存在未内联的本地资源引用，产物将不自包含:")
+        for u in sorted(set(unresolved))[:10]:
+            print(f"  - {u}")
+        print("该骨架缺少完整源资源，请用 --source-dir 指定原始 HTML 目录后重试。")
+        sys.exit(1)
 
     # === 数据注入：替换 office_efficiency_data.js 内容 ===
     # 查找内联的 data.js 块并将内容替换为 DASHBOARD_DATA 引用

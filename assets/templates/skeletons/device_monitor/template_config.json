@@ -102,5 +102,6 @@
         "valdata": true
       }
     }
-  }
+  },
+  "entryFile": "index.html"
 }

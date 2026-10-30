@@ -26,8 +26,7 @@
 ## 注入与自带源
 
 - 全部 15 个骨架均带 `injector.js`，支持**完整数据注入**（`window.DASHBOARD_DATA` → DOM 文本 + ECharts `setOption()`）；`generic / data_center / lpl` 走布局引擎，图表数据为通用结构（statCards / charts / tables）
-- **自带源（11 个，免 `--source-dir`）**：`smart_city` / `power_plant` / `pharma` / `weather` / `lpl` / `generic` / `data_center` / `new_consumption` / `smart_dashboard` / `new_energy_vehicle` / `property_management`
-- **需 `--source-dir`（4 个）**：`revenue` / `device_monitor` / `credit_risk` / `telecom_store`
+- **自带源（15 个全部，免 `--source-dir`）**：`smart_city` / `power_plant` / `pharma` / `weather` / `lpl` / `generic` / `data_center` / `new_consumption` / `smart_dashboard` / `new_energy_vehicle` / `property_management` / `revenue` / `device_monitor` / `credit_risk` / `telecom_store`
 
 ## 场景 → 模板选择建议
 

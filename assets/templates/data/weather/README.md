@@ -1,7 +1,7 @@
 # weather 数据填写说明
 
 > 对应源模板：**092 酷炫大屏数据可视化模板（气象站监控）**
-> 渲染骨架：`assets/templates/skeletons/weather/`（含 injector.js + template_config.json + skeleton.html）
+> 渲染骨架：`assets/templates/skeletons/weather/`（含 injector.js + template_config.json + index.html）
 > 特色：含仪表盘 / 蜡烛图 / 中国地图 / 雷达图 / 水球图（WaterPolo）/ 气压动画条 / 风扇转速动画
 
 ## 顶层字段

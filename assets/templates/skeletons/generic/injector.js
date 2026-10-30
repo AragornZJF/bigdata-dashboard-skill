@@ -142,29 +142,55 @@
     }
 
     // ====== 7. echarts 图表数据（按 id 匹配）======
+    // 原模板 js.js 已 init 并 setOption 了 demo 配置（含渐变/areaStyle 等视觉样式）。
+    // 关键：只更新数据（series[].data / xAxis.data），不替换整个 series 对象，
+    // 否则 areaStyle/itemStyle/color 等视觉配置会被清空。
     if (D.charts && D.charts.length && window.echarts) {
       D.charts.forEach(function (c) {
         if (!c.id) return;
         var el = document.getElementById(c.id);
         var inst = el && echarts.getInstanceByDom(el);
         if (!inst) return;
+
+        // 透传完整 option 优先
+        if (c.option) {
+          inst.setOption(c.option);
+          return;
+        }
+
         var data = c.data || [];
         var opt = {};
-        if (c.type === 'pie') {
+        // 获取已有 option 以判断真实图表类型（避免类型不匹配）
+        var curOpt = inst.getOption();
+        var curSeries = (curOpt && curOpt.series) || [];
+        var realType = curSeries[0] && curSeries[0].type;
+
+        if (realType === 'pie') {
+          // 饼图：只更新 series[0].data
           opt.series = [];
-          // 多数饼图是单系列，覆盖 series[0].data
           opt.series[0] = { data: data.map(function (d) { return { name: d.name, value: d.value }; }) };
-        } else if (c.type === 'bar' || c.type === 'line') {
+        } else if (realType === 'radar') {
+          // 雷达图（lastecharts 在 js.js 中是 radar）：data 格式 [{value:[...]}]
+          // 用户 data 可能是 [{name,value}] 标量或 [{value:[...]}] 数组，统一取 value
+          opt.series = [];
+          opt.series[0] = { data: data.map(function (d) {
+            return { name: d.name, value: d.value };
+          }) };
+        } else if (c.type === 'pie') {
+          opt.series = [];
+          opt.series[0] = { data: data.map(function (d) { return { name: d.name, value: d.value }; }) };
+        } else if (c.type === 'bar' || c.type === 'line' || realType === 'bar' || realType === 'line') {
+          // 柱/线：更新 xAxis.data + series[].data，保留原 series 的视觉配置
           opt.xAxis = { data: data.map(function (d) { return d.name; }) };
-          // 多系列支持：若 c.series 提供，按系列覆盖；否则单系列
           if (c.series && c.series.length) {
-            opt.series = c.series.map(function (s) { return { name: s.name, data: s.data }; });
+            // 多系列：按原 series 数量逐个更新 data，保留样式
+            opt.series = c.series.map(function (s, i) {
+              return { data: s.data };
+            });
           } else {
+            // 单系列数据 -> 更新第一个 series 的 data
             opt.series = [{ data: data.map(function (d) { return d.value; }) }];
           }
-        } else if (c.option) {
-          // 透传完整 ECharts option
-          opt = c.option;
         }
         inst.setOption(opt);
       });

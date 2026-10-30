@@ -1,0 +1,7 @@
+{
+  "name": "data_center",
+  "entryFile": "index.html",
+  "layout": "float",
+  "deps": ["echarts"],
+  "description": "酷炫智能大屏数据中心（内置源，免 --source-dir）。BigDataView 003，浮动布局，含实时数据、图表与监控面板。字段映射见 assets/templates/data/data_center/README.md。"
+}
