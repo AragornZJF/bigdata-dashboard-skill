@@ -11,6 +11,10 @@ env/
 # --- Generated dashboard output (build artifacts; regenerate via scripts/build_dashboard.py) ---
 output/
 
+# --- Example artifacts (examples/ 只保留展示截图 PNG；HTML/临时 JSON 为构建副产物，可随时重建) ---
+examples/*.html
+examples/*.json
+
 # --- Generated diagrams (graph/ 由 graph/generate_flow_svgs.py 随时重生成) ---
 graph/
 
